@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+    postgres:
+        image: postgres:11.4
+        ports:
+            - "15432:5432"
+        container_name: library.postgres
+        environment:
+            POSTGRES_PASSWORD: libpass
+            POSTGRES_USER: libuser
+            POSTGRES_DB: library
+        hostname: postgres
+        restart: always
+
+    pgadmin4:
+        image: dpage/pgadmin4:latest
+        container_name: pgadmin4
+        ports:
+            - 8000:80
+        volumes:
+            - ./pgadmin:/var/lib/pgadmin
+        environment:
+            PGADMIN_DEFAULT_EMAIL: pgadmin
+            PGADMIN_DEFAULT_PASSWORD: pgadmin
+        hostname: pgadmin4
+        depends_on:
+            - postgres
+        restart: always

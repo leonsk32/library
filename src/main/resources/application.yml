@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/library
+    username: libuser
+    password: libpass
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+
+server:
+  servlet:
+    context-path: /api
