@@ -22,6 +22,10 @@ function run_unit_tests() {
     bash $ROOT_DIR/scripts/run-unit-tests.sh
 }
 
+function run_e2e_tests(){
+    bash $ROOT_DIR/scripts/run-unit-tests.sh
+}
+
 function push() {
     git push
 }
