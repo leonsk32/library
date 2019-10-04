@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:library;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: libuser
+    password: libpass
+    driver-class-name: org.h2.Driver
+    initialization-mode: always
+
+server:
+  servlet:
+    context-path: /api
