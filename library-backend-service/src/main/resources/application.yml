@@ -4,7 +4,6 @@ spring:
     username: libuser
     password: libpass
     driver-class-name: org.postgresql.Driver
-    initialization-mode: always
 
 server:
   servlet:
