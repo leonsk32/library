@@ -1,6 +1,5 @@
 package com.example.library.restapi;
 
-import com.example.library.biz.service.SampleService;
 import com.example.library.service.BookshelfService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

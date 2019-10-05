@@ -1,5 +1,9 @@
 package com.example.library.biz.bookshelf;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Entity
  * 本を表現
@@ -9,16 +13,27 @@ package com.example.library.biz.bookshelf;
  */
 class Book {
 
+    @Getter
     private String isbn10;
+    @Getter
     private int amount;
 
-    Book(String isbn) {
-        if(isbn.length() == 10) {
-            new RuntimeException("isbn（１０桁）の桁数が足りないですわ");
+    Book(String isbn10) {
+        if(!(isbn10.length() == 10)) {
+            new RuntimeException("isbn（１０桁）の桁数がおかしいですわ");
         }
-        this.isbn10 = isbn;
+        this.isbn10 = isbn10;
         this.amount = 1;
     }
+
+    /**
+     * 再構成用のコンストラクタ
+     */
+    Book(String isbn10, int amount) {
+        this.isbn10 = isbn10;
+        this.amount = amount;
+    }
+
 
     int amount() {
         return this.amount;

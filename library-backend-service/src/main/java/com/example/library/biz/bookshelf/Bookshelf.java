@@ -1,5 +1,7 @@
 package com.example.library.biz.bookshelf;
 
+import lombok.Getter;
+
 import java.util.List;
 
 /**
@@ -8,6 +10,7 @@ import java.util.List;
  * 本棚を表現
  */
 public class Bookshelf {
+    @Getter
     private List<Book> bookList;
 
     Bookshelf(List<Book> bookList) {

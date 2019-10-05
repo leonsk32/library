@@ -3,9 +3,9 @@ package com.example.library.service;
 import com.example.library.biz.bookshelf.Bookshelf;
 import com.example.library.biz.bookshelf.BookshelfRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class BookshelfService {
     private final BookshelfRepository bookshelfRepository;
