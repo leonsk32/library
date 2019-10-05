@@ -21,15 +21,14 @@ class Book {
         return this.amount;
     }
 
-    String isbn10() {
-        return isbn10;
-    }
-
     void plus() {
         this.amount++;
     }
 
     void minus() {
+        if(this.amount == 0) {
+            throw new RuntimeException("その本の０冊しかない:isbn10" + isbn10);
+        }
         this.amount--;
     }
 

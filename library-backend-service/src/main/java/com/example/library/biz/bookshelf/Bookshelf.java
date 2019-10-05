@@ -14,6 +14,12 @@ public class Bookshelf {
         this.bookList = bookList;
     }
 
+    public void putBook(String isbn10, int i) {
+        for (int y = 0; y < i; y++) {
+            putBook(isbn10);
+        }
+    }
+
     public void putBook(String isbn10) {
         // 本がない場合、あたらしく本棚にいれる、あったら数を増やす
         if (existBook(isbn10)) {
@@ -27,17 +33,12 @@ public class Bookshelf {
         return bookList.stream().noneMatch(book -> book.equals(isbn10));
     }
 
-    public Book takeOut(String isbn10) {
+    public void takeOut(String isbn10) {
         Book book = get(isbn10);
-        if (book.amount() == 1) {
-            bookList.remove(book);
-        } else {
-            book.minus();
-        }
-        return book;
+        book.minus();
     }
 
-    public Book get(String isbn10) {
+    Book get(String isbn10) {
         return bookList.stream()
                 .filter(book -> book.equals(isbn10))
                 .findFirst().orElseThrow(() -> new RuntimeException("そのISBNの本がねえ" + isbn10));
