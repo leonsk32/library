@@ -13,6 +13,9 @@ class Book {
     private int amount;
 
     Book(String isbn) {
+        if(isbn.length() == 10) {
+            new RuntimeException("isbn（１０桁）の桁数が足りないですわ");
+        }
         this.isbn10 = isbn;
         this.amount = 1;
     }
