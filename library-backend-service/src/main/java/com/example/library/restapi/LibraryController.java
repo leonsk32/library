@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/sample")
 @RequiredArgsConstructor
-public class BookshelfController {
+public class LibraryController {
 
     private final SampleService service;
 
-    @GetMapping("/hoge")
-    public int sample() {
-        return service.execute();
-    }
+//    @GetMapping("/hoge")
+//    public int sample() {
+//        return service.execute();
+//    }
 
 }
