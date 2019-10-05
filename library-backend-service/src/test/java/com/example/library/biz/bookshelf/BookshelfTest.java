@@ -12,7 +12,7 @@ class BookshelfTest {
     @Test
     void test01() {
         // arrange
-        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepository();
+        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepositoryForUT();
         Bookshelf bookshelf = bookShelfRepository.get();
         final String isbn10 = "4798121967";
         // act
@@ -25,7 +25,7 @@ class BookshelfTest {
     @Test
     void test02() {
         // arrange
-        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepository();
+        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepositoryForUT();
         Bookshelf bookshelf = bookShelfRepository.get();
         final String isbn10 = "4798121967";
         // act and assert
@@ -41,7 +41,7 @@ class BookshelfTest {
     @Test
     void test03() {
         // arrange
-        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepository();
+        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepositoryForUT();
         Bookshelf bookshelf = bookShelfRepository.get();
         final String isbn10 = "4798121967";
         bookshelf.putBook(isbn10);
@@ -58,7 +58,7 @@ class BookshelfTest {
     @Test
     void test04() {
         // arrange
-        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepository();
+        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepositoryForUT();
         Bookshelf bookshelf = bookShelfRepository.get();
         final String DDDIsbn10 = "4798121967";
         final String SpringBootIsbn10 = "4774182176";
@@ -85,7 +85,7 @@ class BookshelfTest {
     @Test
     void test05() {
         // arrange
-        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepository();
+        BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepositoryForUT();
         Bookshelf bookshelf = bookShelfRepository.get();
         final String isbn10 = "4798121967";
         // act and assert

@@ -44,4 +44,7 @@ public class Bookshelf {
                 .findFirst().orElseThrow(() -> new RuntimeException("そのISBNの本がねえ" + isbn10));
     }
 
+    public int getAmount(String isbn10) {
+        return get(isbn10).amount();
+    }
 }

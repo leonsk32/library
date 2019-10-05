@@ -1,5 +1,6 @@
 package com.example.library.biz.bookshelf;
 
-interface BookshelfRepository {
+public interface BookshelfRepository {
     Bookshelf get();
+    void store(Bookshelf bookshelf);
 }
