@@ -13,7 +13,7 @@ public class Bookshelf {
     @Getter
     private List<Book> bookList;
 
-    Bookshelf(List<Book> bookList) {
+    public Bookshelf(List<Book> bookList) {
         this.bookList = bookList;
     }
 

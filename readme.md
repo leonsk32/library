@@ -1,3 +1,13 @@
+## やり残し一覧
+* swaggerでAPI生成してみたい
+* ORMapperつかってない、JPAてきなのつかってみたい
+* ところどころテストが抜けている
+* test用DBDriverつくるべき
+* SpringBootTestがいくつかある
+* ISBN13桁を無視している
+* 例外がRuntime
+* 本をイミュータブルにして、イベントソーシング的なことをやってみたい
+
 ## １冊借りるときのURL
 ```
 http://localhost:8080/api/v1/books/{isbn} <= 10桁だけ

@@ -1,4 +1,7 @@
-package com.example.library.biz.bookshelf;
+package com.example.library.infra;
+
+import com.example.library.biz.bookshelf.Bookshelf;
+import com.example.library.biz.bookshelf.BookshelfRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;

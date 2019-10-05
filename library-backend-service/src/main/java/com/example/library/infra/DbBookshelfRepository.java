@@ -1,5 +1,8 @@
-package com.example.library.biz.bookshelf;
+package com.example.library.infra;
 
+import com.example.library.biz.bookshelf.Book;
+import com.example.library.biz.bookshelf.Bookshelf;
+import com.example.library.biz.bookshelf.BookshelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,7 +13,7 @@ import java.util.Map;
 
 // TODO ORMapperとかつかうべきか？
 @Repository
-public class DbBookshelfRepository implements BookshelfRepository{
+public class DbBookshelfRepository implements BookshelfRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
     @Override

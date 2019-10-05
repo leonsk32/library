@@ -1,8 +1,6 @@
 package com.example.library.biz.bookshelf;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Entity
@@ -11,7 +9,7 @@ import lombok.Setter;
  * <p>
  * TODO ISBNには１３桁バージョンもあるが、一意性をどう担保するか？？？
  */
-class Book {
+public class Book {
 
     @Getter
     private String isbn10;
@@ -29,7 +27,7 @@ class Book {
     /**
      * 再構成用のコンストラクタ
      */
-    Book(String isbn10, int amount) {
+    public Book(String isbn10, int amount) {
         this.isbn10 = isbn10;
         this.amount = amount;
     }
