@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * Aggregate
+ * これは集約ではなくてサービスに近いものかもしれない
+ * IDがないがライフサイクルの管理は必要？？？
  * <p>
  * 本棚を表現
  */
@@ -23,8 +25,8 @@ public class Bookshelf {
         }
     }
 
+    // 本がない場合、あたらしく本棚にいれる、あったら数を増やす
     public void putBook(String isbn10) {
-        // 本がない場合、あたらしく本棚にいれる、あったら数を増やす
         if (existBook(isbn10)) {
             bookList.add(new Book(isbn10));
         } else {

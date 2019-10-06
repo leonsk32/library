@@ -16,9 +16,12 @@ public class Book {
     @Getter
     private int amount;
 
+    /**
+     * 新規作成用のコンストラクタ
+     */
     Book(String isbn10) {
-        if(!(isbn10.length() == 10)) {
-            new RuntimeException("isbn10 must be 10 digits");
+        if(isbn10.length() != 10) {
+            throw new RuntimeException("isbn10 must be 10 digits");
         }
         this.isbn10 = isbn10;
         this.amount = 1;
