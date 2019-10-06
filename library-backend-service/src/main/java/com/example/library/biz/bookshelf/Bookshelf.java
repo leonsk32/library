@@ -44,7 +44,7 @@ public class Bookshelf {
     Book get(String isbn10) {
         return bookList.stream()
                 .filter(book -> book.equals(isbn10))
-                .findFirst().orElseThrow(() -> new RuntimeException("そのISBNの本がねえ" + isbn10));
+                .findFirst().orElseThrow(() -> new RuntimeException("No book with isbn10 : isbn10 = " + isbn10));
     }
 
     public int getAmount(String isbn10) {

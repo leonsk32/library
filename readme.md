@@ -2,11 +2,11 @@
 * swaggerでAPI生成してみたい
 * ORMapperつかってない、JPAてきなのつかってみたい
 * ところどころテストが抜けている
-* test用DBDriverつくるべき
 * SpringBootTestがいくつかある
 * ISBN13桁を無視している
 * 例外がRuntime
 * 本をイミュータブルにして、イベントソーシング的なことをやってみたい
+* 本棚はEntityなのか、IDがない、APに一個しかない
 
 ## １冊借りるときのURL
 ```

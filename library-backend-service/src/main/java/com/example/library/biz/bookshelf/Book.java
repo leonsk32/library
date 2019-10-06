@@ -18,7 +18,7 @@ public class Book {
 
     Book(String isbn10) {
         if(!(isbn10.length() == 10)) {
-            new RuntimeException("isbn（１０桁）の桁数がおかしいですわ");
+            new RuntimeException("isbn10 must be 10 digits");
         }
         this.isbn10 = isbn10;
         this.amount = 1;
@@ -43,7 +43,7 @@ public class Book {
 
     void minus() {
         if(this.amount == 0) {
-            throw new RuntimeException("その本の０冊しかない:isbn10" + isbn10);
+            throw new RuntimeException("the book amount is 0: isbn10 = " + isbn10);
         }
         this.amount--;
     }
@@ -56,7 +56,7 @@ public class Book {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Book)) throw new RuntimeException("本ではない！！");
+        if (!(object instanceof Book)) throw new RuntimeException("Not a BOOK");
 
         Book other = (Book) object;
         return this.isbn10.equals(other.isbn10);
