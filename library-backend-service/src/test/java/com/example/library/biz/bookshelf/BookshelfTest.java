@@ -17,7 +17,7 @@ class BookshelfTest {
         Bookshelf bookshelf = bookShelfRepository.get();
         final String isbn10 = "4798121967";
         // act
-        bookshelf.putBook(isbn10);
+        bookshelf.registBook(isbn10);
         // assert
         assertThat(bookshelf.get(isbn10).amount()).isEqualTo(1);
     }
@@ -45,8 +45,8 @@ class BookshelfTest {
         BookshelfRepository bookShelfRepository = new InMemoryBookshelfRepositoryForUT();
         Bookshelf bookshelf = bookShelfRepository.get();
         final String isbn10 = "4798121967";
-        bookshelf.putBook(isbn10);
-        bookshelf.putBook(isbn10);
+        bookshelf.registBook(isbn10);
+        bookshelf.registBook(isbn10);
 
         // act
         bookshelf.takeOut(isbn10);
@@ -55,7 +55,7 @@ class BookshelfTest {
         assertThat(bookshelf.get(isbn10).amount()).isEqualTo(1);
     }
 
-    @DisplayName("本の格納と取り出しのテスト")
+    @DisplayName("本の格納と取り出しと返却のテスト")
     @Test
     void test04() {
         // arrange
@@ -64,21 +64,24 @@ class BookshelfTest {
         final String DDDIsbn10 = "4798121967";
         final String SpringBootIsbn10 = "4774182176";
         final String MustleIsbn10 = "1234567891";
-        bookshelf.putBook(DDDIsbn10, 2);
-        bookshelf.putBook(SpringBootIsbn10, 2);
-        bookshelf.putBook(MustleIsbn10, 4);
 
         // act
+        bookshelf.registBooks(DDDIsbn10, 2);
+        bookshelf.registBooks(SpringBootIsbn10, 2);
+        bookshelf.registBooks(MustleIsbn10, 4);
+
         bookshelf.takeOut(DDDIsbn10);
         bookshelf.takeOut(SpringBootIsbn10);
         bookshelf.takeOut(MustleIsbn10);
         bookshelf.takeOut(MustleIsbn10);
         bookshelf.takeOut(MustleIsbn10);
 
+        bookshelf.returnBook(MustleIsbn10);
+
         // assert
         assertThat(bookshelf.get(DDDIsbn10).amount()).isEqualTo(1);
         assertThat(bookshelf.get(SpringBootIsbn10).amount()).isEqualTo(1);
-        assertThat(bookshelf.get(MustleIsbn10).amount()).isEqualTo(1);
+        assertThat(bookshelf.get(MustleIsbn10).amount()).isEqualTo(2);
     }
 
 
