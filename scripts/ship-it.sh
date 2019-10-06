@@ -23,7 +23,7 @@ function run_unit_tests() {
 }
 
 function run_e2e_tests(){
-    bash $ROOT_DIR/scripts/run-unit-tests.sh
+    bash $ROOT_DIR/scripts/run-e2e-tests.sh
 }
 
 function push() {
@@ -40,6 +40,7 @@ function main() {
     set_project_root_directory
     pull
     run_unit_tests
+    run_e2e_tests
     push
     display_ascii_success_message
 }

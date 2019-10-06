@@ -14,15 +14,15 @@ function set_project_root_directory() {
     ROOT_DIR=$(pwd)
 }
 
-function run_unit_tests() {
+function run_e2e_tests() {
     cd "$ROOT_DIR/library-backend-service"
-    ./gradlew test
+    ./gradlew cucumber
 }
 
 function main() {
     set_bash_error_handling
     set_project_root_directory
-    run_unit_tests
+    run_e2e_tests
 }
 
 main
