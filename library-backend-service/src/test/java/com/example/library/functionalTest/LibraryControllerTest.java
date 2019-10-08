@@ -1,20 +1,27 @@
 package com.example.library.functionalTest;
 
+import com.example.library.restapi.BookDealDto;
 import com.example.library.restapi.LibraryController;
 import com.example.library.restapi.LibraryExceptionHandler;
-import com.example.library.service.BookshelfService;
+import com.example.library.service.BorrowService;
 import com.example.library.util.DbBookshelfUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -22,17 +29,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class LibraryControllerTest {
 
     @Autowired
-    BookshelfService service;
+    LibraryController libraryController;
+
     @Autowired
-    DbBookshelfUtils dbBookshelfUtils;
+    ObjectMapper mapper;
 
     private MockMvc mvc;
 
     @BeforeEach
     void setUp() {
-        dbBookshelfUtils.deleteAll("BOOK");
+//        dbBookshelfUtils.deleteAll("BOOK");
         mvc = MockMvcBuilders
-                .standaloneSetup(new LibraryController(service))
+                .standaloneSetup(libraryController)
                 .setControllerAdvice(new LibraryExceptionHandler())
                 .build();
     }
@@ -42,42 +50,19 @@ class LibraryControllerTest {
     void test01() throws Exception {
 
         // arrange
-        final String isbn10 = "1111111111";
-        dbBookshelfUtils.insertBook(isbn10, 1);
+         BookDealDto bookDealDto = BookDealDto.builder()
+                .isbn10("1234567890")
+                .personId("1234567")
+                .build();
+        String request = mapper.writeValueAsString(bookDealDto);
 
         // act and assert
-        mvc.perform(patch("/v1/books/" + isbn10))
-                .andExpect(status().isOk());
+        mvc.perform(post("/v1/book_deal")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request)
+        ).andExpect(status().isOk());
 
-        assertThat(dbBookshelfUtils.getAmountFor(isbn10)).isEqualTo(0);
+//        assertThat(dbBookshelfUtils.getAmountFor(isbn10)).isEqualTo(0);
     }
 
-    @DisplayName("ない本を借りようとしてエラー")
-    @Test
-    void test02() throws Exception {
-        // act and assert
-        String isbn10 = "1111111111";
-        MvcResult result = mvc.perform(patch("/v1/books/" + isbn10))
-                .andExpect(status().isInternalServerError())
-                .andReturn();
-
-        assertThat(result.getResponse().getContentAsString())
-                .isEqualTo("No book with isbn10 : isbn10 = 1111111111");
-    }
-
-    @DisplayName("全部借りられている本を借りようとしてエラー")
-    @Test
-    void test03() throws Exception {
-        // arrange
-        String isbn10 = "1111111111";
-        dbBookshelfUtils.insertBook(isbn10, 0);
-
-        // act and assert
-        MvcResult result = mvc.perform(patch("/v1/books/" + isbn10))
-                .andExpect(status().isInternalServerError())
-                .andReturn();
-
-        assertThat(result.getResponse().getContentAsString())
-                .isEqualTo("the book amount is 0: isbn10 = 1111111111");
-    }
 }
