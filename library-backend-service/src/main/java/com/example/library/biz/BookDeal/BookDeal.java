@@ -7,7 +7,7 @@ public class BookDeal {
     private final String personId;
 
     /**
-     * 作成用のファクトリ
+     * 新規作成用のファクトリ
      * @param isbn10
      * @param personId
      */

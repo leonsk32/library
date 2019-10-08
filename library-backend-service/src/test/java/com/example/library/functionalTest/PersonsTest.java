@@ -1,35 +1,28 @@
 package com.example.library.functionalTest;
 
-import com.example.library.restapi.BookDealDto;
-import com.example.library.restapi.LibraryController;
 import com.example.library.restapi.LibraryExceptionHandler;
-import com.example.library.service.BorrowService;
-import com.example.library.util.DbBookshelfUtils;
+import com.example.library.restapi.PersonDto;
+import com.example.library.restapi.Persons;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
-class LibraryControllerTest {
+class PersonsTest {
 
     @Autowired
-    LibraryController libraryController;
+    private Persons persons;
 
     @Autowired
     ObjectMapper mapper;
@@ -39,27 +32,24 @@ class LibraryControllerTest {
     @BeforeEach
     void setUp() {
         mvc = MockMvcBuilders
-                .standaloneSetup(libraryController)
+                .standaloneSetup(persons)
                 .setControllerAdvice(new LibraryExceptionHandler())
                 .build();
     }
 
-    @DisplayName("１冊の本を借りる")
+    @DisplayName("人を登録する")
     @Test
     void test01() throws Exception {
 
         // arrange
-         BookDealDto bookDealDto = BookDealDto.builder()
-                .isbn10("1234567890")
-                .personId("1234567")
-                .build();
-        String request = mapper.writeValueAsString(bookDealDto);
+        PersonDto personDto = new PersonDto();
+        personDto.setPersonId("1234567");
+        String request = mapper.writeValueAsString(personDto);
 
         // act and assert
-        mvc.perform(post("/v1/book_deal")
+        mvc.perform(put("/v1/person")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request)
         ).andExpect(status().isOk());
     }
-
 }
