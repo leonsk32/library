@@ -11,6 +11,12 @@
 * バリデーションをしていない
 * 本の購入管理とかやりたい
 
+## sonarqube
+https://sonarcloud.io/dashboard?id=AgileDevelopmentClub_library
+
+## CI
+github actionsを使用して、単体テストを行った後にsonarqubeをしています。
+
 ## １冊借りるときのURL
 ```
 http://localhost:8080/api/v1/books/{isbn} <= 10桁だけ
