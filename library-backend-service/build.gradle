@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.1.8.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id "org.sonarqube" version "2.7.1"
+	id "jacoco"
 }
 
 group = 'com.example'
@@ -40,6 +42,16 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+sonarqube {
+	properties {
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.projectKey", "AgileDevelopmentClub_library"
+		property "sonar.organization", "agiledevelopmentclub"
+		property "sonar.login", "259aab5a38d819bdabe20dd61f17ba4008fd046c"
+		property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+	}
 }
 
 /**
