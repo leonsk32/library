@@ -1,4 +1,4 @@
-package com.example.library.biz.service;
+package com.example.library.domain;
 
 import com.example.library.infra.SampleRepository;
 import org.junit.jupiter.api.BeforeEach;

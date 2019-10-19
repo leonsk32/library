@@ -1,14 +1,10 @@
-package com.example.library.biz.service;
+package com.example.library.domain;
 
-import com.example.library.biz.domain.Isbn;
-import com.example.library.biz.domain.LendingRecord;
-import com.example.library.infra.LendingRecordRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

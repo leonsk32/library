@@ -1,6 +1,6 @@
 package com.example.library.restapi.books;
 
-import com.example.library.biz.service.LibrarianService;
+import com.example.library.domain.LibrarianService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

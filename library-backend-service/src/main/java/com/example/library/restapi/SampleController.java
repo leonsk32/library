@@ -1,6 +1,6 @@
 package com.example.library.restapi;
 
-import com.example.library.biz.service.SampleService;
+import com.example.library.domain.SampleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

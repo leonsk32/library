@@ -1,7 +1,8 @@
-package com.example.library.biz.service;
+package com.example.library.domain;
 
-import com.example.library.biz.domain.Isbn;
-import com.example.library.biz.domain.LendingRecord;
+import com.example.library.domain.Isbn;
+import com.example.library.domain.LendingRecord;
+import com.example.library.domain.LibrarianService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

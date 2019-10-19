@@ -1,6 +1,5 @@
-package com.example.library.infra;
+package com.example.library.domain;
 
-import com.example.library.biz.domain.LendingRecord;
 
 public interface LendingRecordRepository {
     void insert(LendingRecord lendingRecord);

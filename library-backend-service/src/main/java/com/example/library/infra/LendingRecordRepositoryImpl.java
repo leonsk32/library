@@ -1,6 +1,7 @@
 package com.example.library.infra;
 
-import com.example.library.biz.domain.LendingRecord;
+import com.example.library.domain.LendingRecord;
+import com.example.library.domain.LendingRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.example.library.biz.service;
+package com.example.library.domain;
 
 public interface SampleService {
     int execute();

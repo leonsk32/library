@@ -1,6 +1,5 @@
-package com.example.library.biz.domain;
+package com.example.library.domain;
 
-import com.example.library.infra.LendingRecordRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

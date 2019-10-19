@@ -1,4 +1,4 @@
-package com.example.library.biz.domain;
+package com.example.library.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

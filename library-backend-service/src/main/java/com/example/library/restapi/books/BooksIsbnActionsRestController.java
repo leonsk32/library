@@ -1,13 +1,12 @@
 package com.example.library.restapi.books;
 
-import com.example.library.biz.service.LibrarianService;
+import com.example.library.domain.LibrarianService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

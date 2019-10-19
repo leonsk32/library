@@ -1,6 +1,6 @@
 package com.example.library.restapi;
 
-import com.example.library.biz.service.SampleService;
+import com.example.library.domain.SampleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

@@ -1,6 +1,5 @@
-package com.example.library.biz.domain;
+package com.example.library.domain;
 
-import com.example.library.infra.LendingRecordRepository;
 import lombok.*;
 import org.springframework.stereotype.Component;
 

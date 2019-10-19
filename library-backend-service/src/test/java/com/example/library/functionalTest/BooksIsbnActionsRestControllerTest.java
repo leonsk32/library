@@ -1,7 +1,5 @@
 package com.example.library.functionalTest;
 
-import com.example.library.biz.domain.Isbn;
-import com.example.library.biz.domain.LendingRecord;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
