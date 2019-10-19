@@ -1,0 +1,4 @@
+CREATE TABLE LENDING_RECORD (
+      isbn VARCHAR(10) PRIMARY KEY,
+      user_id VARCHAR(7)
+  );

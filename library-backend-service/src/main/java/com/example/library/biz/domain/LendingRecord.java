@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Data
 public class LendingRecord {
-    Isbn isbn;
-    String userId;
-
-    public void lent() {
-    }
+    private Isbn isbn;
+    private String userId;
 }
