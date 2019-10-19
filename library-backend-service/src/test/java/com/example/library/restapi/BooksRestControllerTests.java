@@ -1,5 +1,6 @@
 package com.example.library.restapi;
 
+import com.example.library.restapi.books.BooksRestController;
 import com.example.library.service.BookshelfService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -13,8 +14,8 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = LibraryController.class)
-class LibraryControllerTests {
+@WebMvcTest(value = BooksRestController.class)
+class BooksRestControllerTests {
 
   @Autowired
   private MockMvc mvc;

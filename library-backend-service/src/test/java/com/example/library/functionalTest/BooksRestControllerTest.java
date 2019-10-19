@@ -1,7 +1,7 @@
 package com.example.library.functionalTest;
 
-import com.example.library.restapi.LibraryController;
-import com.example.library.restapi.LibraryExceptionHandler;
+import com.example.library.restapi.books.BooksRestController;
+import com.example.library.restapi.handler.LibraryExceptionHandler;
 import com.example.library.service.BookshelfService;
 import com.example.library.util.DbBookshelfUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest
-class LibraryControllerTest {
+class BooksRestControllerTest {
 
     @Autowired
     BookshelfService service;
@@ -32,7 +32,7 @@ class LibraryControllerTest {
     void setUp() {
         dbBookshelfUtils.deleteAll("BOOK");
         mvc = MockMvcBuilders
-                .standaloneSetup(new LibraryController(service))
+                .standaloneSetup(new BooksRestController(service))
                 .setControllerAdvice(new LibraryExceptionHandler())
                 .build();
     }

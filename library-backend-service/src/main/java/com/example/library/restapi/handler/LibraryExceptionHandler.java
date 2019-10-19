@@ -1,4 +1,4 @@
-package com.example.library.restapi;
+package com.example.library.restapi.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

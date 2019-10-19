@@ -1,4 +1,4 @@
-package com.example.library.restapi;
+package com.example.library.restapi.books;
 
 import com.example.library.service.BookshelfService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1")
 @RequiredArgsConstructor
-public class LibraryController {
+public class BooksRestController {
 
     private final BookshelfService service;
 
