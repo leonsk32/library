@@ -1,15 +1,27 @@
 package com.example.library.biz.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.library.infra.LendingRecordRepository;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class LendingRecord {
+    private final LendingRecordRepository lendingRecordRepository;
     private Isbn isbn;
     private String userId;
+
+    public LendingRecord(LendingRecordRepository repository) {
+        lendingRecordRepository = repository;
+    }
+
+    public LendingRecord create(Isbn isbn, String userId) {
+        this.isbn = isbn;
+        this.userId = userId;
+        return this;
+    }
+
+    public void lent() {
+        lendingRecordRepository.insert(this);
+    }
 }

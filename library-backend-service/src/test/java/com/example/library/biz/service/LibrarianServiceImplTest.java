@@ -17,21 +17,22 @@ import static org.mockito.Mockito.*;
 class LibrarianServiceImplTest {
     LibrarianService target;
     @Mock
-    LendingRecordRepository recordRepository;
+    LendingRecord lendingRecord;
 
     @BeforeEach
     void setup() {
-        target = new LibrarianServiceImpl(recordRepository);
+        target = new LibrarianServiceImpl(lendingRecord);
     }
 
     @Test
     void lent() {
         String isbn = "1234567890";
         String userId = "1234567";
+        Isbn isbnEntity = new Isbn(isbn);
 
-        LendingRecord lendingRecord = new LendingRecord(new Isbn(isbn), userId);
+        when(lendingRecord.create(isbnEntity, userId)).thenReturn(lendingRecord);
 
         target.lent(isbn, userId);
-        verify(recordRepository).insert(lendingRecord);
+        verify(lendingRecord).lent();
     }
 }

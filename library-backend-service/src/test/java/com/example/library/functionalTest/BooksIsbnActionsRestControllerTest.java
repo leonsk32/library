@@ -59,7 +59,6 @@ class BooksIsbnActionsRestControllerTest {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
             List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM LENDING_RECORD");
-            LendingRecord expect = new LendingRecord(new Isbn(isbn), userId);
 
             softly.assertThat(maps).hasSize(1);
             softly.assertThat(maps.get(0).get("ISBN")).isEqualTo(isbn);
