@@ -31,7 +31,7 @@ class LendingRecordRepositoryImplTest {
 
     @Test
     void insert() {
-        LendingRecord entity = this.lendingRecord.create(new Isbn("1"), "2");
+        LendingRecord entity = this.lendingRecord.create(new Isbn("1",""), "2");
 
         target.insert(entity);
 
