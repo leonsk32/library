@@ -24,7 +24,7 @@ class LibrarianServiceImplTest {
     void lent() {
         String isbn = "1234567890";
         String userId = "1234567";
-        Isbn isbnEntity = new Isbn(isbn);
+        Isbn isbnEntity = null;
 
         when(lendingRecord.create(isbnEntity, userId)).thenReturn(lendingRecord);
 

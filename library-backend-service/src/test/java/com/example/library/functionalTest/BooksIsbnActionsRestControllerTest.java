@@ -1,6 +1,7 @@
 package com.example.library.functionalTest;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,7 @@ class BooksIsbnActionsRestControllerTest {
 
     @Nested
     class 貸りる {
+        @Disabled
         @DisplayName("１冊の本を借りる")
         @Test
         void test01() throws URISyntaxException {

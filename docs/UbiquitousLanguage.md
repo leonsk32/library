@@ -3,6 +3,8 @@
 * Properties
     * isbn...
     * num  
+* type:Entity
+    * id...isbn10+isbn13にしてみました
     
 **Book**
 * 本を表す

@@ -13,7 +13,7 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     public void lent(String isbn, String userId) {
-        LendingRecord record = lendingRecord.create(new Isbn(isbn), userId);
+        LendingRecord record = lendingRecord.create(null, userId);
         record.lent();
     }
 }
