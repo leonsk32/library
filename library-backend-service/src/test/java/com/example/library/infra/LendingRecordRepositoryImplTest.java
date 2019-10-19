@@ -1,15 +1,14 @@
 package com.example.library.infra;
 
-import com.example.library.domain.Isbn;
-import com.example.library.domain.LendingRecord;
-import com.example.library.domain.LendingRecordRepository;
+import com.example.library.domain.book.Isbn;
+import com.example.library.domain.lending.LendingRecord;
+import com.example.library.domain.lending.LendingRecordRepository;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

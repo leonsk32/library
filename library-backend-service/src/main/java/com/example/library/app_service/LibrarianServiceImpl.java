@@ -1,7 +1,7 @@
 package com.example.library.app_service;
 
-import com.example.library.domain.LendingRecord;
-import com.example.library.domain.LendingRecordRepository;
+import com.example.library.domain.lending.LendingRecord;
+import com.example.library.domain.lending.LendingRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

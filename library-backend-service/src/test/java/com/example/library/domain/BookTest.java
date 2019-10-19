@@ -1,5 +1,7 @@
 package com.example.library.domain;
 
+import com.example.library.domain.book.Book;
+import com.example.library.domain.book.Isbn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

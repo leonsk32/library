@@ -1,6 +1,6 @@
 package com.example.library.app_service;
 
-import com.example.library.domain.LendingRecordRepository;
+import com.example.library.domain.lending.LendingRecordRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

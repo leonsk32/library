@@ -1,6 +1,7 @@
-package com.example.library.domain;
+package com.example.library.domain.lending;
 
 
+import com.example.library.domain.book.Isbn;
 import lombok.Getter;
 
 /**

@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+/**
+ * こいつはRestのコントローラとして実装するか、RPCのコントローラとして実装するかは
+ * 議論があるとおもいます。
+ */
 @RestController
 @RequestMapping("/v1")
 @RequiredArgsConstructor
