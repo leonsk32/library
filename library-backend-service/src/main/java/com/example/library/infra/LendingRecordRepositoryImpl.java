@@ -12,7 +12,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public void insert(LendingRecord lendingRecord) {
+    public void regist(LendingRecord lendingRecord) {
         jdbcTemplate.execute("insert into lending_record(isbn, user_id) values(" + lendingRecord.getIsbn().getIsbn() + ","+ lendingRecord.getUserId() + ")");
     }
 }

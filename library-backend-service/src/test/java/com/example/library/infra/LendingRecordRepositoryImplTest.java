@@ -14,15 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-@Transactional
+//@Transactional トランザクションはAPService管理したほうがよいらしい
 @SpringBootTest
 class LendingRecordRepositoryImplTest {
-    LendingRecordRepository target;
+    private LendingRecordRepository target;
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    LendingRecord lendingRecord;
+    private JdbcTemplate jdbcTemplate;
 
     @BeforeEach
     void setUp() {
@@ -31,9 +29,9 @@ class LendingRecordRepositoryImplTest {
 
     @Test
     void insert() {
-        LendingRecord entity = this.lendingRecord.create(new Isbn("1",""), "2");
+        LendingRecord entity = new LendingRecord(new Isbn("1",""), "2");
 
-        target.insert(entity);
+        target.regist(entity);
 
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM LENDING_RECORD");
         SoftAssertions softly = new SoftAssertions();
