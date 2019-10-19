@@ -30,7 +30,8 @@ class BooksIsbnActionsRestControllerTest {
 
             //language=JSON
             String request = "{" +
-                    "\"type\":\"a\"" +
+                    "\"type\":\"borrow\"," +
+                    "\"userId\":\"1234567\"" +
                     "}";
 
             URI url = URI.create("/v1/books/" + isbn + "/actions");
