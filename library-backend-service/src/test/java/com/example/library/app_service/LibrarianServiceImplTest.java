@@ -1,5 +1,6 @@
 package com.example.library.app_service;
 
+import com.example.library.domain.BookStatus;
 import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
@@ -11,6 +12,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -55,5 +59,20 @@ class LibrarianServiceImplTest {
             verify(lendingRecordRepository).receive(expected);
         }
     }
+
+    @DisplayName("本の一覧を取得する")
+    @Nested
+    class search {
+        @DisplayName("検索する")
+        @Test
+        void test_01() {
+
+            List<BookStatus> actual = target.search();
+
+            assertThat(actual).hasSize(0);
+        }
+
+    }
+
 
 }
