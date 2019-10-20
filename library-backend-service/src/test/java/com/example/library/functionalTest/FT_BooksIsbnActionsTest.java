@@ -92,7 +92,7 @@ class FT_BooksIsbnActionsTest {
             ResponseEntity<Object> response =
                     restTemplate.exchange(requestEntity, Object.class);
             SoftAssertions softly = new SoftAssertions();
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_IMPLEMENTED);
+            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             softly.assertAll();
         }
     }

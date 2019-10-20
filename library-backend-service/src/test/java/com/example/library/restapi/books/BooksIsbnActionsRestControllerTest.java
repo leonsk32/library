@@ -1,7 +1,6 @@
 package com.example.library.restapi.books;
 
 import com.example.library.app_service.LibrarianService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -44,7 +43,6 @@ class BooksIsbnActionsRestControllerTest {
         verify(service).lent(isbn, userId);
     }
 
-    @Disabled("service以降を作成したら、disabledを削除する")
     @Test
     void return_test01() throws Exception {
         // arrange

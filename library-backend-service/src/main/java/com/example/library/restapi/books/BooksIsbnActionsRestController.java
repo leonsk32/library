@@ -27,18 +27,18 @@ public class BooksIsbnActionsRestController {
 
     @PostMapping("books/{isbn}/actions")
     public ResponseEntity<Void> actions(@PathVariable("isbn") String isbn, @RequestBody @Valid RequestParam body) {
-        switch (body.getType()){
+        switch (body.getType()) {
             case BORROW:
                 service.lent(isbn, body.getUserId());
                 break;
             case RETURN:
-                return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+                service.receive(isbn, body.getUserId());
+                break;
             default:
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 
     // FIXME: setterはいらないけど、valueだときかなかった。
