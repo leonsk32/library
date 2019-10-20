@@ -15,6 +15,6 @@ public class LibrarianServiceImpl implements LibrarianService {
     @Override
     public void lent(String isbn, String userId) {
         LendingRecord record = new LendingRecord(null, userId);
-        lendingRecordRepository.regist(record);
+        lendingRecordRepository.register(record);
     }
 }

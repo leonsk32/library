@@ -30,7 +30,7 @@ class LendingRecordRepositoryImplTest {
     void insert() {
         LendingRecord entity = new LendingRecord(new Isbn("1",""), "2");
 
-        target.regist(entity);
+        target.register(entity);
 
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM LENDING_RECORD");
         SoftAssertions softly = new SoftAssertions();

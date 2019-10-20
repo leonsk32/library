@@ -27,9 +27,9 @@ class LibrarianServiceImplTest {
         String isbn = "1234567890";
         String userId = "1234567";
 
-        doNothing().when(lendingRecordRepository).regist(any());
+        doNothing().when(lendingRecordRepository).register(any());
 
         target.lent(isbn, userId);
-        verify(lendingRecordRepository).regist(any());
+        verify(lendingRecordRepository).register(any());
     }
 }
