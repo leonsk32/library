@@ -14,7 +14,36 @@ https://sonarcloud.io/dashboard?id=AgileDevelopmentClub_library
 ## CI
 github actionsを使用して、単体テストを行った後にsonarqubeをしています。
 
-## １冊借りるときのURL
+## エンドポイントについて
+今回、参考にしたのはTrello API。  
+借りる・返す、は名詞ではないので、RESTのエンドポイントとしては不適格。  
+なので、actionsという"行動"という名詞に集約させて、パラメータで判断することが良いと判断しています。　　
+https://developers.trello.com/reference/#enterprisesidadminsidmember-1
+
+### 本の一覧が欲しい時
+```
+/books 
+Getメソッド
+```
+
+### 本を登録・削除するとき
+```
+/books/{isbn}
+Put, Deleteメソッド
+```
+
+### 本に対しての行動(借りる・返す)
+```
+/books/{isbn}/{actions}
+Postメソッド
+jsonのtypeで判断するようにする
+{
+  "type":"borrow"
+}
+等々
+```
+
+### １冊借りるときのURL[旧エンドポイント]
 ```
 http://localhost:8080/api/v1/books/{isbn} <= 10桁だけ
 （例）http://localhost:8080/api/v1/books/1111111111　
