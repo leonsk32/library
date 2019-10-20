@@ -1,6 +1,7 @@
 package com.example.library.restapi.books;
 
 import com.example.library.app_service.LibrarianService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,5 +42,28 @@ class BooksIsbnActionsRestControllerTest {
         )
                 .andExpect(status().isOk());
         verify(service).lent(isbn, userId);
+    }
+
+    @Disabled("service以降を作成したら、disabledを削除する")
+    @Test
+    void return_test01() throws Exception {
+        // arrange
+        final String isbn = "1111111111";
+        String userId = "1234567";
+
+        //language=JSON
+        String body = "{" +
+                "\"type\":\"return\"," +
+                "\"userId\":\"1234567\"" +
+                "}";
+
+        // act and assert
+        mvc.perform(
+                post("/v1/books/" + isbn + "/actions")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(body)
+        )
+                .andExpect(status().isOk());
+        verify(service).receive(isbn, userId);
     }
 }
