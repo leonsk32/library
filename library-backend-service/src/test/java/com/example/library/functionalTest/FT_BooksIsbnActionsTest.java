@@ -72,9 +72,10 @@ class FT_BooksIsbnActionsTest {
         @DisplayName("１冊の本を返す")
         @Test
         void test01() throws URISyntaxException {
-
             final String isbn = "1111111111";
             String userId = "1234567";
+
+            jdbcTemplate.execute("INSERT INTO LENDING_RECORD values('" + isbn + "', '" + userId + "')");
 
             //language=JSON
             String request = "{" +
@@ -93,6 +94,9 @@ class FT_BooksIsbnActionsTest {
                     restTemplate.exchange(requestEntity, Object.class);
             SoftAssertions softly = new SoftAssertions();
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+            List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM LENDING_RECORD");
+            softly.assertThat(maps).hasSize(0);
             softly.assertAll();
         }
     }
