@@ -2,6 +2,7 @@ package com.example.library.app_service;
 
 import com.example.library.domain.lending.LendingRecordRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -22,14 +23,17 @@ class LibrarianServiceImplTest {
         target = new LibrarianServiceImpl(lendingRecordRepository);
     }
 
-    @Test
-    void lent() {
-        String isbn = "1234567890";
-        String userId = "1234567";
+    @Nested
+    class lent {
+        @Test
+        void lent() {
+            String isbn = "1234567890";
+            String userId = "1234567";
 
-        doNothing().when(lendingRecordRepository).register(any());
+            doNothing().when(lendingRecordRepository).register(any());
 
-        target.lent(isbn, userId);
-        verify(lendingRecordRepository).register(any());
+            target.lent(isbn, userId);
+            verify(lendingRecordRepository).register(any());
+        }
     }
 }
