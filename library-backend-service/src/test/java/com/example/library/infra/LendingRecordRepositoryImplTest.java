@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-@Transactional // トランザクションはAPService管理したほうがよいらしい ←Test内部で毎回DBを初期化したいため。つけないと、registerとreceiveで一意制約違反で失敗する。
+//@Transactional // トランザクションはAPService管理したほうがよいらしい ←Test内部で毎回DBを初期化したいため。つけないと、registerとreceiveで一意制約違反で失敗する。
 @SpringBootTest
 class LendingRecordRepositoryImplTest {
     private LendingRecordRepository target;
@@ -27,6 +27,7 @@ class LendingRecordRepositoryImplTest {
     @BeforeEach
     void setUp() {
         target = new LendingRecordRepositoryImpl(jdbcTemplate);
+        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
     }
 
     @Test
