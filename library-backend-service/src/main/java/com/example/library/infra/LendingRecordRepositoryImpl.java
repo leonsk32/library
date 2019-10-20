@@ -18,6 +18,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
 
     @Override
     public void receive(LendingRecord lendingRecord) {
-
+        String sql = "DELETE FROM LENDING_RECORD WHERE isbn = '" + lendingRecord.getIsbn().getIsbn() + "' AND USER_ID='" + lendingRecord.getUserId() + "';";
+        jdbcTemplate.execute(sql);
     }
 }
