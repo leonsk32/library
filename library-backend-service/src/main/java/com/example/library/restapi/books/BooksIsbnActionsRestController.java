@@ -23,12 +23,15 @@ public class BooksIsbnActionsRestController {
     private final LibrarianService service;
 
     private static final String BORROW = "borrow";
+    private static final String RETURN = "return";
 
     @PostMapping("books/{isbn}/actions")
     public ResponseEntity<Void> actions(@PathVariable("isbn") String isbn, @RequestBody @Valid RequestParam body) {
         switch (body.getType()){
             case BORROW:
                 service.lent(isbn, body.getUserId());
+            case RETURN:
+                return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
             default:
         }
 

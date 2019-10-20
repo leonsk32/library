@@ -67,6 +67,36 @@ class BooksIsbnActionsRestControllerTest {
         }
     }
 
+    @Nested
+    class 返す {
+        @DisplayName("１冊の本を返す")
+        @Test
+        void test01() throws URISyntaxException {
+
+            final String isbn = "1111111111";
+            String userId = "1234567";
+
+            //language=JSON
+            String request = "{" +
+                    "\"type\":\"return\"," +
+                    "\"userId\":\"1234567\"" +
+                    "}";
+
+            URI url = URI.create("/v1/books/" + isbn + "/actions");
+
+            RequestEntity requestEntity =
+                    RequestEntity.post(url)
+                            .contentType(MediaType.APPLICATION_JSON_UTF8)
+                            .body(request);
+
+            ResponseEntity<Object> response =
+                    restTemplate.exchange(requestEntity, Object.class);
+            SoftAssertions softly = new SoftAssertions();
+            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_IMPLEMENTED);
+            softly.assertAll();
+        }
+    }
+
 
     @Nested
     class Validator {
