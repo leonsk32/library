@@ -30,6 +30,7 @@ public class BooksIsbnActionsRestController {
         switch (body.getType()){
             case BORROW:
                 service.lent(isbn, body.getUserId());
+                break;
             case RETURN:
                 return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
             default:
