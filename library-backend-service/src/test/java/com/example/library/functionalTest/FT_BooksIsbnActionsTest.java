@@ -22,7 +22,7 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class BooksIsbnActionsRestControllerTest {
+class FT_BooksIsbnActionsTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
