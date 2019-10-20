@@ -11,11 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
-//@Transactional トランザクションはAPService管理したほうがよいらしい
+@Transactional // トランザクションはAPService管理したほうがよいらしい ←Test内部で毎回DBを初期化したいため。つけないと、registerとreceiveで一意制約違反で失敗する。
 @SpringBootTest
 class LendingRecordRepositoryImplTest {
     private LendingRecordRepository target;
