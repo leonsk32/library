@@ -2,12 +2,14 @@ package com.example.library.domain.lending;
 
 
 import com.example.library.domain.book.Isbn;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
  * こいつはEntityの可能性がある
  * 日付を持ったほうがよいかも
  */
+@EqualsAndHashCode
 public class LendingRecord {
     @Getter
     Isbn isbn;

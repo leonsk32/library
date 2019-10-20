@@ -15,4 +15,9 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     public void register(LendingRecord lendingRecord) {
         jdbcTemplate.execute("insert into lending_record(isbn, user_id) values(" + lendingRecord.getIsbn().getIsbn() + ","+ lendingRecord.getUserId() + ")");
     }
+
+    @Override
+    public void receive(LendingRecord lendingRecord) {
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.library.app_service;
 
+import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     public void receive(String isbn, String userId) {
-
+        Isbn isbnEntity = new Isbn(isbn, "");
+        LendingRecord record = new LendingRecord(isbnEntity, userId);
+        lendingRecordRepository.receive(record);
     }
 }

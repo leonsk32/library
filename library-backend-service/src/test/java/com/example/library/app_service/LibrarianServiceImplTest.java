@@ -1,7 +1,10 @@
 package com.example.library.app_service;
 
+import com.example.library.domain.book.Isbn;
+import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,4 +39,21 @@ class LibrarianServiceImplTest {
             verify(lendingRecordRepository).register(any());
         }
     }
+
+    @DisplayName("本の返却を司書が受け取る")
+    @Nested
+    class receive {
+        @DisplayName("貸出帳に返却記録を付ける")
+        @Test
+        void test_01() {
+            String isbn = "1234567890";
+            String userId = "1234567";
+
+            target.receive(isbn, userId);
+
+            LendingRecord expected = new LendingRecord(new Isbn(isbn, ""), userId);
+            verify(lendingRecordRepository).receive(expected);
+        }
+    }
+
 }
