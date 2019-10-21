@@ -19,13 +19,14 @@ public class LibrarianServiceImpl implements LibrarianService {
     private final LendingRecordRepository lendingRecordRepository;
     @Override
     public void lent(String isbn, String userId) {
-        LendingRecord record = new LendingRecord(null, userId);
+        Isbn isbnEntity = new Isbn(isbn);
+        LendingRecord record = new LendingRecord(isbnEntity, userId);
         lendingRecordRepository.register(record);
     }
 
     @Override
     public void receive(String isbn, String userId) {
-        Isbn isbnEntity = new Isbn(isbn, "");
+        Isbn isbnEntity = new Isbn(isbn);
         LendingRecord record = new LendingRecord(isbnEntity, userId);
         lendingRecordRepository.receive(record);
     }

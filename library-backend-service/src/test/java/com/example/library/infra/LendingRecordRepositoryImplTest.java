@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-@Transactional // トランザクションはAPService管理したほうがよいらしい ←Test内部で毎回DBを初期化したいため。つけないと、registerとreceiveで一意制約違反で失敗する。
+@Transactional
 @SpringBootTest
 class LendingRecordRepositoryImplTest {
     private LendingRecordRepository target;
@@ -31,14 +31,14 @@ class LendingRecordRepositoryImplTest {
 
     @Test
     void insert() {
-        LendingRecord entity = new LendingRecord(new Isbn("1", ""), "2");
+        LendingRecord entity = new LendingRecord(new Isbn("1234567890123"), "2");
 
         target.register(entity);
 
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM LENDING_RECORD");
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(maps).hasSize(1);
-        softly.assertThat(maps.get(0).get("ISBN")).isEqualTo("1");
+        softly.assertThat(maps.get(0).get("ISBN")).isEqualTo("1234567890123");
         softly.assertThat(maps.get(0).get("USER_ID")).isEqualTo("2");
         softly.assertAll();
     }
@@ -49,14 +49,14 @@ class LendingRecordRepositoryImplTest {
         @Test
         void receive_01() {
             // GIVEN
-            LendingRecord entity = new LendingRecord(new Isbn("1", ""), "2");
+            LendingRecord entity = new LendingRecord(new Isbn("1234567890123"), "2");
 
             SoftAssertions softly = new SoftAssertions();
             target.register(entity);
             List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM LENDING_RECORD");
 
             softly.assertThat(maps).hasSize(1);
-            softly.assertThat(maps.get(0).get("ISBN")).isEqualTo("1");
+            softly.assertThat(maps.get(0).get("ISBN")).isEqualTo("1234567890123");
             softly.assertThat(maps.get(0).get("USER_ID")).isEqualTo("2");
 
             // WHEN

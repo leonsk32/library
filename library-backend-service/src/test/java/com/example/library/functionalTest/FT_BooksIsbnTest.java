@@ -32,7 +32,7 @@ class FT_BooksIsbnTest {
         @DisplayName("１冊の本を登録する")
         @Test
         void test01() throws URISyntaxException {
-            final String isbn = "1111111111";
+            final String isbn = "1111111111111";
             URI url = URI.create("/v1/books/" + isbn);
 
             RequestEntity requestEntity = RequestEntity.put(url).build();
@@ -51,7 +51,7 @@ class FT_BooksIsbnTest {
         @DisplayName("１冊の本を削除する")
         @Test
         void test01() throws URISyntaxException {
-            final String isbn = "1111111111";
+            final String isbn = "1111111111111";
             URI url = URI.create("/v1/books/" + isbn);
 
             RequestEntity requestEntity = RequestEntity.delete(url).build();

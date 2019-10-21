@@ -31,12 +31,11 @@ class FT_BooksIsbnActionsTest {
 
     @Nested
     class 貸りる {
-        @Disabled
         @DisplayName("１冊の本を借りる")
         @Test
         void test01() throws URISyntaxException {
 
-            final String isbn = "1111111111";
+            final String isbn = "1111111111111";
             String userId = "1234567";
 
             //language=JSON
@@ -72,7 +71,7 @@ class FT_BooksIsbnActionsTest {
         @DisplayName("１冊の本を返す")
         @Test
         void test01() throws URISyntaxException {
-            final String isbn = "1111111111";
+            final String isbn = "1111111111111";
             String userId = "1234567";
 
             jdbcTemplate.execute("INSERT INTO LENDING_RECORD values('" + isbn + "', '" + userId + "')");
@@ -108,7 +107,7 @@ class FT_BooksIsbnActionsTest {
         @Test
         void test01() throws URISyntaxException {
 
-            final String isbn = "1111111111";
+            final String isbn = "1111111111111";
 
             //language=JSON
             String request = "{}";
