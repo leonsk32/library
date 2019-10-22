@@ -23,12 +23,13 @@ class LendingRecordRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
+        jdbcTemplate.execute("Delete from LENDING_RECORD");
         target = new LendingRecordRepositoryImpl(jdbcTemplate);
     }
 
     @AfterEach
     void tearDown() {
-        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
+        jdbcTemplate.execute("Delete from LENDING_RECORD");
     }
 
     @Test
