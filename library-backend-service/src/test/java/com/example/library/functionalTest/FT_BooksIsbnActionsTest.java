@@ -28,11 +28,6 @@ class FT_BooksIsbnActionsTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @AfterAll
-    void last(){
-        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
-    }
-
     @Nested
     class 貸りる {
         @DisplayName("１冊の本を借りる")
