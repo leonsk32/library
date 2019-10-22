@@ -1,5 +1,6 @@
 package com.example.library.app_service;
 
+import com.example.library.domain.BookSearchComponent;
 import com.example.library.domain.BookStatus;
 import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
@@ -10,8 +11,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,10 +27,12 @@ class LibrarianServiceImplTest {
     LibrarianService target;
     @Mock
     LendingRecordRepository lendingRecordRepository;
+    @Mock
+    BookSearchComponent bookSearchComponent;
 
     @BeforeEach
     void setup() {
-        target = new LibrarianServiceImpl(lendingRecordRepository);
+        target = new LibrarianServiceImpl(lendingRecordRepository, bookSearchComponent);
     }
 
     @Nested
@@ -67,6 +72,7 @@ class LibrarianServiceImplTest {
         @Test
         void test_01() {
 
+            Mockito.when(bookSearchComponent.search(any())).thenReturn(Arrays.asList());
             List<BookStatus> actual = target.search();
 
             assertThat(actual).hasSize(0);
