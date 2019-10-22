@@ -4,10 +4,7 @@ import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,7 +23,13 @@ class LendingRecordRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
+        jdbcTemplate.execute("Delete from LENDING_RECORD");
         target = new LendingRecordRepositoryImpl(jdbcTemplate);
+    }
+
+    @AfterEach
+    void tearDown() {
+        jdbcTemplate.execute("Delete from LENDING_RECORD");
     }
 
     @Test
