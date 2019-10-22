@@ -4,6 +4,7 @@ import com.example.library.domain.book.Book;
 import com.example.library.domain.lending.LendingRecord;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * 本の一覧
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
  * 本 + 貸出状況 = ？？？
  * なんてドメイン名？
  */
+@Getter
 @EqualsAndHashCode
 @AllArgsConstructor
 public class BookStatus {
