@@ -71,4 +71,47 @@ class LendingRecordRepositoryImplTest {
             softly.assertAll();
         }
     }
+
+    @DisplayName("find")
+    @Nested
+    class find {
+        @DisplayName("単数の取得")
+        @Test
+        void test_01() {
+            // GIVEN
+            LendingRecord entity = new LendingRecord(new Isbn("1234567890123"), "2");
+
+            SoftAssertions softly = new SoftAssertions();
+            target.register(entity);
+
+            // THEN
+            List<LendingRecord> actual = target.find();
+            softly.assertThat(actual).hasSize(1);
+            softly.assertThat(actual.get(0)).isEqualTo(entity);
+            softly.assertAll();
+        }
+
+        @DisplayName("複数の取得")
+        @Test
+        void test_02() {
+            // GIVEN
+            LendingRecord entity1 = new LendingRecord(new Isbn("1234567890123"), "2");
+            LendingRecord entity2 = new LendingRecord(new Isbn("1234567890124"), "3");
+            LendingRecord entity3 = new LendingRecord(new Isbn("1234567890125"), "4");
+
+            SoftAssertions softly = new SoftAssertions();
+            target.register(entity1);
+            target.register(entity2);
+            target.register(entity3);
+
+            // THEN
+            List<LendingRecord> actual = target.find();
+            softly.assertThat(actual).hasSize(3);
+            softly.assertThat(actual.get(0)).isEqualTo(entity1);
+            softly.assertThat(actual.get(1)).isEqualTo(entity2);
+            softly.assertThat(actual.get(2)).isEqualTo(entity3);
+            softly.assertAll();
+        }
+
+    }
 }
