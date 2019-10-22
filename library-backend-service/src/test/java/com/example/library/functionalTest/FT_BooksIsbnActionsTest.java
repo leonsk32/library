@@ -1,10 +1,7 @@
 package com.example.library.functionalTest;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -30,6 +27,11 @@ class FT_BooksIsbnActionsTest {
     private TestRestTemplate restTemplate;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @AfterAll
+    void last(){
+        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
+    }
 
     @Nested
     class 貸りる {
