@@ -2,6 +2,7 @@ package com.example.library.domain;
 
 import com.example.library.domain.book.Book;
 import com.example.library.domain.lending.LendingRecord;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
  * なんてドメイン名？
  */
 @EqualsAndHashCode
+@AllArgsConstructor
 public class BookStatus {
     Book book;
     LendingRecord lendingRecord;

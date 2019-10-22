@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class LendingRecordRepositoryImpl implements LendingRecordRepository {
@@ -20,5 +22,10 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     public void receive(LendingRecord lendingRecord) {
         String sql = "DELETE FROM LENDING_RECORD WHERE isbn = '" + lendingRecord.getIsbn().getIsbn() + "' AND USER_ID='" + lendingRecord.getUserId() + "';";
         jdbcTemplate.execute(sql);
+    }
+
+    @Override
+    public List<LendingRecord> find() {
+        return null;
     }
 }
