@@ -1,5 +1,6 @@
 package com.example.library.functionalTest;
 
+import com.example.library.restapi.books.dto.BookListDto;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -34,8 +35,13 @@ class FT_BooksTest {
             ResponseEntity<Object> response =
                     restTemplate.exchange(requestEntity, Object.class);
 
+            response.getBody().toString();
+
             SoftAssertions softly = new SoftAssertions();
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_IMPLEMENTED);
+            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+            // TODO: FTのjsonを比較するのってどうやればいい？
+            softly.assertThat(response.getBody().toString()).isEqualTo("{books=[]}");
             softly.assertAll();
         }
     }
