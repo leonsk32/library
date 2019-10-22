@@ -3,7 +3,9 @@ package com.example.library.infra;
 import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
 
     @Override
     public List<LendingRecord> find() {
-        return null;
+        String sql = "SELECT * FROM LENDING_RECORD";
+        RowMapper<LendingRecord> mapper = new BeanPropertyRowMapper<LendingRecord>(LendingRecord.class);
+        return jdbcTemplate.query(sql, mapper);
     }
 }

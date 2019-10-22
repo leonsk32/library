@@ -2,18 +2,17 @@ package com.example.library.domain.lending;
 
 
 import com.example.library.domain.book.Isbn;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * こいつはEntityの可能性がある
  * 日付を持ったほうがよいかも
  */
-@EqualsAndHashCode
+@Data
+@NoArgsConstructor
 public class LendingRecord {
-    @Getter
     Isbn isbn;
-    @Getter
     String userId;
 
     public LendingRecord(Isbn isbn, String userId) {
