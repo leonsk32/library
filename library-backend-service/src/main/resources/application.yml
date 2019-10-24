@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:15432/library
-    username: libuser
-    password: libpass
+    url: ${DATABASE_URL_SPRINGBOOT:jdbc:postgresql://localhost:15432/library}
+    username: ${DATABASE_USER:libuser}
+    password: ${DATABASE_PASS:libpass}
     driver-class-name: org.postgresql.Driver
 
 server:
