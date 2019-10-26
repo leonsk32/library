@@ -46,7 +46,7 @@ public class Isbn {
     private String toIsbn13(String isbn) {
         String isbn13 = PREFIX_ISBN + isbn.substring(0, 9);
 
-        int multiple = 0;
+        int multiple;
         int checkDigit = 0;
         for (int i = 0; i < isbn13.length(); i++) {
             multiple = i % 2 == 0 ? 1 : 3;
@@ -54,8 +54,8 @@ public class Isbn {
         }
         checkDigit = 10 - (checkDigit % 10);
 
-        if (checkDigit == 10){
-            return isbn13;
+        if (checkDigit == 10) {
+            return isbn13 + 0;
         } else {
             return isbn13 + checkDigit;
         }
