@@ -1,8 +1,6 @@
 package com.example.library.restapi.books;
 
 import com.example.library.app_service.BookSearchService;
-import com.example.library.app_service.LoanService;
-import com.example.library.domain.BookStatus;
 import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
 import org.junit.jupiter.api.DisplayName;
@@ -30,19 +28,19 @@ class BooksRestControllerTest {
     @DisplayName("検索する")
     @Test
     void test_01() throws Exception {
-        List<BookStatus> bookStatusList =
+        List<LendingRecord> lendingRecordList =
                 Arrays.asList(
-                        new BookStatus(null, new LendingRecord(new Isbn("1234567890123"), "123")),
-                        new BookStatus(null, new LendingRecord(new Isbn("1234567890124"), "456"))
+                        new LendingRecord(new Isbn("1234567890123"), "123"),
+                        new LendingRecord(new Isbn("1234567890124"), "456")
                 );
 
-        when(service.search()).thenReturn(bookStatusList);
+        when(service.search()).thenReturn(lendingRecordList);
 
         mvc.perform(
                 get("/v1/books")
         )
                 .andExpect(status().isOk())
-        .andExpect(content().json("{\"books\":[{\"isbn\":\"1234567890123\",\"userId\":\"123\"},{\"isbn\":\"1234567890124\",\"userId\":\"456\"}]}", true))
+                .andExpect(content().json("{\"books\":[{\"isbn\":\"1234567890123\",\"userId\":\"123\"},{\"isbn\":\"1234567890124\",\"userId\":\"456\"}]}", true))
         ;
     }
 }

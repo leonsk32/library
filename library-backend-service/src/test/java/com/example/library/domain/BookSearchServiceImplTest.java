@@ -37,13 +37,9 @@ class BookSearchServiceImplTest {
                 );
 
         when(lendingRecordRepository.find()).thenReturn(lendingRecords);
-        List<BookStatus> actual = target.search();
+        List<LendingRecord> actual = target.search();
 
-        List<BookStatus> expected =
-                Arrays.asList(
-                        new BookStatus(null, lendingRecords.get(0)),
-        new BookStatus(null, lendingRecords.get(1))
-                );
+        List<LendingRecord> expected = lendingRecords;
         assertThat(actual).isEqualTo(expected);
     }
 }

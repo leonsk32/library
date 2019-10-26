@@ -1,14 +1,14 @@
 package com.example.library.restapi.books.dto;
 
-import com.example.library.domain.BookStatus;
+import com.example.library.domain.lending.LendingRecord;
 import lombok.Getter;
 
 @Getter
 public class BookDto {
     String isbn;
     String userId;
-    public BookDto(BookStatus book) {
-        this.isbn = book.getLendingRecord().getIsbn().getIsbn();
-        this.userId = book.getLendingRecord().getUserId();
+    public BookDto(LendingRecord book) {
+        this.isbn = book.getIsbn().getIsbn();
+        this.userId = book.getUserId();
     }
 }

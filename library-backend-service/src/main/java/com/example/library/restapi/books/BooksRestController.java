@@ -1,7 +1,7 @@
 package com.example.library.restapi.books;
 
 import com.example.library.app_service.BookSearchService;
-import com.example.library.domain.BookStatus;
+import com.example.library.domain.lending.LendingRecord;
 import com.example.library.restapi.books.dto.BookListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class BooksRestController {
      */
     @GetMapping("books")
     public ResponseEntity<BookListDto> search() {
-        List<BookStatus> search = service.search();
+        List<LendingRecord> search = service.search();
         return new ResponseEntity<>(new BookListDto(search), HttpStatus.OK);
     }
 }
