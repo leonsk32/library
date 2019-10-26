@@ -52,9 +52,13 @@ public class Isbn {
             multiple = i % 2 == 0 ? 1 : 3;
             checkDigit += Integer.parseInt(String.valueOf(isbn13.charAt(i))) * multiple;
         }
-        checkDigit = 10 - (checkDigit % 10) == 10 ? 0 : checkDigit;
+        checkDigit = 10 - (checkDigit % 10);
 
-        return isbn13 + checkDigit;
+        if (checkDigit == 10){
+            return isbn13;
+        } else {
+            return isbn13 + checkDigit;
+        }
     }
 
     private boolean checkIsbn10(String isbn) {
