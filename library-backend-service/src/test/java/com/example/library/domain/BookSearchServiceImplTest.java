@@ -1,5 +1,6 @@
 package com.example.library.domain;
 
+import com.example.library.app_service.BookSearchServiceImpl;
 import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
@@ -13,19 +14,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class BookSearchComponentTest {
-    private BookSearchComponent target;
+class BookSearchServiceImplTest {
+    private BookSearchServiceImpl target;
     @Mock
     LendingRecordRepository lendingRecordRepository;
 
 
     @BeforeEach
     void setup() {
-        target = new BookSearchComponent(lendingRecordRepository);
+        target = new BookSearchServiceImpl(lendingRecordRepository);
     }
 
     @Test

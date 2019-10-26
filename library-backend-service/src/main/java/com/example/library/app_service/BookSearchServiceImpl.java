@@ -1,17 +1,17 @@
-package com.example.library.domain;
+package com.example.library.app_service;
 
+import com.example.library.domain.BookStatus;
 import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class BookSearchComponent {
+public class BookSearchServiceImpl implements BookSearchService {
     private final LendingRecordRepository lendingRecordRepository;
 
     public List<BookStatus> search(String... options) {

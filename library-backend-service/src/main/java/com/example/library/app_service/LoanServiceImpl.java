@@ -1,7 +1,6 @@
 package com.example.library.app_service;
 
 import com.example.library.domain.BookStatus;
-import com.example.library.domain.BookSearchComponent;
 import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
@@ -17,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanServiceImpl implements LoanService {
     private final LendingRecordRepository lendingRecordRepository;
-    private final BookSearchComponent bookSearchComponent;
+    private final BookSearchServiceImpl bookSearchServiceImpl;
     @Override
     public void lent(String isbn, String userId) {
         Isbn isbnEntity = new Isbn(isbn);
@@ -34,6 +33,6 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<BookStatus> search(String... options) {
-        return bookSearchComponent.search(options);
+        return bookSearchServiceImpl.search(options);
     }
 }

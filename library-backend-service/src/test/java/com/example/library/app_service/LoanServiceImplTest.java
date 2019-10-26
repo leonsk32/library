@@ -1,6 +1,5 @@
 package com.example.library.app_service;
 
-import com.example.library.domain.BookSearchComponent;
 import com.example.library.domain.BookStatus;
 import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
@@ -28,11 +27,11 @@ class LoanServiceImplTest {
     @Mock
     LendingRecordRepository lendingRecordRepository;
     @Mock
-    BookSearchComponent bookSearchComponent;
+    BookSearchServiceImpl bookSearchServiceImpl;
 
     @BeforeEach
     void setup() {
-        target = new LoanServiceImpl(lendingRecordRepository, bookSearchComponent);
+        target = new LoanServiceImpl(lendingRecordRepository, bookSearchServiceImpl);
     }
 
     @Nested
@@ -72,7 +71,7 @@ class LoanServiceImplTest {
         @Test
         void test_01() {
 
-            Mockito.when(bookSearchComponent.search(any())).thenReturn(Arrays.asList());
+            Mockito.when(bookSearchServiceImpl.search(any())).thenReturn(Arrays.asList());
             List<BookStatus> actual = target.search();
 
             assertThat(actual).hasSize(0);
