@@ -23,8 +23,8 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class LibrarianServiceImplTest {
-    LibrarianService target;
+class LoanServiceImplTest {
+    LoanService target;
     @Mock
     LendingRecordRepository lendingRecordRepository;
     @Mock
@@ -32,7 +32,7 @@ class LibrarianServiceImplTest {
 
     @BeforeEach
     void setup() {
-        target = new LibrarianServiceImpl(lendingRecordRepository, bookSearchComponent);
+        target = new LoanServiceImpl(lendingRecordRepository, bookSearchComponent);
     }
 
     @Nested

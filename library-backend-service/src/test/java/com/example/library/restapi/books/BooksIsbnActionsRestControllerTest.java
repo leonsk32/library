@@ -1,6 +1,6 @@
 package com.example.library.restapi.books;
 
-import com.example.library.app_service.LibrarianService;
+import com.example.library.app_service.LoanService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,7 +19,7 @@ class BooksIsbnActionsRestControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private LibrarianService service;
+    private LoanService service;
 
     @Test
     void borrow_test01() throws Exception {

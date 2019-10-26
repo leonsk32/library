@@ -1,6 +1,6 @@
 package com.example.library.restapi.books;
 
-import com.example.library.app_service.LibrarianService;
+import com.example.library.app_service.LoanService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 @Validated
 public class BooksIsbnActionsRestController {
-    private final LibrarianService service;
+    private final LoanService service;
 
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";

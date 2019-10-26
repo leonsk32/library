@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * application Serviceの可能性が高い
+ * 貸借サービス
  */
 @Service
 @RequiredArgsConstructor
-public class LibrarianServiceImpl implements LibrarianService {
+public class LoanServiceImpl implements LoanService {
     private final LendingRecordRepository lendingRecordRepository;
     private final BookSearchComponent bookSearchComponent;
     @Override

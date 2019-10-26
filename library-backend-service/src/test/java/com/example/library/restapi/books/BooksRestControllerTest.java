@@ -1,6 +1,6 @@
 package com.example.library.restapi.books;
 
-import com.example.library.app_service.LibrarianService;
+import com.example.library.app_service.LoanService;
 import com.example.library.domain.BookStatus;
 import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
@@ -24,7 +24,7 @@ class BooksRestControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private LibrarianService service;
+    private LoanService service;
 
     @DisplayName("検索する")
     @Test
