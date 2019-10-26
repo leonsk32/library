@@ -8,9 +8,21 @@ servers:
 paths:
   /books:
     get:
-      summary: Your GET endpoint
+      summary: 本を検索する
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    anyOf:
+                      - type: array
+                        items: {}
+                      - $ref: ./models/books.v1.yaml
     parameters: []
   '/books/{isbn}':
     parameters:
@@ -22,7 +34,7 @@ paths:
           type: string
         description: ''
     put:
-      summary: ''
+      summary: 本を登録する
       responses:
         '501':
           description: Not Implemented
@@ -38,12 +50,8 @@ paths:
         name: isbn
         in: path
         required: true
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
     post:
-      summary: ''
+      summary: 本に対する行動
       responses:
         '200':
           description: OK
@@ -51,17 +59,18 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                userId:
-                  type: string
+              $ref: ./models/bookaction.v1.yaml
             examples:
-              借りる:
+              本を借りる:
                 value:
                   type: borrow
                   userId: '1234567'
-        description: ''
+              本を返す:
+                value:
+                  type: return
+                  userId: '1234567'
+        description: パラメータのISBNの
+      description: ''
+      parameters: []
 components:
   schemas: {}
