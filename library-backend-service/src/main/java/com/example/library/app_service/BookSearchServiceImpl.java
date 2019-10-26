@@ -14,6 +14,7 @@ import java.util.List;
 public class BookSearchServiceImpl implements BookSearchService {
     private final LendingRecordRepository lendingRecordRepository;
 
+    @Override
     public List<BookStatus> search(String... options) {
 
         List<LendingRecord> lendingRecords = lendingRecordRepository.find();

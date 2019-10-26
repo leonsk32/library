@@ -1,12 +1,14 @@
 package com.example.library.restapi.books;
 
-import com.example.library.app_service.LoanService;
+import com.example.library.app_service.BookSearchService;
 import com.example.library.domain.BookStatus;
 import com.example.library.restapi.books.dto.BookListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
 @RequestMapping("/v1")
 @RequiredArgsConstructor
 public class BooksRestController {
-    private final LoanService service;
+    private final BookSearchService service;
 
     /**
      * 本の一覧を取得する。

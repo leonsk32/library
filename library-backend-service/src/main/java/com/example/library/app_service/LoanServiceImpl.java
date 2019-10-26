@@ -1,13 +1,10 @@
 package com.example.library.app_service;
 
-import com.example.library.domain.BookStatus;
 import com.example.library.domain.book.Isbn;
 import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 貸借サービス
@@ -16,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanServiceImpl implements LoanService {
     private final LendingRecordRepository lendingRecordRepository;
-    private final BookSearchServiceImpl bookSearchServiceImpl;
     @Override
     public void lent(String isbn, String userId) {
         Isbn isbnEntity = new Isbn(isbn);
@@ -29,10 +25,5 @@ public class LoanServiceImpl implements LoanService {
         Isbn isbnEntity = new Isbn(isbn);
         LendingRecord record = new LendingRecord(isbnEntity, userId);
         lendingRecordRepository.receive(record);
-    }
-
-    @Override
-    public List<BookStatus> search(String... options) {
-        return bookSearchServiceImpl.search(options);
     }
 }
