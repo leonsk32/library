@@ -28,6 +28,9 @@ https://developers.trello.com/reference/#enterprisesidadminsidmember-1
 https://enigmatic-depths-14464.herokuapp.com/api/v1/books
 ```
 
+## swaggerの定義公開URL
+https://stoplight.io/p/docs-preview/gh/agiledevelopmentclub/library
+
 ### 本の一覧が欲しい時
 ```
 /books 
