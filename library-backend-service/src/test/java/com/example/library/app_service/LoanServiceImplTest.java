@@ -36,11 +36,11 @@ class LoanServiceImplTest {
     class lent {
         @Test
         void lent() {
-            String isbn = "9784567890123";
-            String userId = "1234567";
+            String isbn = "9784567890978";
+            String userId = "9784567";
 
-            when(bookRepository.findById(any())).thenReturn(new Book("1234567890123", "titleA"));
-            when(userRepository.findById(any())).thenReturn(new User("1234567", "aa@bb"));
+            when(bookRepository.findById(any())).thenReturn(new Book("9784567890978", "titleA"));
+            when(userRepository.findById(any())).thenReturn(new User("9784567", "aa@bb"));
             doNothing().when(lendingRecordRepository).register(any());
 
             target.lent(isbn, userId);
@@ -54,8 +54,8 @@ class LoanServiceImplTest {
         @DisplayName("貸出帳に返却記録を付ける")
         @Test
         void test_01() {
-            String isbn = "9784567890123";
-            String userId = "1234567";
+            String isbn = "9784567890978";
+            String userId = "9784567";
 
             doNothing().when(lendingRecordRepository).delete(any());
             target.receive(isbn, userId);

@@ -48,7 +48,7 @@ class FT_BooksIsbnActionsTest {
         @Test
         void test01() {
 
-            jdbcTemplate.execute("insert into BOOK (isbn, title) values(1111111111111, 'titleA')");
+            jdbcTemplate.execute("insert into BOOK (isbn, title) values(9781111111111, 'titleA')");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(1234567, 'aa@bb')");
 
             final String isbn = "9781111111111";
@@ -87,7 +87,7 @@ class FT_BooksIsbnActionsTest {
         @DisplayName("１冊の本を返す")
         @Test
         void test01() {
-            jdbcTemplate.execute("insert into BOOK (isbn, title) values(1111111111111, 'titleA')");
+            jdbcTemplate.execute("insert into BOOK (isbn, title) values(9781111111111, 'titleA')");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(1234567, 'aa@bb')");
 
             final String isbn = "9781111111111";

@@ -28,7 +28,7 @@ class LendingRecordTest {
     @Test
     void test_01() {
         // arrange
-        Book book = new Book("1234567890", "tile1");
+        Book book = new Book("9874567890", "tile1");
         User user = new User("1234567", "aa@bb");
         LendingRecord lendingRecord1 = new LendingRecord(book, user);
         LendingRecord lendingRecord2 = new LendingRecord(book, user);

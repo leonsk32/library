@@ -15,12 +15,13 @@ public class Isbn {
 
 
     Isbn(String isbn) {
-        if (isbn.length() != 10 && isbn.length() != 13) throw new RuntimeException("ISBNの桁数が正しくない");
+        if (!(isbn.length() == 10 || isbn.length() == 13)) throw new RuntimeException("ISBNの桁数が正しくない");
+        String isbn1 = convert10to13(isbn);
         // ISBNではない可能性がある。2列目バーコードを読み取った可能性。
-        if (!PREFIX_ISBN.equals(isbn.substring(0, 3))) {
+        if (!PREFIX_ISBN.equals(isbn1.substring(0, 3))) {
             throw new RuntimeException();
         }
-        this.isbn = convert10to13(isbn);
+        this.isbn = isbn1;
     }
 
     /**

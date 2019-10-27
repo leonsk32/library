@@ -36,8 +36,8 @@ class BookRepositoryImplTest {
     @DisplayName("取得できるケース")
     @Test
     void test01() {
-        jdbcTemplate.execute("insert into BOOK (isbn, title) values('1234567890123', 'titleA')");
-        String isbn = "1234567890123";
+        jdbcTemplate.execute("insert into BOOK (isbn, title) values('9784567890978', 'titleA')");
+        String isbn = "9784567890978";
         Book book = target.findById(isbn);
 
         assertThat(book).isEqualTo(new Book(isbn, "titleA"));
@@ -46,8 +46,8 @@ class BookRepositoryImplTest {
     @DisplayName("取得できないケース")
     @Test
     void test02() {
-        String isbn = "1234567890123";
-        Book book = target.findById("1234567890124");
+        String isbn = "9784567890978";
+        Book book = target.findById("9784567890124");
         assertThat(book).isNull();
     }
 }
