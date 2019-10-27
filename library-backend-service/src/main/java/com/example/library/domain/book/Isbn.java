@@ -5,38 +5,36 @@ import lombok.Getter;
 
 /**
  * 10桁のisbnが入ってきたとき、13桁のISBNに変換して生成する
- * VO?
+ * Entity
  */
 @EqualsAndHashCode
 @Getter
 public class Isbn {
     private final String isbn;
+    private static final String PREFIX_ISBN = "978";
 
-    public Isbn(String isbn) {
-        this.isbn = setIsbn(isbn);
-    }
 
-    private String setIsbn(String isbn) {
-        if (checkIsbn10(isbn)) {
-            return toIsbn13(isbn);
-        }
-
-        if (checkIsbn13(isbn)) {
-            return isbn;
-        }
-
-        throw new RuntimeException();
-    }
-
-    private boolean checkIsbn13(String isbn) {
+    Isbn(String isbn) {
+        if (isbn.length() != 10 && isbn.length() != 13) throw new RuntimeException("ISBNの桁数が正しくない");
         // ISBNではない可能性がある。2列目バーコードを読み取った可能性。
         if (!PREFIX_ISBN.equals(isbn.substring(0, 3))) {
             throw new RuntimeException();
         }
-        return isbn.length() == 13;
+        this.isbn = convert10to13(isbn);
     }
 
-    private static final String PREFIX_ISBN = "978";
+    /**
+     * 10桁のisbnだったら、13桁のISBNに変換
+     *
+     * @param isbn
+     * @return 13桁のISBN
+     */
+    private String convert10to13(String isbn) {
+        if (isbn.length() == 10) {
+            return toIsbn13(isbn);
+        }
+        return isbn;
+    }
 
     /**
      * ISBNを10桁から13桁に変更する。
@@ -66,7 +64,9 @@ public class Isbn {
         }
     }
 
-    private boolean checkIsbn10(String isbn) {
-        return isbn.length() == 10;
+    @Override
+    public String toString() {
+        return this.isbn;
     }
+
 }

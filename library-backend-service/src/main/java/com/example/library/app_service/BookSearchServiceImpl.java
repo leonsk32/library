@@ -14,6 +14,6 @@ public class BookSearchServiceImpl implements BookSearchService {
 
     @Override
     public List<LendingRecord> search(String... options) {
-        return lendingRecordRepository.find();
+        return lendingRecordRepository.findAll();
     }
 }

@@ -8,7 +8,7 @@ public class BookDto {
     String isbn;
     String userId;
     public BookDto(LendingRecord book) {
-        this.isbn = book.getIsbn().getIsbn();
-        this.userId = book.getUserId();
+        this.isbn = book.getBook().getIsbn().toString();
+        this.userId = book.getUser().getUserId();
     }
 }

@@ -1,8 +1,9 @@
 package com.example.library.restapi.books;
 
 import com.example.library.app_service.BookSearchService;
-import com.example.library.domain.book.Isbn;
+import com.example.library.domain.book.Book;
 import com.example.library.domain.lending.LendingRecord;
+import com.example.library.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ class BooksRestControllerTest {
     void test_01() throws Exception {
         List<LendingRecord> lendingRecordList =
                 Arrays.asList(
-                        new LendingRecord(new Isbn("9784567890123"), "123"),
-                        new LendingRecord(new Isbn("9784567890124"), "456")
+                        new LendingRecord(new Book("9784567890123", "title"), new User("1234567", "aa@bb")),
+                        new LendingRecord(new Book("9784567890124", "title"), new User("1234568", "aa@bb"))
                 );
 
         when(service.search()).thenReturn(lendingRecordList);
@@ -40,7 +41,7 @@ class BooksRestControllerTest {
                 get("/v1/books")
         )
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"books\":[{\"isbn\":\"9784567890123\",\"userId\":\"123\"},{\"isbn\":\"9784567890124\",\"userId\":\"456\"}]}", true))
+                .andExpect(content().json("{\"books\":[{\"isbn\":\"9784567890123\",\"userId\":\"1234567\"},{\"isbn\":\"9784567890124\",\"userId\":\"1234568\"}]}", true))
         ;
     }
 }

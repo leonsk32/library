@@ -1,16 +1,23 @@
 package com.example.library.domain.user;
 
+import lombok.Getter;
+
 public class User {
-    private String userId;
+    @Getter
+    private final String userId;
+    private final String email;
     private String simei;
     private String namae;
-    private String email;
 
-    public User(String userId, String simei, String namae, String email) {
-
+    public User(String userId, String email, String simei, String namae) {
         this.userId = userId;
+        this.email = email;
         this.simei = simei;
         this.namae = namae;
+    }
+
+    public User(String userId, String email) {
+        this.userId = userId;
         this.email = email;
     }
 

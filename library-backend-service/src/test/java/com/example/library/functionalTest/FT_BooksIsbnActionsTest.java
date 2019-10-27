@@ -28,16 +28,28 @@ class FT_BooksIsbnActionsTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @BeforeEach
+    void setUp() {
+        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
+        jdbcTemplate.execute("Delete from BOOK");
+        jdbcTemplate.execute("Delete from USERR");
+    }
+
     @AfterEach
     private void tearDown() {
         jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
+        jdbcTemplate.execute("Delete from BOOK");
+        jdbcTemplate.execute("Delete from USERR");
     }
 
     @Nested
     class 貸りる {
         @DisplayName("１冊の本を借りる")
         @Test
-        void test01() throws URISyntaxException {
+        void test01() {
+
+            jdbcTemplate.execute("insert into BOOK (isbn, title) values(1111111111111, 'titleA')");
+            jdbcTemplate.execute("insert into USERR(user_id, email) values(1234567, 'aa@bb')");
 
             final String isbn = "9781111111111";
             String userId = "1234567";
@@ -74,7 +86,10 @@ class FT_BooksIsbnActionsTest {
     class 返す {
         @DisplayName("１冊の本を返す")
         @Test
-        void test01() throws URISyntaxException {
+        void test01() {
+            jdbcTemplate.execute("insert into BOOK (isbn, title) values(1111111111111, 'titleA')");
+            jdbcTemplate.execute("insert into USERR(user_id, email) values(1234567, 'aa@bb')");
+
             final String isbn = "9781111111111";
             String userId = "1234567";
 

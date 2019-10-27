@@ -1,22 +1,35 @@
 package com.example.library.domain.lending;
 
 
-import com.example.library.domain.book.Isbn;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.library.domain.book.Book;
+import com.example.library.domain.user.User;
+import lombok.Getter;
 
 /**
- * こいつはEntityの可能性がある
+ * こいつはEntity
  * 日付を持ったほうがよいかも
+ * immutable(変更不可)
  */
-@Data
-@NoArgsConstructor
-public class LendingRecord {
-    Isbn isbn;
-    String userId;
+public final class LendingRecord {
+    @Getter
+    private final Book book;
+    @Getter
+    private final User user;
 
-    public LendingRecord(Isbn isbn, String userId) {
-        this.isbn = isbn;
-        this.userId = userId;
+    public LendingRecord(Book book, User user) {
+        this.book = book;
+        this.user = user;
     }
+
+    // TODO 同一性を考える上で日付を持つべきという考えをもったが
+    // 実装上、LocalDateTimeをコンストラクタインジェクション無しで使いたかったが
+    // よくわからなかったのでヘルプください
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof LendingRecord)) throw new RuntimeException("Lending Record同士で比較してくれ");
+        LendingRecord otherLendingRecord = (LendingRecord) other;
+        return this.book.equals(otherLendingRecord.book) &&
+                this.user.equals(otherLendingRecord.user);
+    }
+
 }
