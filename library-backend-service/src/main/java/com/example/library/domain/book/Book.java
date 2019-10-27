@@ -6,13 +6,17 @@ import lombok.Getter;
  * Entity
  */
 public class Book {
-    @Getter
     private Isbn isbn;
+    @Getter
     private String title;
 
     public Book(String isbn, String title) {
         this.isbn = new Isbn(isbn);
         this.title = title;
+    }
+
+    public String getIsbn() {
+        return this.isbn.toString();
     }
 
     @Override

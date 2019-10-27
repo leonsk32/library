@@ -1,14 +1,14 @@
 package com.example.library.restapi.books.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class BookDto {
+public class LendingRecordDto {
+    private String userId;
+    private String namae;
+    private String simei;
     private String isbn;
     private String title;
-
 }

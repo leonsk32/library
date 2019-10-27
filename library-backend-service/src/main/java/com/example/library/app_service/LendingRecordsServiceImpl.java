@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BookSearchServiceImpl implements BookSearchService {
+public class LendingRecordsServiceImpl implements LendingRecordsService {
     private final LendingRecordRepository lendingRecordRepository;
 
     @Override

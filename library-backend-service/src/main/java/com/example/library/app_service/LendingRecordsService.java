@@ -4,6 +4,6 @@ import com.example.library.domain.lending.LendingRecord;
 
 import java.util.List;
 
-public interface BookSearchService {
+public interface LendingRecordsService {
     List<LendingRecord> search(String... options);
 }
