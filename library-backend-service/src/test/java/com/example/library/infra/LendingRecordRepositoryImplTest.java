@@ -34,14 +34,14 @@ class LendingRecordRepositoryImplTest {
 
     @Test
     void insert() {
-        LendingRecord entity = new LendingRecord(new Isbn("1234567890123"), "2");
+        LendingRecord entity = new LendingRecord(new Isbn("9784567890123"), "2");
 
         target.register(entity);
 
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM LENDING_RECORD");
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(maps).hasSize(1);
-        softly.assertThat(maps.get(0).get("ISBN")).isEqualTo("1234567890123");
+        softly.assertThat(maps.get(0).get("ISBN")).isEqualTo("9784567890123");
         softly.assertThat(maps.get(0).get("USER_ID")).isEqualTo("2");
         softly.assertAll();
     }
@@ -52,14 +52,14 @@ class LendingRecordRepositoryImplTest {
         @Test
         void receive_01() {
             // GIVEN
-            LendingRecord entity = new LendingRecord(new Isbn("1234567890123"), "2");
+            LendingRecord entity = new LendingRecord(new Isbn("9784567890123"), "2");
 
             SoftAssertions softly = new SoftAssertions();
             target.register(entity);
             List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM LENDING_RECORD");
 
             softly.assertThat(maps).hasSize(1);
-            softly.assertThat(maps.get(0).get("ISBN")).isEqualTo("1234567890123");
+            softly.assertThat(maps.get(0).get("ISBN")).isEqualTo("9784567890123");
             softly.assertThat(maps.get(0).get("USER_ID")).isEqualTo("2");
 
             // WHEN
@@ -79,7 +79,7 @@ class LendingRecordRepositoryImplTest {
         @Test
         void test_01() {
             // GIVEN
-            LendingRecord entity = new LendingRecord(new Isbn("1234567890123"), "2");
+            LendingRecord entity = new LendingRecord(new Isbn("9784567890123"), "2");
 
             SoftAssertions softly = new SoftAssertions();
             target.register(entity);
@@ -95,9 +95,9 @@ class LendingRecordRepositoryImplTest {
         @Test
         void test_02() {
             // GIVEN
-            LendingRecord entity1 = new LendingRecord(new Isbn("1234567890123"), "2");
-            LendingRecord entity2 = new LendingRecord(new Isbn("1234567890124"), "3");
-            LendingRecord entity3 = new LendingRecord(new Isbn("1234567890125"), "4");
+            LendingRecord entity1 = new LendingRecord(new Isbn("9784567890123"), "2");
+            LendingRecord entity2 = new LendingRecord(new Isbn("9784567890124"), "3");
+            LendingRecord entity3 = new LendingRecord(new Isbn("9784567890125"), "4");
 
             SoftAssertions softly = new SoftAssertions();
             target.register(entity1);

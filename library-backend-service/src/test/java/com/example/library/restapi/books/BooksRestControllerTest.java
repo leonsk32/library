@@ -30,8 +30,8 @@ class BooksRestControllerTest {
     void test_01() throws Exception {
         List<LendingRecord> lendingRecordList =
                 Arrays.asList(
-                        new LendingRecord(new Isbn("1234567890123"), "123"),
-                        new LendingRecord(new Isbn("1234567890124"), "456")
+                        new LendingRecord(new Isbn("9784567890123"), "123"),
+                        new LendingRecord(new Isbn("9784567890124"), "456")
                 );
 
         when(service.search()).thenReturn(lendingRecordList);
@@ -40,7 +40,7 @@ class BooksRestControllerTest {
                 get("/v1/books")
         )
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"books\":[{\"isbn\":\"1234567890123\",\"userId\":\"123\"},{\"isbn\":\"1234567890124\",\"userId\":\"456\"}]}", true))
+                .andExpect(content().json("{\"books\":[{\"isbn\":\"9784567890123\",\"userId\":\"123\"},{\"isbn\":\"9784567890124\",\"userId\":\"456\"}]}", true))
         ;
     }
 }

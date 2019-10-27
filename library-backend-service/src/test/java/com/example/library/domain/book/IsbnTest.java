@@ -36,4 +36,11 @@ class IsbnTest {
     void test_03() {
         assertThat(EVANS_DDD_ISBN13).isEqualTo(new Isbn(EVANS_DDD_ISBN13).getIsbn());
     }
+
+    @DisplayName("13桁だが、頭から3文字が978ではない場合、Exceptionを発生させる。2列目を読み込んだ可能性。")
+    @Test
+    void test_04() {
+        assertThrows(RuntimeException.class,
+                () ->new Isbn("1921234567890"));
+    }
 }

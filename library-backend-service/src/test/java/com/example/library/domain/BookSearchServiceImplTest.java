@@ -32,8 +32,8 @@ class BookSearchServiceImplTest {
     void search() {
 
         List<LendingRecord> lendingRecords = Arrays.asList(
-                new LendingRecord(new Isbn("1234567890123"), "1234567"),
-                new LendingRecord(new Isbn("1234567890124"), "1234567")
+                new LendingRecord(new Isbn("9784567890123"), "1234567"),
+                new LendingRecord(new Isbn("9784567890124"), "1234567")
                 );
 
         when(lendingRecordRepository.find()).thenReturn(lendingRecords);

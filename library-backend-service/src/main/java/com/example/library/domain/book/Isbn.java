@@ -1,6 +1,7 @@
 package com.example.library.domain.book;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * 10桁のisbnが入ってきたとき、13桁のISBNに変換して生成する
@@ -28,6 +29,10 @@ public class Isbn {
     }
 
     private boolean checkIsbn13(String isbn) {
+        // ISBNではない可能性がある。2列目バーコードを読み取った可能性。
+        if (!PREFIX_ISBN.equals(isbn.substring(0, 3))) {
+            throw new RuntimeException();
+        }
         return isbn.length() == 13;
     }
 

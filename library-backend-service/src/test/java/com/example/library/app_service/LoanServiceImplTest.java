@@ -30,7 +30,7 @@ class LoanServiceImplTest {
     class lent {
         @Test
         void lent() {
-            String isbn = "1234567890123";
+            String isbn = "9784567890123";
             String userId = "1234567";
 
             doNothing().when(lendingRecordRepository).register(any());
@@ -46,7 +46,7 @@ class LoanServiceImplTest {
         @DisplayName("貸出帳に返却記録を付ける")
         @Test
         void test_01() {
-            String isbn = "1234567890123";
+            String isbn = "9784567890123";
             String userId = "1234567";
 
             target.receive(isbn, userId);
