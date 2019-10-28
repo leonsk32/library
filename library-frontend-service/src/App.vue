@@ -41,23 +41,21 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
 import HelloWorld from './components/HelloWorld.vue';
 
-export default Vue.extend({
-  name: 'App',
+@Component({
   components: {
     HelloWorld,
   },
-  data: () => ({
-    drawer: false,
-    //
-  }),
+})
+export default class App extends Vue {
+    drawer: boolean = false;
 
-  watch: {
-    group() {
+    @Watch('drawer')
+    onChanged() {
       this.drawer = false;
-    },
-  },
-});
+    }
+}
 </script>

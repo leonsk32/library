@@ -59,12 +59,20 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import axios from 'axios';
 
 @Component
 export default class Home extends Vue {
     datas: any = null;
 
-    getDatas(): any{
+    getDatas(): any {
+      const res = axios.get('https://enigmatic-depths-14464.herokuapp.com/api/v1/books');
+      console.log(res);
+      this.datas = res.data;
+    }
+
+    mounted(): void {
+      this.getDatas();
     }
 }
 </script>
