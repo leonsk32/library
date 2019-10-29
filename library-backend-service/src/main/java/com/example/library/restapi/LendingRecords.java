@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tmp")
 @RequiredArgsConstructor
-public class RendingRecords {
+public class LendingRecords {
 
     private final LendingRecordsService service;
 
@@ -56,10 +56,10 @@ public class RendingRecords {
         for (LendingRecord entity : entities) {
             LendingRecordDto recordDto = new LendingRecordDto();
             recordDto.setIsbn(entity.getBook().getIsbn());
-            recordDto.setTitle(entity.getBook().getTitle());
             recordDto.setUserId(entity.getUser().getUserId());
             recordDto.setNamae(entity.getUser().getNamae());
             recordDto.setSimei(entity.getUser().getSimei());
+            list.add(recordDto);
         }
         dtos.setLendingRecords(list);
         return dtos;

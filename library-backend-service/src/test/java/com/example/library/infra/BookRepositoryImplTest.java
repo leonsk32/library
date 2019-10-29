@@ -36,11 +36,11 @@ class BookRepositoryImplTest {
     @DisplayName("取得できるケース")
     @Test
     void test01() {
-        jdbcTemplate.execute("insert into BOOK (isbn, title) values('9784567890978', 'titleA')");
+        jdbcTemplate.execute("insert into BOOK (isbn) values('9784567890978')");
         String isbn = "9784567890978";
         Book book = target.findById(isbn);
 
-        assertThat(book).isEqualTo(new Book(isbn, "titleA"));
+        assertThat(book).isEqualTo(new Book(isbn));
     }
 
     @DisplayName("取得できないケース")

@@ -7,12 +7,9 @@ import lombok.Getter;
  */
 public class Book {
     private Isbn isbn;
-    @Getter
-    private String title;
 
-    public Book(String isbn, String title) {
+    public Book(String isbn) {
         this.isbn = new Isbn(isbn);
-        this.title = title;
     }
 
     public String getIsbn() {

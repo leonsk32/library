@@ -49,9 +49,9 @@ class LendingRecordRepositoryImplTest {
     @Test
     void insert() {
         // Arrange
-        jdbcTemplate.execute("insert into BOOK (isbn, title) values(9784567890978, 'titleA')");
+        jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890978)");
         jdbcTemplate.execute("insert into USERR(user_id, email) values(9784567, 'aa@bb')");
-        LendingRecord entity = new LendingRecord(new Book("9784567890978", "titleA"), new User("9784567", "aa@bb"));
+        LendingRecord entity = new LendingRecord(new Book("9784567890978"), new User("9784567", "aa@bb"));
 
         // Act
         target.register(entity);
@@ -71,9 +71,9 @@ class LendingRecordRepositoryImplTest {
         @Test
         void dlete01() {
             // GIVEN
-            jdbcTemplate.execute("insert into BOOK (isbn, title) values(9784567890978, 'titleA')");
+            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890978)");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784567, 'aa@bb')");
-            LendingRecord entity = new LendingRecord(new Book("9784567890978", "titleA"),new User( "9784567", "aa@bb"));
+            LendingRecord entity = new LendingRecord(new Book("9784567890978"),new User( "9784567", "aa@bb"));
 
             SoftAssertions softly = new SoftAssertions();
             target.register(entity);
@@ -100,9 +100,9 @@ class LendingRecordRepositoryImplTest {
         @Test
         void findById_01() {
             // GIVEN
-            jdbcTemplate.execute("insert into BOOK (isbn, title) values(9784567890978, 'titleA')");
+            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890978)");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784567, 'aa@bb')");
-            Book book = new Book("9784567890978", "titleA");
+            Book book = new Book("9784567890978");
             User user = new User("9784567", "aa@bb");
             LendingRecord entity = new LendingRecord(book, user);
 
@@ -118,15 +118,15 @@ class LendingRecordRepositoryImplTest {
         @Test
         void findAll_02() {
             // GIVEN
-            jdbcTemplate.execute("insert into BOOK (isbn, title) values(9784567890978, 'titleA')");
-            jdbcTemplate.execute("insert into BOOK (isbn, title) values(9784567890124, 'titleB')");
-            jdbcTemplate.execute("insert into BOOK (isbn, title) values(9784567890125, 'titleC')");
+            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890978)");
+            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890124)");
+            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890125)");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784567, 'aa@bb')");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784568, 'ab@bb')");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784569, 'ac@bb')");
-            LendingRecord entity1 = new LendingRecord(new Book("9784567890978", "titleA"), new User("9784567", "aa@BB"));
-            LendingRecord entity2 = new LendingRecord(new Book("9784567890124", "titleB"), new User("9784568", "ab@BB"));
-            LendingRecord entity3 = new LendingRecord(new Book("9784567890125", "titleC"), new User("9784569", "ac@BB"));
+            LendingRecord entity1 = new LendingRecord(new Book("9784567890978"), new User("9784567", "aa@BB"));
+            LendingRecord entity2 = new LendingRecord(new Book("9784567890124"), new User("9784568", "ab@BB"));
+            LendingRecord entity3 = new LendingRecord(new Book("9784567890125"), new User("9784569", "ac@BB"));
 
             SoftAssertions softly = new SoftAssertions();
             target.register(entity1);

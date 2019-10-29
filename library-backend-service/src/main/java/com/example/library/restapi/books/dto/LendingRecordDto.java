@@ -10,5 +10,4 @@ public class LendingRecordDto {
     private String namae;
     private String simei;
     private String isbn;
-    private String title;
 }

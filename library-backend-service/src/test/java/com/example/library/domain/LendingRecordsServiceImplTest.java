@@ -33,8 +33,8 @@ class LendingRecordsServiceImplTest {
     void search() {
 
         List<LendingRecord> lendingRecords = Arrays.asList(
-                new LendingRecord(new Book("9784567890123", "titleA"), new User("1234567", "aa@bb")),
-                new LendingRecord(new Book("9784567890124", "titleB"), new User("1234568", "aa@bb"))
+                new LendingRecord(new Book("9784567890123"), new User("1234567", "aa@bb")),
+                new LendingRecord(new Book("9784567890124"), new User("1234568", "aa@bb"))
         );
 
         when(lendingRecordRepository.findAll()).thenReturn(lendingRecords);
