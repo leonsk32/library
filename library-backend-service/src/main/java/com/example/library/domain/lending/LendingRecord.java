@@ -21,7 +21,7 @@ public final class LendingRecord {
         this.user = user;
     }
 
-    // TODO 同一性を考える上で日付を持つべきという考えをもったが
+    // TODO 同一性を考える上で日付を持つべきという考えも
     // 実装上、LocalDateTimeをコンストラクタインジェクション無しで使いたかったが
     // よくわからなかったのでヘルプください
     @Override

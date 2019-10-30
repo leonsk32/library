@@ -1,10 +1,10 @@
 package com.example.library.restapi.books.dto;
 
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
+@Data
 public class BookListDto {
-    List<BookDto> books;
+    List<String> isbns;
 }
