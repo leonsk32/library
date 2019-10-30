@@ -15,6 +15,8 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
 @RequestMapping("/tmp")
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class LendingRecords {
     public ResponseEntity<LendingRecordsDto> search() {
         List<LendingRecord> result = service.search();
         LendingRecordsDto lendingRecordsDto = convertSearchResult(result);
-        return new ResponseEntity<>(lendingRecordsDto, HttpStatus.OK);
+        return new ResponseEntity<>(lendingRecordsDto, OK);
     }
 
     /**
@@ -39,15 +41,16 @@ public class LendingRecords {
      * @param body userIdとisbnが含まれる
      */
     @PostMapping("rendingRecords")
-    public ResponseEntity<Void> register(@RequestBody @Valid RequestParam body) {
-
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<Void> borrow(@RequestBody @Valid RequestParame body) {
+        service.borrow(body.getIsbn(), body.getUserId());
+        return new ResponseEntity<>(OK);
     }
 
     // TODO 本来であればURLにIDを仕込むがこの場合はどうする
-    @DeleteMapping("rendingRecords/")
-    public ResponseEntity<Void> delete(@RequestBody @Valid RequestParam body) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    @DeleteMapping("rendingRecords")
+    public ResponseEntity<Void> delete(@RequestBody @Valid RequestParame body) {
+        service.returnn(body.getIsbn(), body.getUserId());
+        return new ResponseEntity<>(OK);
     }
 
     private LendingRecordsDto convertSearchResult(List<LendingRecord> entities) {
@@ -66,7 +69,7 @@ public class LendingRecords {
     }
 
     @Data
-    private static class RequestParam {
+    private static class RequestParame {
         @NotNull
         private String isbn;
         @NotNull

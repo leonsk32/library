@@ -31,7 +31,7 @@
 //    void test_01() throws Exception {
 //        List<LendingRecord> lendingRecordList =
 //                Arrays.asList(
-//                        new LendingRecord(new Book("9784567890123", "title"), new User("1234567", "aa@bb")),
+////                        new LendingRecord(new Book("9784567890123", "title"), new User("1234567", "aa@bb")),
 //                        new LendingRecord(new Book("9784567890124", "title"), new User("1234568", "aa@bb"))
 //                );
 //

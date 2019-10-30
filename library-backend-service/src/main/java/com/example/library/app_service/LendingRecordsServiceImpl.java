@@ -16,4 +16,14 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
     public List<LendingRecord> search(String... options) {
         return lendingRecordRepository.findAll();
     }
+
+    @Override
+    public void borrow(String isbn, String userId) {
+
+    }
+
+    @Override
+    public void returnn(String isbn, String userId) {
+
+    }
 }

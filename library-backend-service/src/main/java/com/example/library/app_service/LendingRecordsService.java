@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface LendingRecordsService {
     List<LendingRecord> search(String... options);
+
+    void borrow(String isbn, String userId);
+
+    void returnn(String isbn, String userId);
 }
