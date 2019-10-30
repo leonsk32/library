@@ -19,7 +19,7 @@ public class BookRepositoryImpl implements BookRepository {
         List<Map<String, Object>> resultMap= jdbcTemplate.queryForList(sql);
         if(resultMap.size() == 0) return null;
         String title =  (String)resultMap.get(0).get("title");
-        Book book = new Book(isbn, title);
+        Book book = new Book(isbn);
         return book;
     }
 }

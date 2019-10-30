@@ -1,6 +1,6 @@
 create TABLE BOOK (
       isbn VARCHAR(13) PRIMARY KEY,
-      title VARCHAR
+      amount INT
   );
 
 create TABLE USERR (
