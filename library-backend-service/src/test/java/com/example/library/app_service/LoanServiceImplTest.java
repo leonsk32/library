@@ -39,7 +39,7 @@ class LoanServiceImplTest {
             String isbn = "9784567890978";
             String userId = "9784567";
 
-            when(bookRepository.findById(any())).thenReturn(new Book("9784567890978", "titleA"));
+            when(bookRepository.findById(any())).thenReturn(new Book("9784567890978"));
             when(userRepository.findById(any())).thenReturn(new User("9784567", "aa@bb"));
             doNothing().when(lendingRecordRepository).register(any());
 
@@ -60,7 +60,7 @@ class LoanServiceImplTest {
             doNothing().when(lendingRecordRepository).delete(any());
             target.receive(isbn, userId);
 
-            LendingRecord expected = new LendingRecord(new Book(isbn, "titleA"), new User(userId, "aa@bb"));
+            LendingRecord expected = new LendingRecord(new Book(isbn), new User(userId, "aa@bb"));
             verify(lendingRecordRepository).delete(any());
         }
     }

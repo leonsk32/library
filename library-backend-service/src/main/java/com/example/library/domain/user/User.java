@@ -5,8 +5,11 @@ import lombok.Getter;
 public class User {
     @Getter
     private final String userId;
+    @Getter
     private final String email;
+    @Getter
     private String simei;
+    @Getter
     private String namae;
 
     public User(String userId, String email, String simei, String namae) {

@@ -15,8 +15,8 @@ class BookTest {
     @DisplayName("同一性の操作の検証")
     @Test
     void equal01() {
-        Book book1 = new Book(EVANS_DDD_ISBN10, "title2");
-        Book book2 = new Book(EVANS_DDD_ISBN13, "title3");
+        Book book1 = new Book(EVANS_DDD_ISBN10);
+        Book book2 = new Book(EVANS_DDD_ISBN13);
         assertThat(book1).isEqualTo(book2);
     }
 }
