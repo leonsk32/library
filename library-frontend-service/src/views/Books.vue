@@ -1,5 +1,16 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <HelloWorld/>
 </template>
+<script lang="ts">
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
+import HelloWorld from '@/components/HelloWorld.vue';
+
+@Component({
+  components: {
+    HelloWorld,
+  },
+})
+export default class App extends Vue {
+}
+</script>

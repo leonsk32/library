@@ -59,30 +59,23 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import axios from 'axios';
-// import { DefaultApi } from '@/generated';
+// import { BooksApi } from '@/generated';
 import { DefaultApi } from '@/generated/external';
 
 @Component
 export default class Home extends Vue {
     datas: any = null;
 
-    api: DefaultApi = new DefaultApi();
+    // bookApi: BooksApi = new BooksApi();
+    bookInfoapi: DefaultApi = new DefaultApi();
 
     getDatas(): any {
-      // const hoge: Array<string> = ['978-4-7981-2196-3', '978-4-7981-3161-0'];
-
       const hoge: Array<string> = ['978-4-7981-2196-3'];
-      this.api.getGet(hoge)
+      this.bookInfoapi.getGet(hoge)
         .then((res) => {
           console.log(res);
           this.datas = res.data;
         });
-
-      // const res =  this.api.booksGet();
-      // const res = axios.get('https://enigmatic-depths-14464.herokuapp.com/api/v1/books');
-      // console.log(res);
-      // this.datas = res.data;
     }
 
     mounted(): void {

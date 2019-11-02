@@ -1,5 +1,17 @@
 <template>
   <v-app>
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title class="headline">
+        <span>ADC</span>
+        <span class="font-weight-light">Library</span>
+      </v-toolbar-title>
+    </v-app-bar>
+
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+
     <v-navigation-drawer
       v-model="drawer"
       absolute
@@ -12,7 +24,7 @@
       >
         <v-list-item-group
           v-model="group"
-          active-class="deep-purple--text text--accent-4"
+          active-class="deep-purple--text text--accent-1"
         >
           <v-list-item>
             <v-list-item-title>Search</v-list-item-title>
@@ -25,33 +37,18 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="headline">
-        <span>ADC</span>
-        <span class="font-weight-light">Library</span>
-      </v-toolbar-title>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
-import HelloWorld from './components/HelloWorld.vue';
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
+@Component
 export default class App extends Vue {
     drawer: boolean = false;
+
+    group: any = null;
 
     @Watch('drawer')
     onChanged() {
