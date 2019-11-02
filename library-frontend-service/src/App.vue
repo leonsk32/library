@@ -3,7 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       absolute
-      bottom
+      left
       temporary
     >
       <v-list
@@ -12,14 +12,34 @@
       >
         <v-list-item-group
           v-model="group"
-          active-class="deep-purple--text text--accent-4"
+          active-class="deep-purple--text text--accent-1"
         >
+
           <v-list-item>
-            <v-list-item-title>Search</v-list-item-title>
+            <v-list-item-title
+              @click="to('/')"
+            >
+              <v-icon>fas fa-book</v-icon>
+              ダッシュボード
+            </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title>貸出一覧</v-list-item-title>
+            <v-list-item-title
+              @click="to('/books')"
+            >
+              <v-icon>fas fa-book</v-icon>
+              検索
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title
+              @click="to('/books')"
+            >
+              <v-icon>fas fa-book</v-icon>
+              貸出一覧
+            </v-list-item-title>
           </v-list-item>
 
         </v-list-item-group>
@@ -35,7 +55,7 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
@@ -43,19 +63,15 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
-import HelloWorld from './components/HelloWorld.vue';
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
+@Component
 export default class App extends Vue {
     drawer: boolean = false;
 
-    @Watch('drawer')
-    onChanged() {
-      this.drawer = false;
+    group: any = null;
+
+    to(url: string):any {
+      this.$router.push(url);
     }
 }
 </script>

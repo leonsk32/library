@@ -1,8 +1,8 @@
 // tslint:disable
 /// <reference path="./custom.d.ts" />
 /**
- * libraryApplication
- * 図書館アプリのライブラリ
+ * openBD API
+ * [openBDプロジェクト（カーリル・版元ドットコム）](https://openbd.jp)によって提供される書誌情報・書影を、だれでも自由に使える、高速なAPI.
  *
  * The version of the OpenAPI document: 1.0.0
  * 
@@ -18,7 +18,7 @@ import { Configuration } from "./configuration";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 
-export const BASE_PATH = "http://localhost:8080/api/v1".replace(/\/+$/, "");
+export const BASE_PATH = "https://api.openbd.jp/v1".replace(/\/+$/, "");
 
 /**
  *
