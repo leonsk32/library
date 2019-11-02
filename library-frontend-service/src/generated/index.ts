@@ -1,7 +1,7 @@
 // tslint:disable
 /**
- * openBD API
- * [openBDプロジェクト（カーリル・版元ドットコム）](https://openbd.jp)によって提供される書誌情報・書影を、だれでも自由に使える、高速なAPI.
+ * libraryApplication
+ * 図書館アプリのライブラリ
  *
  * The version of the OpenAPI document: 1.0.0
  * 
