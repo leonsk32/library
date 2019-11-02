@@ -1,5 +1,51 @@
 <template>
   <v-app>
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      left
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-1"
+        >
+
+          <v-list-item>
+            <v-list-item-title
+              @click="to('/')"
+            >
+              <v-icon>fas fa-book</v-icon>
+              ダッシュボード
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title
+              @click="to('/books')"
+            >
+              <v-icon>fas fa-book</v-icon>
+              検索
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title
+              @click="to('/books')"
+            >
+              <v-icon>fas fa-book</v-icon>
+              貸出一覧
+            </v-list-item-title>
+          </v-list-item>
+
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-app-bar app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="headline">
@@ -11,32 +57,6 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      bottom
-      temporary
-    >
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-1"
-        >
-          <v-list-item>
-            <v-list-item-title>Search</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>貸出一覧</v-list-item-title>
-          </v-list-item>
-
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
   </v-app>
 </template>
 
@@ -50,9 +70,8 @@ export default class App extends Vue {
 
     group: any = null;
 
-    @Watch('drawer')
-    onChanged() {
-      this.drawer = false;
+    to(url: string):any {
+      this.$router.push(url);
     }
 }
 </script>
