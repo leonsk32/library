@@ -59,22 +59,29 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-// import { BooksApi } from '@/generated';
+import { BooksApi } from '@/generated';
 import { DefaultApi } from '@/generated/external';
 
 @Component
 export default class Home extends Vue {
     datas: any = null;
 
-    // bookApi: BooksApi = new BooksApi();
+    bookApi: BooksApi = new BooksApi();
+
     bookInfoapi: DefaultApi = new DefaultApi();
 
     getDatas(): any {
       const hoge: Array<string> = ['978-4-7981-2196-3'];
-      this.bookInfoapi.getGet(hoge)
+      this.bookApi.booksGet()
         .then((res) => {
-          console.log(res);
-          this.datas = res.data;
+          const { books } = res.data;
+          // booksを加工してisbnに。
+
+          this.bookInfoapi.getGet(hoge)
+            .then((res2) => {
+              console.log(res2);
+              this.datas = res2.data;
+            });
         });
     }
 
