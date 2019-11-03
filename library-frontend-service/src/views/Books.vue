@@ -1,14 +1,12 @@
 <template>
-  <v-card>
-
-    未実装です
-  </v-card>
+    <BookList/>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
-
-@Component
+import BookList from '@/components/BookList.vue';
+@Component({
+  components: { BookList },
+})
 export default class Books extends Vue {
 }
 </script>
