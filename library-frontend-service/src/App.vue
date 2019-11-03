@@ -71,6 +71,9 @@ export default class App extends Vue {
     group: any = null;
 
     to(url: string):any {
+      if (this.$route.fullPath === url) {
+        return;
+      }
       this.$router.push(url);
     }
 }
