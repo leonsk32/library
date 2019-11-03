@@ -288,18 +288,18 @@ export const BooksIsbnActionsApiAxiosParamCreator = function (configuration?: Co
         /**
          * 
          * @summary 本に対する行動
-         * @param {} UNKNOWN_PARAMETER_NAME 
+         * @param {string} isbn 
          * @param {Bookaction} [bookaction] パラメータのISBNの
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        booksIsbnActionsPost(UNKNOWN_PARAMETER_NAME: , bookaction?: Bookaction, options: any = {}): RequestArgs {
-            // verify required parameter 'UNKNOWN_PARAMETER_NAME' is not null or undefined
-            if (UNKNOWN_PARAMETER_NAME === null || UNKNOWN_PARAMETER_NAME === undefined) {
-                throw new RequiredError('UNKNOWN_PARAMETER_NAME','Required parameter UNKNOWN_PARAMETER_NAME was null or undefined when calling booksIsbnActionsPost.');
+        booksIsbnActionsPost(isbn: string, bookaction?: Bookaction, options: any = {}): RequestArgs {
+            // verify required parameter 'isbn' is not null or undefined
+            if (isbn === null || isbn === undefined) {
+                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksIsbnActionsPost.');
             }
             const localVarPath = `/books/{isbn}/actions`
-                .replace(`{${"isbn"}}`, encodeURIComponent(String(UNKNOWN_PARAMETER_NAME)));
+                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -337,13 +337,13 @@ export const BooksIsbnActionsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 本に対する行動
-         * @param {} UNKNOWN_PARAMETER_NAME 
+         * @param {string} isbn 
          * @param {Bookaction} [bookaction] パラメータのISBNの
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        booksIsbnActionsPost(UNKNOWN_PARAMETER_NAME: , bookaction?: Bookaction, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = BooksIsbnActionsApiAxiosParamCreator(configuration).booksIsbnActionsPost(UNKNOWN_PARAMETER_NAME, bookaction, options);
+        booksIsbnActionsPost(isbn: string, bookaction?: Bookaction, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = BooksIsbnActionsApiAxiosParamCreator(configuration).booksIsbnActionsPost(isbn, bookaction, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -361,13 +361,13 @@ export const BooksIsbnActionsApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary 本に対する行動
-         * @param {} UNKNOWN_PARAMETER_NAME 
+         * @param {string} isbn 
          * @param {Bookaction} [bookaction] パラメータのISBNの
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        booksIsbnActionsPost(UNKNOWN_PARAMETER_NAME: , bookaction?: Bookaction, options?: any) {
-            return BooksIsbnActionsApiFp(configuration).booksIsbnActionsPost(UNKNOWN_PARAMETER_NAME, bookaction, options)(axios, basePath);
+        booksIsbnActionsPost(isbn: string, bookaction?: Bookaction, options?: any) {
+            return BooksIsbnActionsApiFp(configuration).booksIsbnActionsPost(isbn, bookaction, options)(axios, basePath);
         },
     };
 };
@@ -382,14 +382,14 @@ export class BooksIsbnActionsApi extends BaseAPI {
     /**
      * 
      * @summary 本に対する行動
-     * @param {} UNKNOWN_PARAMETER_NAME 
+     * @param {string} isbn 
      * @param {Bookaction} [bookaction] パラメータのISBNの
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BooksIsbnActionsApi
      */
-    public booksIsbnActionsPost(UNKNOWN_PARAMETER_NAME: , bookaction?: Bookaction, options?: any) {
-        return BooksIsbnActionsApiFp(this.configuration).booksIsbnActionsPost(UNKNOWN_PARAMETER_NAME, bookaction, options)(this.axios, this.basePath);
+    public booksIsbnActionsPost(isbn: string, bookaction?: Bookaction, options?: any) {
+        return BooksIsbnActionsApiFp(this.configuration).booksIsbnActionsPost(isbn, bookaction, options)(this.axios, this.basePath);
     }
 
 }

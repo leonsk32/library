@@ -43,6 +43,9 @@ actions:
     - name: isbn
       in: path
       required: true
+      schema:
+        type: string
+      description: ''
   post:
     tags:
       - booksIsbnActions
