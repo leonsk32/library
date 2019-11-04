@@ -18,6 +18,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { BooksApi } from '@/generated';
+import { DefaultApi } from '@/generated/external';
 
 @Component
 export default class BookList extends Vue {
@@ -29,15 +31,32 @@ export default class BookList extends Vue {
     { text: '貸出者', value: 'users' },
   ];
 
+    bookApi: BooksApi = new BooksApi();
+
+    bookInfoapi: DefaultApi = new DefaultApi();
+
   getBooks(): any {
-    const hoge = [
+      const hoge: Array<string> = ['978-4-7981-2196-3'];
+      this.bookApi.booksGet()
+          .then((res) => {
+              const { books } = res.data;
+              // booksを加工してisbnに。
+
+              this.bookInfoapi.getGet(hoge)
+                  .then((res2) => {
+                      this.books = res2.data;
+                  });
+          });
+
+
+    const hoge2 = [
       { title: 'DDD', max: '2', users: 'きり丸' },
       { title: 'vue', max: '0', users: '乱太郎,きり丸,新兵衛' },
       { title: 'Nuxt', max: '0', users: 'きり丸' },
       { title: 'よくわからないDDD', max: '1', users: '' },
       { title: 'アジャイルサムライ', max: '10', users: '' },
     ];
-    this.books = hoge;
+    this.books = hoge2;
   }
 
   mounted(): void {
