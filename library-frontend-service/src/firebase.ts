@@ -23,11 +23,11 @@ export default {
           : firebase.auth.Auth.Persistence.SESSION,
       );
   },
-  login(): void {
+  login(): Promise<firebase.auth.UserCredential> {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
+    return firebase.auth().signInWithPopup(provider);
   },
-  logout() {
-    firebase.auth().signOut();
+  logout(): any {
+    return firebase.auth().signOut();
   },
 };

@@ -3,13 +3,13 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-layout v-if="userStatus" key="login" row>
-      <v-flex xs2>
+      <v-flex>
+        <span>{{ user.displayName }}</span>
+      </v-flex>
+      <v-flex>
         <v-btn color="info" @click="doLogout">
           SIGN OUT
         </v-btn>
-      </v-flex>
-      <v-flex xs2>
-        <p class="navbar-item">{{ user.displayName }}</p>
       </v-flex>
     </v-layout>
     <v-layout v-else key="logout" row>
@@ -32,12 +32,16 @@ export default class Auth extends Vue {
 
     userStatus: boolean = false;
 
-    doLogin(): void {
-      this.user = Firebase.login();
+    async doLogin(): Promise<void> {
+      const tmpUser = await Firebase.login();
+      this.user = tmpUser.user;
+      this.userStatus = true;
     }
 
     doLogout(): void {
-      this.user = Firebase.logout();
+      Firebase.logout();
+      this.user = {};
+      this.userStatus = false;
     }
 }
 </script>
