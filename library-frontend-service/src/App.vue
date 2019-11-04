@@ -52,6 +52,7 @@
         <span>ADC</span>
         <span class="font-weight-light">Library</span>
       </v-toolbar-title>
+      <Auth/>
     </v-app-bar>
 
     <v-content>
@@ -62,9 +63,12 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
+import Auth from '@/components/Auth.vue';
 
 
-@Component
+@Component(
+  { components: { Auth } },
+)
 export default class App extends Vue {
     drawer: boolean = false;
 
