@@ -1,0 +1,14 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Firebase Deploy
+      run: |
+        ./library-frontend-service/node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
