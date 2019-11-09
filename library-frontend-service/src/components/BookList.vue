@@ -48,12 +48,16 @@ export default class BookList extends Vue {
 
     getBooks(): any {
       const hoge: Array<string> = ['978-4-7981-2196-3'];
+      const hoge3: Array<string> = [];
 
       this.bookApi.booksGet()
         .then((res) => {
-          const books = res.data;
-          // booksを加工してisbnに。
-          this.bookInfoapi.getGet(hoge)
+          // const books = res.data;
+          // let isbn = books.isbn;
+          const isbn : string = '9784798121963';
+          const formatIsbn = `${isbn.substr(0, 3)}-${isbn.substr(3, 1)}-${isbn.substr(4, 4)}-${isbn.substr(8, 4)}-${isbn.substr(12, 1)}`;
+          hoge3.push(formatIsbn);
+          this.bookInfoapi.getGet(hoge3)
             .then((res2) => {
               this.books = res2.data;
             });
