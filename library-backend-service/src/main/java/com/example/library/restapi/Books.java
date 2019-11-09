@@ -49,9 +49,9 @@ public class Books {
     private BookListDto convert(List<Book> books) {
         BookListDto bookListDto = new BookListDto();
         List<String> isbns = new ArrayList<>();
-//        for(Book book : books) {
-//            isbns.add(book.getIsbn());
-//        }
+        for(Book book : books) {
+            isbns.add(book.getIsbn());
+        }
         bookListDto.setIsbns(isbns);
         return bookListDto;
     }
