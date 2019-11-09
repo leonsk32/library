@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { BooksApi } from '@/generated';
+import { BooksApi, Configuration } from '@/generated';
 import { DefaultApi } from '@/generated/external';
 
 @Component
@@ -31,21 +31,27 @@ export default class BookList extends Vue {
     { text: '貸出者', value: 'users' },
   ];
 
-    bookApi: BooksApi = new BooksApi();
+  configuration: Configuration =
+      {
+        baseOptions: {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+        },
+        basePath: process.env.VUE_APP_DEV_SERVER_URL,
+
+      };
+
+    bookApi: BooksApi = new BooksApi(this.configuration);
 
     bookInfoapi: DefaultApi = new DefaultApi();
 
     getBooks(): any {
       const hoge: Array<string> = ['978-4-7981-2196-3'];
 
-      const options = {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      };
-      this.bookApi.booksGet(options)
+      this.bookApi.booksGet()
         .then((res) => {
-          const { books } = res.data;
+          const books = res.data;
           // booksを加工してisbnに。
           this.bookInfoapi.getGet(hoge)
             .then((res2) => {
