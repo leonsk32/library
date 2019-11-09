@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/tmp")
 @RequiredArgsConstructor
 public class Users {
+
     @GetMapping("users")
     public ResponseEntity<BookListDto> search() {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);

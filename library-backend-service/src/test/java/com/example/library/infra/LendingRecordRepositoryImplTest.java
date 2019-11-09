@@ -71,7 +71,7 @@ class LendingRecordRepositoryImplTest {
         @Test
         void dlete01() {
             // GIVEN
-            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890978)");
+            bookRepository.register(new Book("9784567890978"));
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784567, 'aa@bb')");
             LendingRecord entity = new LendingRecord(new Book("9784567890978"),new User( "9784567", "aa@bb"));
 
@@ -100,7 +100,7 @@ class LendingRecordRepositoryImplTest {
         @Test
         void findById_01() {
             // GIVEN
-            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890978)");
+            bookRepository.register(new Book("9784567890978"));
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784567, 'aa@bb')");
             Book book = new Book("9784567890978");
             User user = new User("9784567", "aa@bb");
@@ -118,9 +118,9 @@ class LendingRecordRepositoryImplTest {
         @Test
         void findAll_02() {
             // GIVEN
-            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890978)");
-            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890124)");
-            jdbcTemplate.execute("insert into BOOK (isbn) values(9784567890125)");
+            bookRepository.register(new Book("9784567890978"));
+            bookRepository.register(new Book("9784567890124"));
+            bookRepository.register(new Book("9784567890125"));
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784567, 'aa@bb')");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784568, 'ab@bb')");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784569, 'ac@bb')");

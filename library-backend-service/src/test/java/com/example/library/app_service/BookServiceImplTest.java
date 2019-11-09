@@ -3,6 +3,8 @@ package com.example.library.app_service;
 import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -30,6 +32,7 @@ class BookServiceImplTest {
         verify(bookRepository).findAll();
     }
 
+    @Disabled
     @Test
     void test02() {
         final String isbn = "9781234567890";

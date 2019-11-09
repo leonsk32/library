@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -35,16 +34,6 @@ class BookRepositoryImplTest {
         jdbcTemplate.execute("Delete from BOOK");
     }
 
-    @DisplayName("取得できるケース")
-    @Test
-    void test01() {
-        jdbcTemplate.execute("insert into BOOK (isbn) values('9784567890978')");
-        String isbn = "9784567890978";
-        Book book = target.findById(isbn);
-
-        assertThat(book).isEqualTo(new Book(isbn));
-    }
-
     @DisplayName("取得できないケース")
     @Test
     void test02() {
@@ -53,68 +42,8 @@ class BookRepositoryImplTest {
         assertThat(book).isNull();
     }
 
-    @DisplayName("全取得")
-    @Test
-    void test03() {
-        jdbcTemplate.execute("insert into BOOK (isbn) values('9784567890978')");
-        jdbcTemplate.execute("insert into BOOK (isbn) values('9784567890979')");
-        List<Book> books = target.findAll();
-        assertThat(books).isEqualTo(asList(
-                new Book("9784567890978"),
-                new Book("9784567890979")
-        ));
-    }
-
-    @DisplayName("登録")
-    @Test
-    void test04() {
-        List<Book> none = target.findAll();
-        assertThat(none.size()).isZero();
-
-        target.register(new Book("9781234567890"));
-
-        List<Book> all = target.findAll();
-        assertThat(all.size()).isOne();
-        assertThat(all.get(0).getIsbn()).isEqualTo("9781234567890");
-        assertThat(all.get(0).getAmount()).isEqualTo(1);
-
-    }
-
-    @DisplayName("削除")
-    @Test
-    void test05() {
-        Book book = new Book("9781234567890");
-        target.register(book);
-        List<Book> all = target.findAll();
-        assertThat(all.size()).isOne();
-        assertThat(all.get(0).getIsbn()).isEqualTo("9781234567890");
-        assertThat(all.get(0).getAmount()).isEqualTo(1);
-
-        target.delete(book);
-
-        List<Book> none = target.findAll();
-        assertThat(none.size()).isZero();
-    }
-
-    @DisplayName("保存")
-    @Test
-    void test06() {
-        String isbn = "9781234567890";
-        Book book = new Book(isbn);
-        target.register(book);
-
-        Book byId = target.findById(isbn);
-        byId.add();
-
-        target.save(byId);
-        List<Book> all = target.findAll();
-        assertThat(all.size()).isOne();
-        assertThat(all.get(0).getIsbn()).isEqualTo("9781234567890");
-        assertThat(all.get(0).getAmount()).isEqualTo(2);
-
-    }
-
-    @DisplayName("シナリオテスト")
+    @DisplayName("シナリオテスト" +
+            "すべてのメソッドを組み合わせてテストしている")
     @Test
     void test07() {
         String isbn1 = "9781234567890";
