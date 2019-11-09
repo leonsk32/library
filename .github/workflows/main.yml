@@ -39,12 +39,6 @@ jobs:
         working-directory: ./library-frontend-service
       - name: Build
         run: npm run build
-      - name: Archive Production Artifact
-        working-directory: ./library-frontend-service
-        uses: actions/upload-artifact@master
-        with:
-          name: dist
-          path: dist
       - name: deploy to Firebase Hosting
         working-directory: ./library-frontend-service
         run: |
