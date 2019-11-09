@@ -37,10 +37,17 @@ export default class BookList extends Vue {
 
     getBooks(): any {
       const hoge: Array<string> = ['978-4-7981-2196-3'];
-      this.bookApi.booksGet()
+
+      const options = {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      };
+      this.bookApi.booksGet(options)
         .then((res) => {
           const { books } = res.data;
           // booksを加工してisbnに。
+          console.log(books);
 
           this.bookInfoapi.getGet(hoge)
             .then((res2) => {

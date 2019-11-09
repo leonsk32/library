@@ -20,6 +20,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 public class Books {
     private final BookService service;
+    @CrossOrigin
     @GetMapping("books")
     public ResponseEntity<BookListDto> search() {
         List<Book> books = service.searchAll();
@@ -48,9 +49,9 @@ public class Books {
     private BookListDto convert(List<Book> books) {
         BookListDto bookListDto = new BookListDto();
         List<String> isbns = new ArrayList<>();
-        for(Book book : books) {
-            isbns.add(book.getIsbn());
-        }
+//        for(Book book : books) {
+//            isbns.add(book.getIsbn());
+//        }
         bookListDto.setIsbns(isbns);
         return bookListDto;
     }
