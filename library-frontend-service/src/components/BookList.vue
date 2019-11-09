@@ -69,5 +69,9 @@ export default class BookList extends Vue {
     mounted(): void {
       this.getBooks();
     }
+
+    toFormatedIsbn(isbn: string): string {
+        return isbn;
+    }
 }
 </script>
