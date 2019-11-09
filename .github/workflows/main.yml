@@ -43,4 +43,4 @@ jobs:
       - name: deploy to Firebase Hosting
         working-directory: ./library-frontend-service
         run: |
-          npm run deploy --token=${{ secrets.FIREBASE_TOKEN }}
+          ./library-frontend-service/node_modules/.bin/firebase deploy --token=${{ secrets.FIREBASE_TOKEN }
