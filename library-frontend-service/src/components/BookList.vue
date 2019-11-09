@@ -47,8 +47,6 @@ export default class BookList extends Vue {
         .then((res) => {
           const { books } = res.data;
           // booksを加工してisbnに。
-          console.log(books);
-
           this.bookInfoapi.getGet(hoge)
             .then((res2) => {
               this.books = res2.data;
@@ -68,10 +66,6 @@ export default class BookList extends Vue {
 
     mounted(): void {
       this.getBooks();
-    }
-
-    toFormatedIsbn(isbn: string): string {
-        return isbn;
     }
 }
 </script>
