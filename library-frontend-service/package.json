@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve  ----mode development",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint --fix",
+    "deploy": "firebase deploy",
     "test:unit": "vue-cli-service test:unit",
     "generate": "run-p generate:ts generate:java",
     "generateAll": "run-p generate:*",
@@ -42,6 +43,7 @@
     "typescript": "~3.5.3",
     "vue-cli-plugin-vuetify": "^1.1.1",
     "vue-template-compiler": "^2.6.10",
-    "vuetify-loader": "^1.3.0"
+    "vuetify-loader": "^1.3.0",
+    "firebase-tools": "^6.7.2"
   }
 }
