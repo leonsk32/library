@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve  ----mode development",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --fix",
     "test:unit": "vue-cli-service test:unit",
     "generate": "run-p generate:ts generate:java",
     "generateAll": "run-p generate:*",
