@@ -7,14 +7,35 @@ import lombok.Getter;
  */
 public class Book {
     private Isbn isbn;
+    @Getter
+    private int amount;
 
+    /**
+     * ファクトリ用のコンストラクタ
+     */
     public Book(String isbn) {
         this.isbn = new Isbn(isbn);
+        this.amount = 1;
+    }
+
+    /**
+     * 再構成用のコンストラクタ
+     */
+    public Book(String isbn, int amount) {
+        this.isbn = new Isbn(isbn);
+        this.amount = amount;
     }
 
     public String getIsbn() {
         return this.isbn.toString();
     }
+
+
+    public void add(){
+        amount++;
+    }
+
+
 
     @Override
     public boolean equals(Object other) {

@@ -1,4 +1,4 @@
-package com.example.library.restapi.books.dto;
+package com.example.library.restapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

@@ -10,4 +10,6 @@ public interface BookRepository {
     void register(Book book);
 
     void delete(Book book);
+
+    void save(Book book);
 }

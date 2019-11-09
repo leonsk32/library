@@ -1,6 +1,6 @@
 package com.example.library.restapi;
 
-import com.example.library.restapi.books.dto.BookListDto;
+import com.example.library.restapi.dto.BookListDto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

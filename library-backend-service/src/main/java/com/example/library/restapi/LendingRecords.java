@@ -2,11 +2,10 @@ package com.example.library.restapi;
 
 import com.example.library.app_service.LendingRecordsService;
 import com.example.library.domain.lending.LendingRecord;
-import com.example.library.restapi.books.dto.LendingRecordDto;
-import com.example.library.restapi.books.dto.LendingRecordsDto;
+import com.example.library.restapi.dto.LendingRecordDto;
+import com.example.library.restapi.dto.LendingRecordsDto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

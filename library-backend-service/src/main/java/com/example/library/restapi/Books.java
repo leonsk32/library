@@ -3,7 +3,7 @@ package com.example.library.restapi;
 
 import com.example.library.app_service.BookService;
 import com.example.library.domain.book.Book;
-import com.example.library.restapi.books.dto.BookListDto;
+import com.example.library.restapi.dto.BookListDto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

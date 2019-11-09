@@ -1,6 +1,6 @@
 //package com.example.library.functionalTest;
 //
-//import com.example.library.restapi.books.dto.BookListDto;
+//import com.example.library.restapi.dto.BookListDto;
 //import org.assertj.core.api.SoftAssertions;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Nested;

@@ -64,4 +64,94 @@ class BookRepositoryImplTest {
                 new Book("9784567890979")
         ));
     }
+
+    @DisplayName("登録")
+    @Test
+    void test04() {
+        List<Book> none = target.findAll();
+        assertThat(none.size()).isZero();
+
+        target.register(new Book("9781234567890"));
+
+        List<Book> all = target.findAll();
+        assertThat(all.size()).isOne();
+        assertThat(all.get(0).getIsbn()).isEqualTo("9781234567890");
+        assertThat(all.get(0).getAmount()).isEqualTo(1);
+
+    }
+
+    @DisplayName("削除")
+    @Test
+    void test05() {
+        Book book = new Book("9781234567890");
+        target.register(book);
+        List<Book> all = target.findAll();
+        assertThat(all.size()).isOne();
+        assertThat(all.get(0).getIsbn()).isEqualTo("9781234567890");
+        assertThat(all.get(0).getAmount()).isEqualTo(1);
+
+        target.delete(book);
+
+        List<Book> none = target.findAll();
+        assertThat(none.size()).isZero();
+    }
+
+    @DisplayName("保存")
+    @Test
+    void test06() {
+        String isbn = "9781234567890";
+        Book book = new Book(isbn);
+        target.register(book);
+
+        Book byId = target.findById(isbn);
+        byId.add();
+
+        target.save(byId);
+        List<Book> all = target.findAll();
+        assertThat(all.size()).isOne();
+        assertThat(all.get(0).getIsbn()).isEqualTo("9781234567890");
+        assertThat(all.get(0).getAmount()).isEqualTo(2);
+
+    }
+
+    @DisplayName("シナリオテスト")
+    @Test
+    void test07() {
+        String isbn1 = "9781234567890";
+        String isbn2 = "9781234567891";
+        String isbn3 = "9781234567892";
+        Book book1 = new Book(isbn1);
+        Book book2 = new Book(isbn2);
+        Book book3 = new Book(isbn3);
+
+        target.register(book1);
+        target.register(book2);
+        target.register(book3);
+
+        Book byId = target.findById(isbn1);
+        assertThat(byId).isNotNull();
+        assertThat(byId.getAmount()).isOne();
+
+        List<Book> all = target.findAll();
+        Book book4 = all.get(0);
+        Book book5 = all.get(1);
+        Book book6 = all.get(2);
+        assertThat(all.size()).isEqualTo(3);
+
+        target.delete(book5);
+        List<Book> all2 = target.findAll();
+        assertThat(all2.size()).isEqualTo(2);
+
+        book4.add();
+        book4.add();
+        book6.add();
+        target.save(book4);
+        target.save(book6);
+
+        List<Book> all1 = target.findAll();
+        String isbn9 = all1.get(0).getIsbn();
+        Book byId1 = target.findById(isbn9);
+        assertThat(byId1).isNotNull();
+
+    }
 }

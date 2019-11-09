@@ -19,7 +19,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void register(String isbn) {
-        repository.register(new Book(isbn));
+        Book book = repository.findById(isbn);
+        if(book == null) {
+            repository.register(new Book(isbn));
+        }
+        book.add();
+        repository.save(new Book(isbn));
     }
 
     @Override
