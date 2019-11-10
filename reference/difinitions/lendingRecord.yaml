@@ -1,0 +1,17 @@
+title: lendingRecords
+type: object
+description: 貸出帳の検索結果オブジェクト
+properties:
+  isbn:
+    type: string
+  userId:
+    type: string
+  simei:
+    type: string
+  email:
+    type: string
+x-examples:
+  本:
+    value:
+      isbn: '1234567890123'
+      userId: '1234567'

@@ -1,13 +1,8 @@
-title: lendingRecords
+title: lendingRecord
 type: object
-description: 貸出帳の検索結果オブジェクト
+description: 貸出帳のオブジェクト
 properties:
-  isbn:
-    type: string
-  userId:
-    type: string
-x-examples:
-  本:
-    value:
-      isbn: '1234567890123'
-      userId: '1234567'
+  lendingRecords:
+    type: array
+    items:
+      $ref: ./lendingRecord.yaml

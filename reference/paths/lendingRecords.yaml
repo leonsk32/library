@@ -9,11 +9,6 @@ root:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                lendingRecords:
-                    type: array
-                    items:
-                      $ref: ./difinitions/lendingRecords.yaml
+              $ref: ./difinitions/lendingRecords.yaml
   parameters: []
 
