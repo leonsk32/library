@@ -1,8 +1,8 @@
-lendingRecords:
+root:
   get:
     tags:
-      - books
-    summary: 本を検索する
+      - lendingRecords
+    summary: 貸出帳を検索する
     responses:
       '200':
         description: OK
@@ -11,10 +11,9 @@ lendingRecords:
             schema:
               type: object
               properties:
-                books:
-                  anyOf:
-                    - type: array
-                      items: {}
-                    - $ref: ./difinitions/lendingRecords.yaml
+                lendingRecords:
+                    type: array
+                    items:
+                      $ref: ./difinitions/lendingRecords.yaml
   parameters: []
 

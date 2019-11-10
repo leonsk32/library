@@ -1,6 +1,6 @@
-title: books
+title: lendingRecords
 type: object
-description: 本の検索結果オブジェクト
+description: 貸出帳の検索結果オブジェクト
 properties:
   isbn:
     type: string
