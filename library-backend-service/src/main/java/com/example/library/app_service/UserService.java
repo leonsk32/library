@@ -14,4 +14,12 @@ public class UserService {
     public List<User> searchAll() {
         return userRepository.findAll();
     }
+
+    public User searchById(String userId) {
+        User user = userRepository.findById(userId);
+        if(user == null) {
+            throw new RuntimeException("ユーザが存在しない。userId = " + userId);
+        }
+        return user;
+    }
 }

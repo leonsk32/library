@@ -26,7 +26,7 @@ class UsersTest {
     @MockBean
     private UserService userService;
 
-    @DisplayName("get")
+    @DisplayName("全検索")
     @Test
     void name() throws Exception {
         when(userService.searchAll()).thenReturn(List.of(
@@ -54,4 +54,21 @@ class UsersTest {
                                 "}", true));
         verify(userService).searchAll();
     }
+
+    @DisplayName("検索")
+    @Test
+    void test02() throws Exception {
+        when(userService.searchById("1234567")).thenReturn(new User("1234567", "aa@bb", "kirima", "nainai"));
+        mockMvc.perform(get("/v1/users/1234567"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        "{\n" +
+                                "  \"userId\": \"1234567\",\n" +
+                                "  \"email\": \"aa@bb\",\n" +
+                                "  \"simei\": \"kirima\",\n" +
+                                "  \"namae\": \"nainai\"\n" +
+                                "}", true));
+        verify(userService).searchById("1234567");
+    }
+
 }
