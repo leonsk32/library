@@ -10,7 +10,7 @@
     "generate": "run-p generate:ts generate:java",
     "generateAll": "run-p generate:*",
     "generate:ts": "openapi-generator generate -i ../reference/index.yaml -g typescript-axios -o ./client/generated",
-    "generate:java": "openapi-generator generate -i ../reference/index.yaml -g spring -o ./server/generated",
+    "generate:java": "openapi-generator generate -i ../reference/index.yaml -g spring -o ./server/generated --additional-properties dateLibrary=java8-localdatetime,interfaceOnly=true,skipDefaultInterface=true",
     "generate:external": "openapi-generator generate -i ../reference/external/openBd.yaml -g typescript-axios -o ./client/generated/external"
   },
   "dependencies": {
