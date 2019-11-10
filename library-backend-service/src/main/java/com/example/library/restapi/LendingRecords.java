@@ -17,7 +17,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("/tmp")
+@RequestMapping("/v1")
 @RequiredArgsConstructor
 public class LendingRecords {
 

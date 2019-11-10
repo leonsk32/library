@@ -33,7 +33,7 @@ class BooksTest {
 
         when(service.searchAll()).thenReturn(books);
 
-        mockMvc.perform(get("/tmp/books"))
+        mockMvc.perform(get("/v1/books"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         "{\n" +
@@ -49,7 +49,7 @@ class BooksTest {
         final String isbn = "9784567890123";
         doNothing().when(service).register(isbn);
 
-        mockMvc.perform(put("/tmp/books/" + isbn)
+        mockMvc.perform(put("/v1/books/" + isbn)
         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
         verify(service).register(isbn);
@@ -60,7 +60,7 @@ class BooksTest {
         final String isbn = "9784567890123";
         doNothing().when(service).waste(isbn);
 
-        mockMvc.perform(delete("/tmp/books/" + isbn)
+        mockMvc.perform(delete("/v1/books/" + isbn)
         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
         verify(service).waste(isbn);

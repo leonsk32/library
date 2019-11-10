@@ -16,7 +16,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/tmp")
+@RequestMapping("/v1")
 @RequiredArgsConstructor
 public class Books {
     private final BookService service;

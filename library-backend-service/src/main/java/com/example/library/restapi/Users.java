@@ -43,9 +43,9 @@ public class Users {
         return new ResponseEntity<>(userDto, OK);
     }
 
-    @PutMapping("users/{userId}")
+    @PostMapping("users/")
     @CrossOrigin
-    public ResponseEntity<Void> register(@PathVariable("userId") String userId, @RequestBody @Valid RequestParam body) {
+    public ResponseEntity<Void> register(@RequestBody @Valid RequestParam body) {
 
         return new ResponseEntity<>(NOT_IMPLEMENTED);
     }
@@ -62,9 +62,7 @@ public class Users {
         private String userId;
         @NotNull
         private String email;
-        @NotNull
         private String namae;
-        @NotNull
         private String simei;
 
     }
