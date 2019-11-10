@@ -9,6 +9,6 @@ root:
         content:
           application/json:
             schema:
-              $ref: ./difinitions/lendingRecords.yaml
+              $ref: ./difinitions/lendingRecordsDto.yaml
   parameters: []
 

@@ -38,6 +38,8 @@ dependencies {
 	testImplementation 'com.codeborne:selenide:5.2.3'
 	testImplementation 'io.cucumber:cucumber-java:4.7.1'
 	testImplementation 'io.cucumber:cucumber-junit:4.7.1'
+
+	implementation 'org.openapitools:openapi-generator-gradle-plugin:4.2.0'
 }
 
 test {

@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.*;
 @RestController
 @RequestMapping("/v1")
 @RequiredArgsConstructor
-public class LendingRecords {
+public class LendingRecords implements LendingRecordsApi{
 
     private final LendingRecordsService service;
 
@@ -30,10 +30,11 @@ public class LendingRecords {
      */
     @GetMapping("lendingRecords")
     @CrossOrigin
-    public ResponseEntity<LendingRecordsDto> search() {
+    @Override
+    public ResponseEntity<LendingRecordsDto> lendingRecordsGet() {
         List<LendingRecord> result = service.search();
-        LendingRecordsDto lendingRecordsDto = convertSearchResult(result);
-        return new ResponseEntity<>(lendingRecordsDto, OK);
+        LendingRecordsDto LendingRecords = convertSearchResult(result);
+        return new ResponseEntity<>(LendingRecords, OK);
     }
 
     /**
@@ -66,9 +67,11 @@ public class LendingRecords {
             recordDto.setSimei(entity.getUser().getSimei());
             list.add(recordDto);
         }
-        dtos.setLendingRecords(list);
+        dtos.setLendingRecordsDto(list);
         return dtos;
     }
+
+
 
     @Data
     private static class RequestParame {

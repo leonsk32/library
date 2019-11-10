@@ -1,4 +1,4 @@
-title: lendingRecords
+title: lendingRecordsDto
 type: object
 description: 貸出帳の検索結果オブジェクト
 properties:
@@ -6,9 +6,9 @@ properties:
     type: string
   userId:
     type: string
-  simei:
+  namae:
     type: string
-  email:
+  simei:
     type: string
 x-examples:
   本:
