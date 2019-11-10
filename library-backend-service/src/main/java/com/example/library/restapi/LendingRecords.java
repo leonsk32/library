@@ -67,7 +67,7 @@ public class LendingRecords implements LendingRecordsApi{
             recordDto.setSimei(entity.getUser().getSimei());
             list.add(recordDto);
         }
-        dtos.setLendingRecordsDto(list);
+        dtos.setLendingRecords(list);
         return dtos;
     }
 

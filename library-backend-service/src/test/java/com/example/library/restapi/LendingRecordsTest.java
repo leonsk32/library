@@ -41,7 +41,7 @@ class LendingRecordsTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         "{\n" +
-                                "  \"lendingRecord\": [\n" +
+                                "  \"lendingRecords\": [\n" +
                                 "    {\n" +
                                 "      \"isbn\": \"9784567890123\",\n" +
                                 "      \"userId\": \"1234567\",\n" +
@@ -69,7 +69,7 @@ class LendingRecordsTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         "{\n" +
-                                "  \"lendingRecord\": [\n" +
+                                "  \"lendingRecords\": [\n" +
                                 "  ]\n" +
                                 "}", true));
     }

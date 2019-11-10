@@ -2,7 +2,7 @@ title: lendingRecordDto
 type: object
 description: 貸出帳のオブジェクト
 properties:
-  lendingRecordsDto:
+  lendingRecords:
     type: array
     items:
       $ref: ./lendingRecordDto.yaml

@@ -13,40 +13,40 @@ import java.util.Objects;
  * 貸出帳のオブジェクト
  */
 @ApiModel(description = "貸出帳のオブジェクト")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-11T00:31:00.882741700+09:00[Asia/Tokyo]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-11T00:41:00.353393300+09:00[Asia/Tokyo]")
 
 public class LendingRecordsDto   {
-  @JsonProperty("lendingRecordsDto")
+  @JsonProperty("lendingRecords")
   @Valid
-  private List<LendingRecordDto> lendingRecordsDto = null;
+  private List<LendingRecordDto> lendingRecords = null;
 
-  public LendingRecordsDto lendingRecordsDto(List<LendingRecordDto> lendingRecordsDto) {
-    this.lendingRecordsDto = lendingRecordsDto;
+  public LendingRecordsDto lendingRecords(List<LendingRecordDto> lendingRecords) {
+    this.lendingRecords = lendingRecords;
     return this;
   }
 
-  public LendingRecordsDto addLendingRecordsDtoItem(LendingRecordDto lendingRecordsDtoItem) {
-    if (this.lendingRecordsDto == null) {
-      this.lendingRecordsDto = new ArrayList<>();
+  public LendingRecordsDto addLendingRecordsItem(LendingRecordDto lendingRecordsItem) {
+    if (this.lendingRecords == null) {
+      this.lendingRecords = new ArrayList<>();
     }
-    this.lendingRecordsDto.add(lendingRecordsDtoItem);
+    this.lendingRecords.add(lendingRecordsItem);
     return this;
   }
 
   /**
-   * Get lendingRecordsDto
-   * @return lendingRecordsDto
+   * Get lendingRecords
+   * @return lendingRecords
   */
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public List<LendingRecordDto> getLendingRecordsDto() {
-    return lendingRecordsDto;
+  public List<LendingRecordDto> getLendingRecords() {
+    return lendingRecords;
   }
 
-  public void setLendingRecordsDto(List<LendingRecordDto> lendingRecordsDto) {
-    this.lendingRecordsDto = lendingRecordsDto;
+  public void setLendingRecords(List<LendingRecordDto> lendingRecords) {
+    this.lendingRecords = lendingRecords;
   }
 
 
@@ -59,12 +59,12 @@ public class LendingRecordsDto   {
       return false;
     }
     LendingRecordsDto lendingRecordsDto = (LendingRecordsDto) o;
-    return Objects.equals(this.lendingRecordsDto, lendingRecordsDto.lendingRecordsDto);
+    return Objects.equals(this.lendingRecords, lendingRecordsDto.lendingRecords);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(lendingRecordsDto);
+    return Objects.hash(lendingRecords);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class LendingRecordsDto   {
     StringBuilder sb = new StringBuilder();
     sb.append("class LendingRecordsDto {\n");
     
-    sb.append("    lendingRecordsDto: ").append(toIndentedString(lendingRecordsDto)).append("\n");
+    sb.append("    lendingRecords: ").append(toIndentedString(lendingRecords)).append("\n");
     sb.append("}");
     return sb.toString();
   }
