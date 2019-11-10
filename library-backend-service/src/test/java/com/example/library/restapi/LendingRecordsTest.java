@@ -37,7 +37,7 @@ class LendingRecordsTest {
 
         when(service.search()).thenReturn(lendingRecordList);
 
-        mockMvc.perform(get("/v1/rendingRecords"))
+        mockMvc.perform(get("/v1/lendingRecords"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         "{\n" +
@@ -65,7 +65,7 @@ class LendingRecordsTest {
 
         when(service.search()).thenReturn(lendingRecordList);
 
-        mockMvc.perform(get("/v1/rendingRecords"))
+        mockMvc.perform(get("/v1/lendingRecords"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         "{\n" +
@@ -88,7 +88,7 @@ class LendingRecordsTest {
 
         // act and assert
         mockMvc.perform(
-                post("/v1/rendingRecords")
+                post("/v1/lendingRecords")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(body))
                 .andExpect(status().isOk());
@@ -109,7 +109,7 @@ class LendingRecordsTest {
 
         // act and assert
         mockMvc.perform(
-                delete("/v1/rendingRecords")
+                delete("/v1/lendingRecords")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(body))
                 .andExpect(status().isOk());
