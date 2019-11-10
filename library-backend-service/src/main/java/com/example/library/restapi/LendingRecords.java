@@ -29,6 +29,7 @@ public class LendingRecords {
      * @return
      */
     @GetMapping("rendingRecords")
+    @CrossOrigin
     public ResponseEntity<LendingRecordsDto> search() {
         List<LendingRecord> result = service.search();
         LendingRecordsDto lendingRecordsDto = convertSearchResult(result);
@@ -40,6 +41,7 @@ public class LendingRecords {
      * @param body userIdとisbnが含まれる
      */
     @PostMapping("rendingRecords")
+    @CrossOrigin
     public ResponseEntity<Void> borrow(@RequestBody @Valid RequestParame body) {
         service.borrow(body.getIsbn(), body.getUserId());
         return new ResponseEntity<>(OK);
@@ -47,6 +49,7 @@ public class LendingRecords {
 
     // TODO 本来であればURLにIDを仕込むがこの場合はどうする
     @DeleteMapping("rendingRecords")
+    @CrossOrigin
     public ResponseEntity<Void> delete(@RequestBody @Valid RequestParame body) {
         service.returnn(body.getIsbn(), body.getUserId());
         return new ResponseEntity<>(OK);

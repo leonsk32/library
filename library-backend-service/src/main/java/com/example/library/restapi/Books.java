@@ -27,12 +27,14 @@ public class Books {
         return new ResponseEntity<BookListDto>(convert(books), OK);
     }
 
+    @CrossOrigin
     @PutMapping("books/{isbn}")
     public ResponseEntity<Void> register(@PathVariable("isbn") String isbn) {
         service.register(isbn);
         return new ResponseEntity<>(OK);
     }
 
+    @CrossOrigin
     @DeleteMapping("books/{isbn}")
     public ResponseEntity<Void> delete(@PathVariable("isbn") String isbn) {
         service.waste(isbn);

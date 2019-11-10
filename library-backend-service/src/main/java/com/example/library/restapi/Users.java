@@ -16,17 +16,20 @@ import javax.validation.constraints.NotNull;
 public class Users {
 
     @GetMapping("users")
+    @CrossOrigin
     public ResponseEntity<BookListDto> search() {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @PutMapping("users/{userId}")
+    @CrossOrigin
     public ResponseEntity<Void> register(@PathVariable("userId") String userId, @RequestBody @Valid RequestParam body) {
 
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @DeleteMapping("users/{userId}")
+    @CrossOrigin
     public ResponseEntity<Void> delete(@PathVariable("userId") String userId) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
