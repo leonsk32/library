@@ -1,6 +1,10 @@
 package com.example.library.restapi;
 
+import com.example.library.app_service.UserService;
+import com.example.library.domain.user.User;
 import com.example.library.restapi.dto.BookListDto;
+import com.example.library.restapi.dto.UserDto;
+import com.example.library.restapi.dto.UsersDto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,28 +14,36 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
-@RequestMapping("/tmp")
+@RequestMapping("/v1")
 @RequiredArgsConstructor
 public class Users {
 
+    private final UserService service;
+
     @GetMapping("users")
     @CrossOrigin
-    public ResponseEntity<BookListDto> search() {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<UsersDto> search() {
+        List<User> users = service.searchAll();
+        return new ResponseEntity<>(convert(users), OK);
     }
 
     @PutMapping("users/{userId}")
     @CrossOrigin
     public ResponseEntity<Void> register(@PathVariable("userId") String userId, @RequestBody @Valid RequestParam body) {
 
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(NOT_IMPLEMENTED);
     }
 
     @DeleteMapping("users/{userId}")
     @CrossOrigin
     public ResponseEntity<Void> delete(@PathVariable("userId") String userId) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(NOT_IMPLEMENTED);
     }
 
     @Data
@@ -45,5 +57,22 @@ public class Users {
         @NotNull
         private String simei;
 
+    }
+
+    private UsersDto convert(List<User> users) {
+        UsersDto result = new UsersDto();
+        List<UserDto> userDtoList = new ArrayList<>();
+
+        for (User user : users) {
+            UserDto userDto = new UserDto();
+            userDto.setUserId(user.getUserId());
+            userDto.setEmail(user.getEmail());
+            userDto.setSimei(user.getSimei());
+            userDto.setNamae(user.getNamae());
+            userDtoList.add(userDto);
+        }
+
+        result.setUsers(userDtoList);
+        return result;
     }
 }
