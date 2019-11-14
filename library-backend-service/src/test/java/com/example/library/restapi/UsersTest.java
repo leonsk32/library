@@ -2,17 +2,18 @@ package com.example.library.restapi;
 
 import com.example.library.app_service.UserService;
 import com.example.library.domain.user.User;
+import com.example.library.restapi.dto.UserDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -71,4 +72,31 @@ class UsersTest {
         verify(userService).searchById("1234567");
     }
 
+    @DisplayName("ユーザの新規作成")
+    @Test
+    void test03() throws Exception {
+        // arrange
+
+        UserDto userDto = new UserDto();
+        userDto.setUserId("1234567");
+        userDto.setNamae("kirima");
+        userDto.setEmail("kiri@kiri");
+        userDto.setSimei("nainai");
+
+        //language=json
+        String body = "{\n" +
+                "  \"userId\": \"1234567\",\n" +
+                "  \"namae\": \"kirima\",\n" +
+                "  \"email\": \"kiri@kiri\",\n" +
+                "  \"simei\": \"nainai\"\n" +
+                "}";
+
+        // act
+        doNothing().when(userService).register(userDto);
+        mockMvc.perform(put("/v1/users")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(body))
+                .andExpect(status().isOk());
+        verify(userService).register(userDto);
+    }
 }

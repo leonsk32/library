@@ -43,17 +43,24 @@ public class Users {
         return new ResponseEntity<>(userDto, OK);
     }
 
-    @PostMapping("users/")
+    @PutMapping("users")
     @CrossOrigin
     public ResponseEntity<Void> register(@RequestBody @Valid RequestParam body) {
 
-        return new ResponseEntity<>(NOT_IMPLEMENTED);
+        UserDto userDto = new UserDto();
+        userDto.setUserId(body.getUserId());
+        userDto.setEmail(body.getEmail());
+        userDto.setSimei(body.getSimei());
+        userDto.setNamae(body.getNamae());
+        service.register(userDto);
+        return new ResponseEntity<>(OK);
     }
 
     @DeleteMapping("users/{userId}")
     @CrossOrigin
     public ResponseEntity<Void> delete(@PathVariable("userId") String userId) {
-        return new ResponseEntity<>(NOT_IMPLEMENTED);
+        service.delete(userId);
+        return new ResponseEntity<>(OK);
     }
 
     @Data

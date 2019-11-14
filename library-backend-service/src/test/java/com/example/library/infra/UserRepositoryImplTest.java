@@ -34,9 +34,24 @@ class UserRepositoryImplTest {
 
     @DisplayName("取得できるケース")
     @Test
-    void test01() {
-        jdbcTemplate.execute("insert into USERR(user_id, email) values('1234567', 'aa@bb')");
+    void test03() {
         String user_id = "1234567";
+        User user1 = new User(user_id, "aabb", "a", "a");
+        target.register(user1);
+
+        User user = target.findById(user_id);
+
+        assertThat(user).isEqualTo(user1);
+
+        target.delete("1234567");
+        User user2 = target.findById(user_id);
+        assertThat(user2).isNull();
+    }
+    @DisplayName("取得できるケース")
+    @Test
+    void test01() {
+        String user_id = "1234567";
+        target.register(new User("1234567", "aa@bb", "a", "b"));
          User user = target.findById(user_id);
 
         assertThat(user).isEqualTo(new User(user_id, "aa@bb"));
