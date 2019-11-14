@@ -17,12 +17,13 @@ import static java.util.Collections.*;
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
     private final JdbcTemplate jdbcTemplate;
+
     @Override
     public Book findById(String isbn) {
         String sql = "SELECT * FROM book where isbn = '" + isbn + "'";
-        List<Map<String, Object>> resultMap= jdbcTemplate.queryForList(sql);
-        if(resultMap.size() == 0) return null;
-        Book book = new Book(isbn,(Integer)resultMap.get(0).get("amount"));
+        List<Map<String, Object>> resultMap = jdbcTemplate.queryForList(sql);
+        if (resultMap.size() == 0) return null;
+        Book book = new Book(isbn, (Integer) resultMap.get(0).get("amount"));
         return book;
     }
 
@@ -30,11 +31,11 @@ public class BookRepositoryImpl implements BookRepository {
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM book";
-        List<Map<String, Object>> resultMap= jdbcTemplate.queryForList(sql);
-        if(resultMap.size() == 0) return emptyList();
+        List<Map<String, Object>> resultMap = jdbcTemplate.queryForList(sql);
+        if (resultMap.size() == 0) return emptyList();
         for (Map<String, Object> stringObjectMap : resultMap) {
             String isbn = (String) stringObjectMap.get("isbn");
-            books.add(new Book(isbn,(Integer)stringObjectMap.get("amount")));
+            books.add(new Book(isbn, (Integer) stringObjectMap.get("amount")));
         }
         return books;
     }
@@ -42,19 +43,19 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public void register(Book book) {
         String sql = "insert into book (isbn, amount) values (" +
-                book.getIsbn() + ","+ book.getAmount() +");";
+                book.getIsbn() + "," + book.getAmount() + ");";
         jdbcTemplate.execute(sql);
     }
 
     @Override
     public void delete(Book book) {
-        String sql = "delete from book where isbn = " + book.getIsbn() + ";";
+        String sql = "delete from book where isbn = '" + book.getIsbn() + "';";
         jdbcTemplate.execute(sql);
     }
 
     @Override
     public void save(Book book) {
-        String sql = "update  book set amount=" + book.getAmount() +" where isbn = " + book.getIsbn() + ";";
+        String sql = "update  book set amount=" + book.getAmount() + " where isbn = '" + book.getIsbn() + "';";
         jdbcTemplate.execute(sql);
     }
 

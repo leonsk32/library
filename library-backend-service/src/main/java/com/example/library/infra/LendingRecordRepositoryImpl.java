@@ -23,10 +23,10 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
 
     @Override
     public void register(LendingRecord lendingRecord) {
-        jdbcTemplate.execute("insert into lending_record(isbn, user_id) values("
+        jdbcTemplate.execute("insert into lending_record(isbn, user_id) values('"
                 + lendingRecord.getBook().getIsbn()
-                + ","+
-                lendingRecord.getUser().getUserId() + ")");
+                + "','"+
+                lendingRecord.getUser().getUserId() + "')");
     }
 
     @Override

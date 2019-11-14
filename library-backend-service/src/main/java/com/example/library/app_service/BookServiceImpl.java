@@ -22,11 +22,13 @@ public class BookServiceImpl implements BookService {
         Book book = repository.findById(isbn);
         if(book == null) {
             repository.register(new Book(isbn));
+            return;
         }
         book.add();
-        repository.save(new Book(isbn));
+        repository.save(book);
     }
 
+    // TODO 全部消してしまう、量を減らすように修正
     @Override
     public void waste(String isbn) {
         Book book = repository.findById(isbn);

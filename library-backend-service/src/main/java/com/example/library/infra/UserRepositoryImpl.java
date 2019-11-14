@@ -60,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void delete(String userId) {
-        String sql = "delete from userr where user_id = " + userId + ";";
+        String sql = "delete from userr where user_id = '" + userId + "';";
         jdbcTemplate.execute(sql);
     }
 }

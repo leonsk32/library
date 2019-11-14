@@ -13,6 +13,9 @@ public class User {
     private String namae;
 
     public User(String userId, String email, String simei, String namae) {
+        if(userId.length() > 7) {
+            throw new RuntimeException("userIdは７桁");
+        }
         this.userId = userId;
         this.email = email;
         this.simei = simei;
@@ -20,6 +23,9 @@ public class User {
     }
 
     public User(String userId, String email) {
+        if(userId.length() > 7) {
+            throw new RuntimeException("userIdは７桁");
+        }
         this.userId = userId;
         this.email = email;
     }

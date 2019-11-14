@@ -41,13 +41,6 @@ public class Books {
         return new ResponseEntity<>(OK);
     }
 
-    @Data
-    private static class RequestParam {
-        @NotNull
-        private String title;
-
-    }
-
     private BookListDto convert(List<Book> books) {
         BookListDto bookListDto = new BookListDto();
         List<String> isbns = new ArrayList<>();

@@ -27,6 +27,9 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
     public void borrow(String isbn, String userId) {
         Book book = bookRepository.findById(isbn);
         User user = userRepository.findById(userId);
+
+        if(book == null || user == null) throw new RuntimeException("本かユーザが登録されていない");
+
         LendingRecord lendingRecord = new LendingRecord(book, user);
         lendingRecordRepository.register(lendingRecord);
     }
@@ -35,6 +38,9 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
     public void returnn(String isbn, String userId) {
         Book book = bookRepository.findById(isbn);
         User user = userRepository.findById(userId);
+
+        if(book == null || user == null) throw new RuntimeException("本かユーザが登録されていない");
+
         LendingRecord lendingRecord = lendingRecordRepository.findById(book, user);
         lendingRecordRepository.delete(lendingRecord);
     }

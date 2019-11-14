@@ -25,6 +25,10 @@ public class UserService {
     }
 
     public void register(UserDto userDto) {
+        User byId = userRepository.findById(userDto.getUserId());
+        if(byId != null) {
+            return;
+        }
         User user = new User(
                 userDto.getUserId(),
                 userDto.getEmail(),
