@@ -35,7 +35,9 @@ public class Book {
         amount++;
     }
 
-
+    public void decliment(){
+        amount--;
+    }
 
     @Override
     public boolean equals(Object other) {

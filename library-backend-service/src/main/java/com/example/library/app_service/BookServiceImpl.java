@@ -20,7 +20,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void register(String isbn) {
         Book book = repository.findById(isbn);
-        if(book == null) {
+        if (book == null) {
             repository.register(new Book(isbn));
             return;
         }
@@ -28,10 +28,17 @@ public class BookServiceImpl implements BookService {
         repository.save(book);
     }
 
-    // TODO 全部消してしまう、量を減らすように修正
     @Override
     public void waste(String isbn) {
         Book book = repository.findById(isbn);
-        repository.delete(book);
+        if (book == null) throw new RuntimeException("その本はない");
+        if (book.getAmount() != 0) {
+            book.decliment();
+            repository.save(book);
+            return;
+        }
+        if (book.getAmount() == 0) {
+            repository.delete(book);
+        }
     }
 }
