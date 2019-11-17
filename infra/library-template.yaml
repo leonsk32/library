@@ -1,0 +1,121 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Test cfn Template
+Parameters:
+  KeyPair:
+    Description: Select KeyPair Name.
+    Type: AWS::EC2::KeyPair::KeyName
+Resources:
+  cfnVpc:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: "192.168.0.0/16"
+      Tags:
+        - Key: "Name"
+          Value: "library-vpc"
+  cfnPublicSubnet:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      CidrBlock: "192.168.1.0/24"
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: "Name"
+          Value: "library-public-subnet"
+      VpcId:
+        Ref: cfnVpc
+  cfnPrivateSubnet1a:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      CidrBlock: "192.168.2.0/24"
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: "Name"
+          Value: "library-private-subnet-1a"
+      AvailabilityZone: "ap-northeast-1a"
+      VpcId:
+        Ref: cfnVpc
+  cfnPrivateSubnet1c:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      CidrBlock: "192.168.3.0/24"
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: "ap-northeast-1c"
+      Tags:
+        - Key: "Name"
+          Value: "library-private-subnet-1c"
+      VpcId:
+        Ref: cfnVpc
+  cfnInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: "library-igw"
+  cfnAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: cfnVpc
+      InternetGatewayId:
+        Ref: cfnInternetGateway
+  cfnRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: "library-rt"
+      VpcId:
+        Ref: cfnVpc
+  cfnRoute:
+    Type: AWS::EC2::Route
+    DependsOn: cfnInternetGateway
+    Properties:
+      RouteTableId:
+        Ref: cfnRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: cfnInternetGateway
+  cfnPublicSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: cfnPublicSubnet
+      RouteTableId:
+        Ref: cfnRouteTable
+  cfnEC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: "ami-3bd3c45c"
+      InstanceType: "t2.micro"
+      SubnetId:
+        Ref: cfnPublicSubnet
+      BlockDeviceMappings:
+        - DeviceName: "/dev/xvda"
+          Ebs:
+            VolumeType: "gp2"
+            VolumeSize: 8
+      Tags:
+        - Key: "Name"
+          Value: "library-ap"
+      SecurityGroupIds:
+        - Ref: cfnSecurityGroup
+      KeyName:
+        Ref: KeyPair
+  cfnSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "cfnSecurityGroup"
+      VpcId:
+        Ref: cfnVpc
+      Tags:
+        - Key: "Name"
+          Value: "library-ssh-sg"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: "22"
+          ToPort: "22"
+          CidrIp: 0.0.0.0/0
+  MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref cfnEC2Instance
+
