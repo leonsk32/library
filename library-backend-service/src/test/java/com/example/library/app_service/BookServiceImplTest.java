@@ -46,6 +46,7 @@ class BookServiceImplTest {
     void test03() {
         final String isbn = "9781234567890";
         final Book book = new Book(isbn);
+        book.decliment();
         when(bookRepository.findById(isbn)).thenReturn(book);
         doNothing().when(bookRepository).delete(book);
         target.waste(isbn);
