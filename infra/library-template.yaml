@@ -4,6 +4,10 @@ Parameters:
   KeyPair:
     Description: Select KeyPair Name.
     Type: AWS::EC2::KeyPair::KeyName
+#  DBUser:
+#    Type: String
+#  DBPassword:
+#    Type: String
 Resources:
   cfnVpc:
     Type: "AWS::EC2::VPC"
@@ -84,7 +88,7 @@ Resources:
   cfnEC2Instance:
     Type: "AWS::EC2::Instance"
     Properties:
-      ImageId: "ami-3bd3c45c"
+      ImageId: "ami-0064e711cbc7a825e"
       InstanceType: "t2.micro"
       SubnetId:
         Ref: cfnPublicSubnet
@@ -114,8 +118,61 @@ Resources:
           FromPort: "22"
           ToPort: "22"
           CidrIp: 0.0.0.0/0
+#  cfnDbSecurityGroup:
+#    Type: "AWS::EC2::SecurityGroup"
+#    Properties:
+#      GroupDescription: "cfnSecurityGroup for Db"
+#      VpcId:
+#        Ref: cfnVpc
+#      Tags:
+#        - Key: "Name"
+#          Value: "library-db-sg"
+#      SecurityGroupIngress:
+#        - IpProtocol: tcp
+#          FromPort: "5432"
+#          ToPort: "5432"
+#          CidrIp: 0.0.0.0/0
   MyEIP:
     Type: AWS::EC2::EIP
     Properties:
       InstanceId: !Ref cfnEC2Instance
-
+#  cfnRdsInstance:
+#    Type: AWS::RDS::DBInstance
+#    Properties:
+#      DBInstanceClass: "db.t2.micro"
+#      DBName: "librarydb"
+#      MultiAZ: false
+#      PubliclyAccessible: false
+#      AllocatedStorage: 20
+#      Engine: POSTGRES
+#      MasterUserPassword:
+#        Ref: DBPassword
+#      MasterUsername:
+#        Ref: DBUser
+#      DBSecurityGroups:
+#        - Ref: SecurityGroupForPrivateSubnet
+#      DBSubnetGroupName:
+#        Ref: PrivateSubnetGroup
+#      Tags:
+#        - Key: Name
+#          Value: "library database"
+  # サブネットグループ
+#  PrivateSubnetGroup:
+#    Type: "AWS::RDS::DBSubnetGroup"
+#    Properties:
+#      DBSubnetGroupName: "PrivateSubnetGroup"
+#      DBSubnetGroupDescription: "Private SubnetGroup"
+#      SubnetIds:
+#        - Ref: cfnPrivateSubnet1a
+#        - Ref: cfnPrivateSubnet1c
+  # プライベートサブネット用のセキュリティグループ
+#  SecurityGroupForPrivateSubnet:
+#    Type: "AWS::RDS::DBSecurityGroup"
+#    Properties:
+#      EC2VpcId:
+#        Ref: cfnVpc
+#      DBSecurityGroupIngress:
+#        - EC2SecurityGroupId:
+#            Ref: cfnDbSecurityGroup
+#      GroupDescription: "SecurityGroup For PrivateSubnet"
+#
