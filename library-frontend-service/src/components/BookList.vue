@@ -5,7 +5,7 @@
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="books" class="elevation-1">
+    <v-data-table :headers="headers" :items="lendingRecords" class="elevation-1">
       <template v-slot:items="props">
         <td>{{ props.item.title }}</td>
         <td>{{ props.item.max }}</td>
@@ -18,20 +18,30 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { BooksApi, Configuration } from '@/generated';
+import {
+  LendingRecordsApi, Configuration, LendingRecordsDto, LendingRecordDto,
+} from '@/generated';
 import { DefaultApi } from '@/generated/external';
 
 @Component
 export default class BookList extends Vue {
-  books: any = [];
+    lendingRecords: any = [];
+    // lendingRecords: LendingRecordsDto = [];
 
+  // headers: any = [
+  //   { text: 'タイトル', value: 'title' },
+  //   { text: '在庫数', value: 'max' },
+  //   { text: '貸出者', value: 'users' },
+  // ];
   headers: any = [
-    { text: 'タイトル', value: 'title' },
-    { text: '在庫数', value: 'max' },
-    { text: '貸出者', value: 'users' },
+    { text: 'タイトル', value: 'isbn' },
+    { text: '名前', value: 'namae' },
+    { text: '氏名', value: 'simei' },
+    { text: 'Id', value: 'userId' },
   ];
 
-  configuration: Configuration =
+
+    configuration: Configuration =
       {
         baseOptions: {
           headers: {
@@ -42,36 +52,37 @@ export default class BookList extends Vue {
 
       };
 
-    bookApi: BooksApi = new BooksApi(this.configuration);
+    bookApi: LendingRecordsApi = new LendingRecordsApi(this.configuration);
 
     bookInfoapi: DefaultApi = new DefaultApi();
 
     getBooks(): any {
-      const hoge: Array<string> = ['978-4-7981-2196-3'];
-      const hoge3: Array<string> = [];
+      // const hoge: Array<string> = ['978-4-7981-2196-3'];
+      // const hoge3: Array<string> = [];
 
-      this.bookApi.booksGet()
+      this.bookApi.lendingRecordsGet()
         .then((res) => {
-          // const books = res.data;
+          this.lendingRecords = res.data.lendingRecords;
           // let isbn = books.isbn;
-          const isbn : string = '9784798121963';
-          const formatIsbn = `${isbn.substr(0, 3)}-${isbn.substr(3, 1)}-${isbn.substr(4, 4)}-${isbn.substr(8, 4)}-${isbn.substr(12, 1)}`;
-          hoge3.push(formatIsbn);
-          this.bookInfoapi.getGet(hoge3)
-            .then((res2) => {
-              this.books = res2.data;
-            });
+          // const isbn : string = '9784798121963';
+          // const formatIsbn = `${isbn.substr(0, 3)}-${isbn.substr(3, 1)}-${isbn.substr(4, 4)}
+          // -${isbn.substr(8, 4)}-${isbn.substr(12, 1)}`;
+          // hoge3.push(formatIsbn);
+          // this.bookInfoapi.getGet(hoge3)
+          //   .then((res2) => {
+          //     this.books = res2.data;
+          //   });
         });
 
 
-      const hoge2 = [
-        { title: 'DDD', max: '2', users: 'きり丸' },
-        { title: 'vue', max: '0', users: '乱太郎,きり丸,新兵衛' },
-        { title: 'Nuxt', max: '0', users: 'きり丸' },
-        { title: 'よくわからないDDD', max: '1', users: '' },
-        { title: 'アジャイルサムライ', max: '10', users: '' },
-      ];
-      this.books = hoge2;
+      // const hoge2 = [
+      //   { title: 'DDD', max: '2', users: 'きり丸' },
+      //   { title: 'vue', max: '0', users: '乱太郎,きり丸,新兵衛' },
+      //   { title: 'Nuxt', max: '0', users: 'きり丸' },
+      //   { title: 'よくわからないDDD', max: '1', users: '' },
+      //   { title: 'アジャイルサムライ', max: '10', users: '' },
+      // ];
+      // this.books = hoge2;
     }
 
     mounted(): void {
