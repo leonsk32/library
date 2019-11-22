@@ -67,7 +67,6 @@ public class Users {
     private static class RequestParam {
         @NotNull
         private String userId;
-        @NotNull
         private String email;
         private String namae;
         private String simei;
