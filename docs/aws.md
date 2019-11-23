@@ -12,6 +12,21 @@
 * Jarを起動
 * Ec2のセキュリティグループにHttpを追加
 
+* 非同期実行
+```aidl
+nohup java -jar hogehoge.jar &
+```
+
+* postgresのインストール
+```aidl
+sudo yum install -y  postgresql
+```
+
+* jdk11のインストール
+```aidl
+sudo yum install java-11-amazon-corretto
+
+```
 
 ```aidl
 export DATABASE_PASS=librarypass
