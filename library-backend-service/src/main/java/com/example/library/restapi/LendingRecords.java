@@ -68,14 +68,6 @@ public class LendingRecords implements LendingRecordsApi{
             recordDto.setSimei(entity.getUser().getSimei());
             list.add(recordDto);
         }
-        LendingRecordDto hoge = new LendingRecordDto();
-        hoge.setIsbn("9784798121963");
-        hoge.userId("1614629");
-        list = Arrays.asList(
-          hoge,
-        hoge
-        );
-
         dtos.setLendingRecords(list);
         return dtos;
     }
