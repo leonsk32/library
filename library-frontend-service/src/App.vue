@@ -19,7 +19,7 @@
             <v-list-item-title
               @click="to('/')"
             >
-              <v-icon>fas fa-book</v-icon>
+              <v-icon>mdi-view-dashboard </v-icon>
               ダッシュボード
             </v-list-item-title>
           </v-list-item>
@@ -28,7 +28,7 @@
             <v-list-item-title
               @click="to('/search')"
             >
-              <v-icon>fas fa-book</v-icon>
+              <v-icon>mdi-magnify</v-icon>
               検索
             </v-list-item-title>
           </v-list-item>
@@ -37,7 +37,7 @@
             <v-list-item-title
               @click="to('/books')"
             >
-              <v-icon>fas fa-book</v-icon>
+              <v-icon>mdi-library-books </v-icon>
               貸出一覧
             </v-list-item-title>
           </v-list-item>
@@ -46,7 +46,7 @@
             <v-list-item-title
               @click="to('/ranking')"
             >
-              <v-icon>fas fa-book</v-icon>
+              <v-icon>mdi-medal</v-icon>
               ランキング
             </v-list-item-title>
           </v-list-item>
