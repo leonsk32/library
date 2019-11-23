@@ -1,0 +1,8 @@
+title: rankingsDto
+type: object
+description: ランキングのリスト
+properties:
+  rankings:
+    type: array
+    items:
+      $ref: ./rankingDto.yaml

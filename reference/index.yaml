@@ -17,4 +17,6 @@ paths:
     $ref: './paths/books.yaml#/actions'
   '/lendingRecords':
     $ref: './paths/lendingRecords.yaml#/root'
+  '/ranking/books':
+    $ref: './paths/ranking.yaml#/books'
 
