@@ -60,15 +60,16 @@ export default class BookList extends Vue {
             const formatIsbn = `${isbn.substr(0, 3)}-${isbn.substr(3, 1)}-${isbn.substr(4, 4)}-${isbn.substr(8, 4)}-${isbn.substr(12, 1)}`;
 
             const formatIsbnList: Array<string> = [];
+            let title: string = '';
             formatIsbnList.push(formatIsbn);
             /* eslint no-loop-func:0 */
             this.bookInfoapi.getGet(formatIsbnList)
               .then((res2) => {
+                /* eslint prefer-destructuring:0 */
+                title = res2.data[0].summary.title;
+              }).finally(() => {
                 this.lendingRecords.push(
-                  new LendingRecord(
-                    res2.data[0].summary.title,
-                    lendinfRecordDto.userId,
-                  ),
+                  new LendingRecord(title, lendinfRecordDto.userId),
                 );
               });
           }
