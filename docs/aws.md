@@ -25,7 +25,10 @@ sudo yum install -y  postgresql
 * jdk11のインストール
 ```aidl
 sudo yum install java-11-amazon-corretto
-
+```
+* てで作成したリソースからクラウドフォーメーションのtemplateを作成する方法
+```aidl
+https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/cfn-using-cloudformer.html
 ```
 
 ```aidl
