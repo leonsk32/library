@@ -7,6 +7,6 @@ import BookList from '@/components/BookList.vue';
 @Component({
   components: { BookList },
 })
-export default class Books extends Vue {
+export default class BooksView extends Vue {
 }
 </script>

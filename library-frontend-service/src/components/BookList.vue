@@ -8,8 +8,7 @@
     <v-data-table :headers="headers" :items="lendingRecords" class="elevation-1">
       <template v-slot:items="props">
         <td>{{ props.item.title }}</td>
-        <td>{{ props.item.max }}</td>
-        <td>{{ props.item.users }}</td>
+        <td>{{ props.item.userId }}</td>
       </template>
       <template v-slot:no-data> </template>
     </v-data-table>
