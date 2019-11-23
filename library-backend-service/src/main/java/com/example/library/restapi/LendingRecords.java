@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -67,6 +68,14 @@ public class LendingRecords implements LendingRecordsApi{
             recordDto.setSimei(entity.getUser().getSimei());
             list.add(recordDto);
         }
+        LendingRecordDto hoge = new LendingRecordDto();
+        hoge.setIsbn("9784798121963");
+        hoge.userId("1614629");
+        list = Arrays.asList(
+          hoge,
+        hoge
+        );
+
         dtos.setLendingRecords(list);
         return dtos;
     }

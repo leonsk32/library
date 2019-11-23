@@ -17,13 +17,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import {
-  LendingRecordsApi, Configuration,
-} from '@/generated';
+import { Configuration, LendingRecordsApi } from '@/generated';
 import { DefaultApi } from '@/generated/external';
 import LendingRecord from '@/class/LendingRecord';
 
-@Component
+    @Component
 export default class BookList extends Vue {
     lendingRecords: Array<LendingRecord> = [];
 
