@@ -105,10 +105,10 @@ Resources:
       Port: '5432'
       StorageType: gp2
       BackupRetentionPeriod: '7'
-              MasterUserPassword:
-                Ref: DBPassword
-            MasterUsername:
-              Ref: DBUser
+      MasterUserPassword:
+        Ref: DBPassword
+      MasterUsername:
+        Ref: DBUser
       PreferredBackupWindow: 19:36-20:06
       PreferredMaintenanceWindow: tue:15:00-tue:15:30
       DBName: MyDatabase

@@ -4,10 +4,10 @@ Parameters:
   KeyPair:
     Description: Select KeyPair Name.
     Type: AWS::EC2::KeyPair::KeyName
-#  DBUser:
-#    Type: String
-#  DBPassword:
-#    Type: String
+  DBUser:
+    Type: String
+  DBPassword:
+    Type: String
 Resources:
   cfnVpc:
     Type: "AWS::EC2::VPC"
