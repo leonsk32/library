@@ -51,7 +51,7 @@ export default class BookList extends Vue {
           const lendingRecordsDto: any = res.data.lendingRecords;
 
           /* eslint no-restricted-syntax : 0 */
-          for (let lendingRecordDto of lendingRecordsDto) {
+          for (const lendingRecordDto of lendingRecordsDto) {
             const lendingRecord = new LendingRecord(lendingRecordDto.isbn, lendingRecordDto.userId);
 
             const formatIsbnList: Array<string> = [];
