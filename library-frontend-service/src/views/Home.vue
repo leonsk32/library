@@ -11,6 +11,6 @@ import HelloWorld from '@/components/HelloWorld.vue';
     HelloWorld,
   },
 })
-export default class Home extends Vue {
+export default class HomeView extends Vue {
 }
 </script>

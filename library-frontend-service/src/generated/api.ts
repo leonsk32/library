@@ -21,57 +21,6 @@ import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
- * 
- * @export
- * @interface Bookaction
- */
-export interface Bookaction {
-    /**
-     * 
-     * @type {string}
-     * @memberof Bookaction
-     */
-    type?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Bookaction
-     */
-    userId?: string;
-}
-/**
- * 本の検索結果オブジェクト
- * @export
- * @interface Books
- */
-export interface Books {
-    /**
-     * 
-     * @type {string}
-     * @memberof Books
-     */
-    isbn?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Books
-     */
-    userId?: string;
-}
-/**
- * 
- * @export
- * @interface InlineResponse200
- */
-export interface InlineResponse200 {
-    /**
-     * 
-     * @type {Array | books}
-     * @memberof InlineResponse200
-     */
-    books?: Array | books;
-}
-/**
  * 貸出帳の検索結果オブジェクト
  * @export
  * @interface LendingRecordDto
@@ -115,437 +64,44 @@ export interface LendingRecordsDto {
      */
     lendingRecords?: Array<LendingRecordDto>;
 }
-
 /**
- * BooksApi - axios parameter creator
+ * ランキングを表現する。idは呼び出し元の使い方により、userId等に読み替えられるようにする。
  * @export
+ * @interface RankingDto
  */
-export const BooksApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary 本を検索する
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksGet(options: any = {}): RequestArgs {
-            const localVarPath = `/books`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * BooksApi - functional programming interface
- * @export
- */
-export const BooksApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary 本を検索する
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksGet(options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200> {
-            const localVarAxiosArgs = BooksApiAxiosParamCreator(configuration).booksGet(options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    }
-};
-
-/**
- * BooksApi - factory interface
- * @export
- */
-export const BooksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    return {
-        /**
-         * 
-         * @summary 本を検索する
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksGet(options?: any) {
-            return BooksApiFp(configuration).booksGet(options)(axios, basePath);
-        },
-    };
-};
-
-/**
- * BooksApi - object-oriented interface
- * @export
- * @class BooksApi
- * @extends {BaseAPI}
- */
-export class BooksApi extends BaseAPI {
+export interface RankingDto {
     /**
      * 
-     * @summary 本を検索する
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BooksApi
+     * @type {string}
+     * @memberof RankingDto
      */
-    public booksGet(options?: any) {
-        return BooksApiFp(this.configuration).booksGet(options)(this.axios, this.basePath);
-    }
-
-}
-
-
-/**
- * BooksIsbnApi - axios parameter creator
- * @export
- */
-export const BooksIsbnApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary 本を登録する
-         * @param {string} isbn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnPut(isbn: string, options: any = {}): RequestArgs {
-            // verify required parameter 'isbn' is not null or undefined
-            if (isbn === null || isbn === undefined) {
-                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksIsbnPut.');
-            }
-            const localVarPath = `/books/{isbn}`
-                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * BooksIsbnApi - functional programming interface
- * @export
- */
-export const BooksIsbnApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary 本を登録する
-         * @param {string} isbn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnPut(isbn: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = BooksIsbnApiAxiosParamCreator(configuration).booksIsbnPut(isbn, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    }
-};
-
-/**
- * BooksIsbnApi - factory interface
- * @export
- */
-export const BooksIsbnApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    return {
-        /**
-         * 
-         * @summary 本を登録する
-         * @param {string} isbn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnPut(isbn: string, options?: any) {
-            return BooksIsbnApiFp(configuration).booksIsbnPut(isbn, options)(axios, basePath);
-        },
-    };
-};
-
-/**
- * BooksIsbnApi - object-oriented interface
- * @export
- * @class BooksIsbnApi
- * @extends {BaseAPI}
- */
-export class BooksIsbnApi extends BaseAPI {
+    rank?: string;
     /**
      * 
-     * @summary 本を登録する
-     * @param {string} isbn 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BooksIsbnApi
+     * @type {string}
+     * @memberof RankingDto
      */
-    public booksIsbnPut(isbn: string, options?: any) {
-        return BooksIsbnApiFp(this.configuration).booksIsbnPut(isbn, options)(this.axios, this.basePath);
-    }
-
-}
-
-
-/**
- * BooksIsbnActionsApi - axios parameter creator
- * @export
- */
-export const BooksIsbnActionsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary 本に対する行動
-         * @param {string} isbn 
-         * @param {Bookaction} [bookaction] パラメータのISBNの
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnActionsPost(isbn: string, bookaction?: Bookaction, options: any = {}): RequestArgs {
-            // verify required parameter 'isbn' is not null or undefined
-            if (isbn === null || isbn === undefined) {
-                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksIsbnActionsPost.');
-            }
-            const localVarPath = `/books/{isbn}/actions`
-                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
-            const needsSerialization = (<any>"Bookaction" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(bookaction !== undefined ? bookaction : {}) : (bookaction || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * BooksIsbnActionsApi - functional programming interface
- * @export
- */
-export const BooksIsbnActionsApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary 本に対する行動
-         * @param {string} isbn 
-         * @param {Bookaction} [bookaction] パラメータのISBNの
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnActionsPost(isbn: string, bookaction?: Bookaction, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = BooksIsbnActionsApiAxiosParamCreator(configuration).booksIsbnActionsPost(isbn, bookaction, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    }
-};
-
-/**
- * BooksIsbnActionsApi - factory interface
- * @export
- */
-export const BooksIsbnActionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    return {
-        /**
-         * 
-         * @summary 本に対する行動
-         * @param {string} isbn 
-         * @param {Bookaction} [bookaction] パラメータのISBNの
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnActionsPost(isbn: string, bookaction?: Bookaction, options?: any) {
-            return BooksIsbnActionsApiFp(configuration).booksIsbnActionsPost(isbn, bookaction, options)(axios, basePath);
-        },
-    };
-};
-
-/**
- * BooksIsbnActionsApi - object-oriented interface
- * @export
- * @class BooksIsbnActionsApi
- * @extends {BaseAPI}
- */
-export class BooksIsbnActionsApi extends BaseAPI {
+    id?: string;
     /**
      * 
-     * @summary 本に対する行動
-     * @param {string} isbn 
-     * @param {Bookaction} [bookaction] パラメータのISBNの
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BooksIsbnActionsApi
+     * @type {string}
+     * @memberof RankingDto
      */
-    public booksIsbnActionsPost(isbn: string, bookaction?: Bookaction, options?: any) {
-        return BooksIsbnActionsApiFp(this.configuration).booksIsbnActionsPost(isbn, bookaction, options)(this.axios, this.basePath);
-    }
-
+    num?: string;
 }
-
-
 /**
- * DefaultApi - axios parameter creator
+ * ランキングのリスト
  * @export
+ * @interface RankingsDto
  */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary 
-         * @param {string} isbn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnDelete(isbn: string, options: any = {}): RequestArgs {
-            // verify required parameter 'isbn' is not null or undefined
-            if (isbn === null || isbn === undefined) {
-                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksIsbnDelete.');
-            }
-            const localVarPath = `/books/{isbn}`
-                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DefaultApi - functional programming interface
- * @export
- */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary 
-         * @param {string} isbn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnDelete(isbn: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).booksIsbnDelete(isbn, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    }
-};
-
-/**
- * DefaultApi - factory interface
- * @export
- */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    return {
-        /**
-         * 
-         * @summary 
-         * @param {string} isbn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIsbnDelete(isbn: string, options?: any) {
-            return DefaultApiFp(configuration).booksIsbnDelete(isbn, options)(axios, basePath);
-        },
-    };
-};
-
-/**
- * DefaultApi - object-oriented interface
- * @export
- * @class DefaultApi
- * @extends {BaseAPI}
- */
-export class DefaultApi extends BaseAPI {
+export interface RankingsDto {
     /**
      * 
-     * @summary 
-     * @param {string} isbn 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @type {Array<RankingDto>}
+     * @memberof RankingsDto
      */
-    public booksIsbnDelete(isbn: string, options?: any) {
-        return DefaultApiFp(this.configuration).booksIsbnDelete(isbn, options)(this.axios, this.basePath);
-    }
-
+    rankings?: Array<RankingDto>;
 }
-
 
 /**
  * LendingRecordsApi - axios parameter creator
@@ -641,6 +197,105 @@ export class LendingRecordsApi extends BaseAPI {
      */
     public lendingRecordsGet(options?: any) {
         return LendingRecordsApiFp(this.configuration).lendingRecordsGet(options)(this.axios, this.basePath);
+    }
+
+}
+
+
+/**
+ * RankingApi - axios parameter creator
+ * @export
+ */
+export const RankingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 本の貸し出しランキングを取得する
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rankingBooksGet(options: any = {}): RequestArgs {
+            const localVarPath = `/ranking/books`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RankingApi - functional programming interface
+ * @export
+ */
+export const RankingApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 本の貸し出しランキングを取得する
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rankingBooksGet(options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RankingsDto> {
+            const localVarAxiosArgs = RankingApiAxiosParamCreator(configuration).rankingBooksGet(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * RankingApi - factory interface
+ * @export
+ */
+export const RankingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @summary 本の貸し出しランキングを取得する
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rankingBooksGet(options?: any) {
+            return RankingApiFp(configuration).rankingBooksGet(options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * RankingApi - object-oriented interface
+ * @export
+ * @class RankingApi
+ * @extends {BaseAPI}
+ */
+export class RankingApi extends BaseAPI {
+    /**
+     * 
+     * @summary 本の貸し出しランキングを取得する
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RankingApi
+     */
+    public rankingBooksGet(options?: any) {
+        return RankingApiFp(this.configuration).rankingBooksGet(options)(this.axios, this.basePath);
     }
 
 }

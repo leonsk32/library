@@ -1,0 +1,14 @@
+books:
+  get:
+    tags:
+      - ranking
+    summary: 本の貸し出しランキングを取得する
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: ./difinitions/rankingsDto.yaml
+  parameters: []
+

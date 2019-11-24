@@ -8,8 +8,7 @@
     <v-data-table :headers="headers" :items="lendingRecords" class="elevation-1">
       <template v-slot:items="props">
         <td>{{ props.item.title }}</td>
-        <td>{{ props.item.max }}</td>
-        <td>{{ props.item.users }}</td>
+        <td>{{ props.item.userId }}</td>
       </template>
       <template v-slot:no-data> </template>
     </v-data-table>
@@ -18,28 +17,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import {
-  LendingRecordsApi, Configuration, LendingRecordsDto, LendingRecordDto,
-} from '@/generated';
+import { Configuration, LendingRecordsApi } from '@/generated';
 import { DefaultApi } from '@/generated/external';
+import LendingRecord from '@/class/LendingRecord';
 
-@Component
+    @Component
 export default class BookList extends Vue {
-    lendingRecords: any = [];
-    // lendingRecords: LendingRecordsDto = [];
+    lendingRecords: Array<LendingRecord> = [];
 
-  // headers: any = [
-  //   { text: 'タイトル', value: 'title' },
-  //   { text: '在庫数', value: 'max' },
-  //   { text: '貸出者', value: 'users' },
-  // ];
   headers: any = [
-    { text: 'タイトル', value: 'isbn' },
-    { text: '名前', value: 'namae' },
-    { text: '氏名', value: 'simei' },
-    { text: 'Id', value: 'userId' },
+    { text: 'タイトル', value: 'title' },
+    { text: '貸出者', value: 'userId' },
   ];
-
 
     configuration: Configuration =
       {
@@ -57,32 +46,31 @@ export default class BookList extends Vue {
     bookInfoapi: DefaultApi = new DefaultApi();
 
     getBooks(): any {
-      // const hoge: Array<string> = ['978-4-7981-2196-3'];
-      // const hoge3: Array<string> = [];
-
       this.bookApi.lendingRecordsGet()
         .then((res) => {
-          this.lendingRecords = res.data.lendingRecords;
-          // let isbn = books.isbn;
-          // const isbn : string = '9784798121963';
-          // const formatIsbn = `${isbn.substr(0, 3)}-${isbn.substr(3, 1)}-${isbn.substr(4, 4)}
-          // -${isbn.substr(8, 4)}-${isbn.substr(12, 1)}`;
-          // hoge3.push(formatIsbn);
-          // this.bookInfoapi.getGet(hoge3)
-          //   .then((res2) => {
-          //     this.books = res2.data;
-          //   });
+          const ledingRecords: any = res.data.lendingRecords;
+
+          let lendinfRecordDto : any;
+          /* eslint no-restricted-syntax : 0 */
+          for (lendinfRecordDto of ledingRecords) {
+            const { isbn } = lendinfRecordDto;
+            const formatIsbn = `${isbn.substr(0, 3)}-${isbn.substr(3, 1)}-${isbn.substr(4, 4)}-${isbn.substr(8, 4)}-${isbn.substr(12, 1)}`;
+
+            const formatIsbnList: Array<string> = [];
+            let title: string = '';
+            formatIsbnList.push(formatIsbn);
+            /* eslint no-loop-func:0 */
+            this.bookInfoapi.getGet(formatIsbnList)
+              .then((res2) => {
+                /* eslint prefer-destructuring:0 */
+                title = res2.data[0].summary.title;
+              }).finally(() => {
+                this.lendingRecords.push(
+                  new LendingRecord(title, lendinfRecordDto.userId),
+                );
+              });
+          }
         });
-
-
-      // const hoge2 = [
-      //   { title: 'DDD', max: '2', users: 'きり丸' },
-      //   { title: 'vue', max: '0', users: '乱太郎,きり丸,新兵衛' },
-      //   { title: 'Nuxt', max: '0', users: 'きり丸' },
-      //   { title: 'よくわからないDDD', max: '1', users: '' },
-      //   { title: 'アジャイルサムライ', max: '10', users: '' },
-      // ];
-      // this.books = hoge2;
     }
 
     mounted(): void {

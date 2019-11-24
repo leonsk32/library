@@ -9,12 +9,14 @@ servers:
   - url: 'https://enigmatic-depths-14464.herokuapp.com/api/v1'
     description: Main Server
 paths:
-  /books:
-    $ref: './paths/books.yaml#/books'
-  '/books/{isbn}':
-    $ref: './paths/books.yaml#/isbn'
-  '/books/{isbn}/actions':
-    $ref: './paths/books.yaml#/actions'
+#  /books:
+#    $ref: './paths/books.yaml#/books'
+#  '/books/{isbn}':
+#    $ref: './paths/books.yaml#/isbn'
+#  '/books/{isbn}/actions':
+#    $ref: './paths/books.yaml#/actions'
   '/lendingRecords':
     $ref: './paths/lendingRecords.yaml#/root'
+  '/ranking/books':
+    $ref: './paths/ranking.yaml#/books'
 
