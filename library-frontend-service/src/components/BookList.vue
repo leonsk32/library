@@ -45,29 +45,24 @@ export default class BookList extends Vue {
 
     bookInfoapi: DefaultApi = new DefaultApi();
 
-    getBooks(): any {
+    getBooks(): void {
       this.bookApi.lendingRecordsGet()
         .then((res) => {
-          const ledingRecords: any = res.data.lendingRecords;
+          const lendingRecordsDto: any = res.data.lendingRecords;
 
-          let lendinfRecordDto : any;
           /* eslint no-restricted-syntax : 0 */
-          for (lendinfRecordDto of ledingRecords) {
-            const { isbn } = lendinfRecordDto;
-            const formatIsbn = `${isbn.substr(0, 3)}-${isbn.substr(3, 1)}-${isbn.substr(4, 4)}-${isbn.substr(8, 4)}-${isbn.substr(12, 1)}`;
+          for (let lendingRecordDto of lendingRecordsDto) {
+            const lendingRecord = new LendingRecord(lendingRecordDto.isbn, lendingRecordDto.userId);
 
             const formatIsbnList: Array<string> = [];
-            let title: string = '';
-            formatIsbnList.push(formatIsbn);
+            formatIsbnList.push(lendingRecord.getFormattedIsbn());
             /* eslint no-loop-func:0 */
             this.bookInfoapi.getGet(formatIsbnList)
               .then((res2) => {
                 /* eslint prefer-destructuring:0 */
-                title = res2.data[0].summary.title;
+                lendingRecord.title = res2.data[0].summary.title;
               }).finally(() => {
-                this.lendingRecords.push(
-                  new LendingRecord(title, lendinfRecordDto.userId),
-                );
+                this.lendingRecords.push(lendingRecord);
               });
           }
         });
