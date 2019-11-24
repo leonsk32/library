@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,11 +13,12 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import java.net.URI;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class FT{
+class FT {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -38,7 +40,42 @@ class FT{
     }
 
     @Nested
-    class 貸りる {
+    class Books {
+        @DisplayName("本を廃棄しようとしたが、その本は登録されていなかったのでエラー")
+        @Test
+        void test01() {
+            URI url = URI.create("/v1/books/9784567890123");
+            RequestEntity requestEntity =
+                    RequestEntity.delete(url).build();
+            ResponseEntity<String> response =
+                    restTemplate.exchange(requestEntity, String.class);
+            assertThat(response.getBody()).isEqualTo("その本はない");
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        @DisplayName("本の登録系のハッピーパスやらあれこれ")
+        @Test
+        void test02() {
+
+            // 本Aを２冊、本Bを１冊登録
+            URI url1 = URI.create("/v1/books/9784567890123");
+            URI url2 = URI.create("/v1/books/9784567890124");
+            RequestEntity requestEntity1 = RequestEntity.put(url1).build();
+            RequestEntity requestEntity2 = RequestEntity.put(url2).build();
+            ResponseEntity<String> response1 = restTemplate.exchange(requestEntity1, String.class);
+            ResponseEntity<String> response2 = restTemplate.exchange(requestEntity2, String.class);
+            ResponseEntity<String> response3 = restTemplate.exchange(requestEntity1, String.class);
+
+            jdbcTemplate.queryForList("select * from BOOK");
+            System.out.println("response3 = " + response3);
+
+
+
+        }
+    }
+
+    @Nested
+    class Users {
         @DisplayName("ユーザーを全検索する")
         @Test
         void test01() {
@@ -56,13 +93,10 @@ class FT{
 
             System.out.println("response = " + response);
         }
-    }
 
-    @Nested
-    class 貸りる2 {
         @DisplayName("ユーザーをID検索する")
         @Test
-        void test01() {
+        void test02() {
 
             URI url = URI.create("/v1/users/1234567");
 

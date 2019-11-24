@@ -57,7 +57,7 @@ class BooksTest {
 
         // act and assert
         mockMvc.perform(put("/v1/books/" + isbn)
-        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
         verify(service).register(isbn);
     }
@@ -70,8 +70,21 @@ class BooksTest {
         // act and assert
         doNothing().when(service).waste(isbn);
         mockMvc.perform(delete("/v1/books/" + isbn)
-        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
+        verify(service).waste(isbn);
+    }
+
+    @DisplayName("本を排棄しようとしたが、登録されていなかった")
+    @Test
+    void test04() throws Exception {
+        // arrange
+        final String isbn = "9784567890123";
+        // act and assert
+        doThrow(new RuntimeException()).when(service).waste(isbn);
+        mockMvc.perform(delete("/v1/books/" + isbn)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isInternalServerError());
         verify(service).waste(isbn);
     }
 }
