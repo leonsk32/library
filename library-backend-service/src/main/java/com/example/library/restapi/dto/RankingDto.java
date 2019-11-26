@@ -10,59 +10,59 @@ import java.util.Objects;
  * ランキングを表現する。idは呼び出し元の使い方により、userId等に読み替えられるようにする。
  */
 @ApiModel(description = "ランキングを表現する。idは呼び出し元の使い方により、userId等に読み替えられるようにする。")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-23T22:03:00.345413900+09:00[Asia/Tokyo]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-27T00:15:25.337251400+09:00[Asia/Tokyo]")
 
 public class RankingDto   {
-  @JsonProperty("rank")
-  private String rank;
+  @JsonProperty("userId")
+  private String userId;
 
-  @JsonProperty("id")
-  private String id;
+  @JsonProperty("name")
+  private String name;
 
   @JsonProperty("num")
-  private String num;
+  private Integer num;
 
-  public RankingDto rank(String rank) {
-    this.rank = rank;
+  public RankingDto userId(String userId) {
+    this.userId = userId;
     return this;
   }
 
   /**
-   * Get rank
-   * @return rank
+   * Get userId
+   * @return userId
   */
   @ApiModelProperty(value = "")
 
 
-  public String getRank() {
-    return rank;
+  public String getUserId() {
+    return userId;
   }
 
-  public void setRank(String rank) {
-    this.rank = rank;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
-  public RankingDto id(String id) {
-    this.id = id;
+  public RankingDto name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get name
+   * @return name
   */
   @ApiModelProperty(value = "")
 
 
-  public String getId() {
-    return id;
+  public String getName() {
+    return name;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public RankingDto num(String num) {
+  public RankingDto num(Integer num) {
     this.num = num;
     return this;
   }
@@ -74,11 +74,11 @@ public class RankingDto   {
   @ApiModelProperty(value = "")
 
 
-  public String getNum() {
+  public Integer getNum() {
     return num;
   }
 
-  public void setNum(String num) {
+  public void setNum(Integer num) {
     this.num = num;
   }
 
@@ -92,14 +92,14 @@ public class RankingDto   {
       return false;
     }
     RankingDto rankingDto = (RankingDto) o;
-    return Objects.equals(this.rank, rankingDto.rank) &&
-        Objects.equals(this.id, rankingDto.id) &&
+    return Objects.equals(this.userId, rankingDto.userId) &&
+        Objects.equals(this.name, rankingDto.name) &&
         Objects.equals(this.num, rankingDto.num);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(rank, id, num);
+    return Objects.hash(userId, name, num);
   }
 
   @Override
@@ -107,8 +107,8 @@ public class RankingDto   {
     StringBuilder sb = new StringBuilder();
     sb.append("class RankingDto {\n");
     
-    sb.append("    rank: ").append(toIndentedString(rank)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    num: ").append(toIndentedString(num)).append("\n");
     sb.append("}");
     return sb.toString();
