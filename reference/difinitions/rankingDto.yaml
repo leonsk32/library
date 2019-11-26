@@ -7,7 +7,7 @@ properties:
   name:
     type: string
   num:
-    type: number
+    type: integer
 x-examples:
   本のランキング:
     value:
