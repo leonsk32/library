@@ -2,12 +2,12 @@ title: rankingDto
 type: object
 description: ランキングを表現する。idは呼び出し元の使い方により、userId等に読み替えられるようにする。
 properties:
-  rank:
+  userId:
     type: string
-  id:
+  name:
     type: string
   num:
-    type: string
+    type: number
 x-examples:
   本のランキング:
     value:
