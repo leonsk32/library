@@ -39,6 +39,18 @@ public class LendingRecords implements LendingRecordsApi{
     }
 
     /**
+     * 貸出中の本とユーザーのリストを返却
+     *
+     * @return
+     */
+    @Override
+    public ResponseEntity<LendingRecordsDto> lendingRecordsGetForEvent() {
+        List<LendingRecord> result = service.searchForEvent();
+        LendingRecordsDto LendingRecords = convertSearchResult(result);
+        return new ResponseEntity<>(LendingRecords, OK);
+    }
+
+    /**
      * 借りる
      * @param body userIdとisbnが含まれる
      */

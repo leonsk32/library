@@ -24,6 +24,11 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
     }
 
     @Override
+    public List<LendingRecord> searchForEvent(String... options) {
+        return lendingRecordRepository.findAllForEvent();
+    }
+
+    @Override
     public void borrow(String isbn, String userId) {
         Book book = bookRepository.findById(isbn);
         User user = userRepository.findById(userId);
