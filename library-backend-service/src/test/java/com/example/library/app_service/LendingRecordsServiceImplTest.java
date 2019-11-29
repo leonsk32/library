@@ -58,7 +58,7 @@ class LendingRecordsServiceImplTest {
         );
 
         when(lendingRecordRepository.findAllForEvent()).thenReturn(lendingRecords);
-        List<LendingRecord> actual = target.search();
+        List<LendingRecord> actual = target.searchForEvent();
 
         List<LendingRecord> expected = lendingRecords;
         assertThat(actual).isEqualTo(expected);
