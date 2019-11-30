@@ -25,37 +25,37 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     @Override
     public void register(LendingRecord lendingRecord) {
         jdbcTemplate.execute("insert into lending_record(isbn, user_id) values('"
-            + lendingRecord.getBook().getIsbn()
-            + "','" +
-            lendingRecord.getUser().getUserId() + "')");
+                + lendingRecord.getBook().getIsbn()
+                + "','" +
+                lendingRecord.getUser().getUserId() + "')");
     }
 
     @Override
     public void registerForLendingEvent(LendingRecord lendingRecord) {
         jdbcTemplate.execute("insert into lending_event(isbn, user_id, lending_date) values('"
-            + lendingRecord.getBook().getIsbn()
-            + "','"
-            + lendingRecord.getUser().getUserId()
-            + "','" +
-            LocalDateTime.now() + "')");
+                + lendingRecord.getBook().getIsbn()
+                + "','"
+                + lendingRecord.getUser().getUserId()
+                + "','" +
+                LocalDateTime.now() + "')");
     }
 
     @Override
     public void registerForReturnEvent(LendingRecord lendingRecord) {
         jdbcTemplate.execute("insert into return_event(isbn, user_id, return_date) values('"
-            + lendingRecord.getBook().getIsbn()
-            + "','"
-            + lendingRecord.getUser().getUserId()
-            + "','" +
-            LocalDateTime.now() + "')");
+                + lendingRecord.getBook().getIsbn()
+                + "','"
+                + lendingRecord.getUser().getUserId()
+                + "','" +
+                LocalDateTime.now() + "')");
     }
 
     @Override
     public void delete(LendingRecord lendingRecord) {
         String sql = "DELETE FROM LENDING_RECORD WHERE isbn = '"
-            + lendingRecord.getBook().getIsbn()
-            + "' AND USER_ID='"
-            + lendingRecord.getUser().getUserId() + "';";
+                + lendingRecord.getBook().getIsbn()
+                + "' AND USER_ID='"
+                + lendingRecord.getUser().getUserId() + "';";
         jdbcTemplate.execute(sql);
     }
 
@@ -77,61 +77,72 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     public List<LendingRecord> findAllForEvent() {
 
         String lending = "SELECT isbn, user_id, COUNT(isbn) AS count FROM LENDING_EVENT GROUP BY isbn, user_id";
-        String returned = "SELECT isbn, user_id, COUNT(isbn) AS count FROM RETURN_EVENT GROUP BY isbn, user_id";
-
         List<Map<String, Object>> lendingResultMapList = jdbcTemplate.queryForList(lending);
+
+        String returned = "SELECT isbn, user_id, COUNT(isbn) AS count FROM RETURN_EVENT GROUP BY isbn, user_id";
         List<Map<String, Object>> returnedResultMapList = jdbcTemplate.queryForList(returned);
+
         ArrayList<LendingRecord> lendingRecords = new ArrayList<>();
 
         //isbn,user_idが一致したとき、lendingのほうがcountが多ければlendingRecordsにaddする
+        //TODO need refactor
         for (Map<String, Object> lendingMap : lendingResultMapList) {
-
-            String lendingIsbn = (String) lendingMap.get("isbn");
-            String lendingUserId = (String) lendingMap.get("user_id");
-            long lendingCount = (long) lendingMap.get("count");
 
             boolean isNoReturnRecord = true;
 
             for (Map<String, Object> returnMap : returnedResultMapList) {
 
-
-                String returnIsbn = (String) returnMap.get("isbn");
-                String returnUserId = (String) returnMap.get("user_id");
-                long returnCount = (long) returnMap.get("count");
-
-                if (lendingIsbn.equals(returnIsbn) &&
-                    lendingUserId.equals(returnUserId)) {
+                final RecordMatcher recordMatcher = new RecordMatcher(lendingMap, returnMap);
+                if (recordMatcher.isMatch()) {
 
                     isNoReturnRecord = false;
 
-                    if (lendingCount - returnCount <= 0) {
-                        continue;
+                    if (recordMatcher.isLending()) {
+                        addRecord(lendingRecords, lendingMap);
                     }
-
-                    lendingRecords.add(new LendingRecord(bookRepository.findById(lendingIsbn),
-                        userRepository.findById(lendingUserId)));
-
                 }
             }
 
             if (isNoReturnRecord) {
-                lendingRecords.add(new LendingRecord(bookRepository.findById(lendingIsbn),
-                    userRepository.findById(lendingUserId)));
+                addRecord(lendingRecords, lendingMap);
             }
-
         }
 
         return lendingRecords;
     }
 
+
+    private void addRecord(ArrayList<LendingRecord> lendingRecords, Map<String, Object> lendingMap) {
+        lendingRecords.add(new LendingRecord(bookRepository.findById((String) lendingMap.get("isbn")),
+                userRepository.findById((String) lendingMap.get("user_id"))));
+    }
+
     @Override
     public LendingRecord findById(Book book, User user) {
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from LENDING_RECORD " +
-            "where isbn = '" + book.getIsbn() + "' " +
-            "and user_id = '" + user.getUserId() + "'");
+                "where isbn = '" + book.getIsbn() + "' " +
+                "and user_id = '" + user.getUserId() + "'");
         String isbn = (String) maps.get(0).get("isbn");
         String userId = (String) maps.get(0).get("user_id");
         return new LendingRecord(bookRepository.findById(isbn), userRepository.findById(userId));
     }
 
+    private static class RecordMatcher {
+        private Map<String, Object> lendingMap;
+        private Map<String, Object> returnMap;
+
+        RecordMatcher(Map<String, Object> lendingMap, Map<String, Object> returnMap) {
+            this.lendingMap = lendingMap;
+            this.returnMap = returnMap;
+        }
+
+        boolean isMatch() {
+            return lendingMap.get("isbn").equals(returnMap.get("isbn")) &&
+                    lendingMap.get("user_id").equals(returnMap.get("user_id"));
+        }
+
+        private boolean isLending() {
+            return (long) lendingMap.get("count") - (long) returnMap.get("count") > 0;
+        }
+    }
 }
