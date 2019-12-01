@@ -75,19 +75,19 @@ export interface RankingDto {
      * @type {string}
      * @memberof RankingDto
      */
-    userId?: string;
+    userId: string;
     /**
      * 
      * @type {string}
      * @memberof RankingDto
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {number}
      * @memberof RankingDto
      */
-    num?: number;
+    num: number;
 }
 /**
  * ランキングのリスト
@@ -100,7 +100,7 @@ export interface RankingsDto {
      * @type {Array<RankingDto>}
      * @memberof RankingsDto
      */
-    rankings?: Array<RankingDto>;
+    rankings: Array<RankingDto>;
 }
 
 /**
