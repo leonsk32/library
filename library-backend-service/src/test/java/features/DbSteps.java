@@ -28,6 +28,7 @@ public class DbSteps {
     @Given("^DBの設定をする$")
     public void setupDB() throws Throwable {
         String url = "jdbc:postgresql://localhost:15432/library";
+//        String url = "jdbc:h2:mem:library;MODE=PostgreSQL;DB_CLOSE_DELAY=-1";
 
         connection = DriverManager.getConnection(url, "libuser", "libpass");
     }
