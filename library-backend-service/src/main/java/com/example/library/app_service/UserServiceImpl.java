@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+
     @Override
     public List<User> searchAll() {
         return userRepository.findAll();
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User searchById(String userId) {
         User user = userRepository.findById(userId);
-        if(user == null) {
+        if (user == null) {
             throw new RuntimeException("ユーザが存在しない。userId = " + userId);
         }
         return user;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(UserDto userDto) {
         User byId = userRepository.findById(userDto.getUserId());
-        if(byId != null) {
+        if (byId != null) {
             return;
         }
         User user = new User(
