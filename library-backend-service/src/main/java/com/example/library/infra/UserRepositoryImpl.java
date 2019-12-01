@@ -45,8 +45,8 @@ public class UserRepositoryImpl implements UserRepository {
         List<Map<String, Object>> resultMap = jdbcTemplate.queryForList(sql);
         if (resultMap.size() == 0) return null;
         String email = (String) resultMap.get(0).get("email");
-        String namae = (String) resultMap.get(0).get("simei");
-        String simei = (String) resultMap.get(0).get("namae");
+        String simei = (String) resultMap.get(0).get("simei");
+        String namae= (String) resultMap.get(0).get("namae");
         User user = new User(userId, email, simei, namae);
         return user;
     }
