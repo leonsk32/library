@@ -104,7 +104,9 @@ class UserRepositoryImplTest {
             softly.assertAll();
         }
 
-        @Disabled
+        @DisplayName("" +
+                "・複数件の取得" +
+                "・同一内容は集約する")
         @Test
         void test_02() {
             // GIVEN

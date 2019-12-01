@@ -1,11 +1,17 @@
 package com.example.library.domain.ranking;
 
-import lombok.Value;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Value
+@Getter
+@EqualsAndHashCode
+@ToString
 public class Ranking {
     private String userId;
     private String name;
+    @Setter
     private int num;
 
     public Ranking(String userId, String name) {
