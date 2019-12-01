@@ -62,7 +62,7 @@ class RankingTest {
                 "]}";
 
         mockMvc.perform(get("/v1/ranking/books"))
-                .andExpect(status().isNotImplemented())
+                .andExpect(status().isOk())
                 .andExpect(content().json(content, true))
         ;
         verify(service).searchLentRanking();

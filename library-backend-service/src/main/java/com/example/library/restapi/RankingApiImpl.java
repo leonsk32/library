@@ -7,10 +7,11 @@ import com.example.library.restapi.dto.RankingDto;
 import com.example.library.restapi.dto.RankingsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/v1")
@@ -18,10 +19,11 @@ import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
 public class RankingApiImpl implements RankingApi {
     private final UserService service;
 
+    @CrossOrigin
     @Override
     public ResponseEntity<RankingsDto> rankingBooksGet() {
         RankingList rankings = service.searchLentRanking();
-        return new ResponseEntity<>(convert(rankings), NOT_IMPLEMENTED);
+        return new ResponseEntity<>(convert(rankings), OK);
     }
 
     private RankingsDto convert(RankingList rankings) {
