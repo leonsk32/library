@@ -1,5 +1,6 @@
 package com.example.library.app_service;
 
+import com.example.library.domain.ranking.Ranking;
 import com.example.library.domain.user.User;
 import com.example.library.restapi.dto.UserDto;
 
@@ -13,4 +14,6 @@ public interface UserService {
     void register(UserDto userDto);
 
     void delete(String userId);
+
+    List<Ranking> searchLentRanking();
 }
