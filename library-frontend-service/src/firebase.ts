@@ -12,6 +12,9 @@ const config = {
   measurementId: 'G-YP3QHQ9B9Z',
 };
 
+let loginUser : any = {};
+let userStatus : boolean = false;
+
 export default {
   init(): void {
     firebase.initializeApp(config);
@@ -27,7 +30,27 @@ export default {
     const provider = new firebase.auth.GoogleAuthProvider();
     return firebase.auth().signInWithPopup(provider);
   },
-  logout(): any {
+  logout(): Promise<void> {
     return firebase.auth().signOut();
+  },
+  currentUser(): Promise<void> {
+    return new Promise((resolve) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          loginUser = user;
+          userStatus = true;
+        } else {
+          loginUser = {};
+          userStatus = false;
+        }
+        resolve();
+      });
+    });
+  },
+  findLoginUser(): any {
+    return loginUser;
+  },
+  loginStatus(): any {
+    return userStatus;
   },
 };
