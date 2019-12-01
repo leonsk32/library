@@ -10,10 +10,14 @@
         <v-divider class="mx-2" inset vertical></v-divider>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <v-data-table :headers="headers" :items="ranking" class="elevation-1">
-        <template v-slot:items="props">
-          <td>{{ props.item.title }}</td>
-          <td>{{ props.item.userId }}</td>
+      <v-data-table :headers="headers"
+                    :items="ranking"
+                    :sort-by="['num']"
+                    class="elevation-1">
+        <template v-slot:item.rank="{ item }">
+          <v-chip>
+            {{ranking.map(function(x) {return x.num; }).indexOf(item.num) + 1}}
+          </v-chip>
         </template>
         <template v-slot:no-data> </template>
       </v-data-table>
@@ -49,7 +53,7 @@ export default class Home extends Vue {
 
         // eslint-disable-next-line no-restricted-syntax
         for (const rankingDto of rankingsDto) {
-          const ranking = new Ranking('1', rankingDto.name, rankingDto.num);
+          const ranking = new Ranking(rankingDto.name, rankingDto.num);
           this.ranking.push(ranking);
         }
       });
