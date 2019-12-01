@@ -51,6 +51,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Ranking> searchLentRanking() {
-        return null;
+        return userRepository.findLentRanking();
     }
 }

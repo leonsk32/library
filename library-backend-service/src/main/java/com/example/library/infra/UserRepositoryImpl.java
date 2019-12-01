@@ -1,17 +1,19 @@
 package com.example.library.infra;
 
+import com.example.library.domain.ranking.Ranking;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
+import com.example.library.infra.dto.LendingEventDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Collections.*;
+import static java.util.Collections.emptyList;
 
 @Repository
 @RequiredArgsConstructor
@@ -62,5 +64,19 @@ public class UserRepositoryImpl implements UserRepository {
     public void delete(String userId) {
         String sql = "delete from userr where user_id = '" + userId + "';";
         jdbcTemplate.execute(sql);
+    }
+
+    @Override
+    public List<Ranking> findLentRanking() {
+        String sql = "SELECT * FROM LENDING_EVENT";
+        BeanPropertyRowMapper<LendingEventDto> rowMapper = new BeanPropertyRowMapper<LendingEventDto>(LendingEventDto.class);
+        List<LendingEventDto> result = jdbcTemplate.query(sql, rowMapper);
+
+        List<Ranking> rankingList = new ArrayList<>();
+        for (LendingEventDto dto : result){
+            Ranking ranking = new Ranking(dto.getUserId(), dto.getIsbn(), 0);
+            rankingList.add(ranking);
+        }
+        return rankingList;
     }
 }
