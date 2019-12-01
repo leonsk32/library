@@ -74,8 +74,9 @@ public class UserRepositoryImpl implements UserRepository {
         List<LendingEventDto> result = jdbcTemplate.query(sql, rowMapper);
 
         RankingList rankingList = new RankingList();
-        for (LendingEventDto dto : result){
-            Ranking ranking = new Ranking(dto.getUserId(), "");
+        for (LendingEventDto dto : result) {
+            User user = findById(dto.getUserId());
+            Ranking ranking = new Ranking(dto.getUserId(), user.getFullName());
             rankingList.add(ranking);
         }
         return rankingList;
