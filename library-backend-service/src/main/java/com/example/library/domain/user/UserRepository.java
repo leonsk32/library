@@ -1,6 +1,6 @@
 package com.example.library.domain.user;
 
-import com.example.library.domain.ranking.Ranking;
+import com.example.library.domain.ranking.RankingList;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface UserRepository {
 
     void delete(String userId);
 
-    List<Ranking> findLentRanking();
+    RankingList findLentRanking();
 }

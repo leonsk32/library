@@ -1,6 +1,6 @@
 package com.example.library.app_service;
 
-import com.example.library.domain.ranking.Ranking;
+import com.example.library.domain.ranking.RankingList;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
 import com.example.library.restapi.dto.UserDto;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Ranking> searchLentRanking() {
+    public RankingList searchLentRanking() {
         return userRepository.findLentRanking();
     }
 }

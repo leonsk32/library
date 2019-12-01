@@ -2,14 +2,13 @@ package com.example.library.restapi;
 
 import com.example.library.app_service.UserService;
 import com.example.library.domain.ranking.Ranking;
+import com.example.library.domain.ranking.RankingList;
 import com.example.library.restapi.dto.RankingDto;
 import com.example.library.restapi.dto.RankingsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
 
@@ -21,13 +20,13 @@ public class RankingApiImpl implements RankingApi {
 
     @Override
     public ResponseEntity<RankingsDto> rankingBooksGet() {
-        List<Ranking> rankings = service.searchLentRanking();
+        RankingList rankings = service.searchLentRanking();
         return new ResponseEntity<>(convert(rankings), NOT_IMPLEMENTED);
     }
 
-    private RankingsDto convert(List<Ranking> rankings) {
+    private RankingsDto convert(RankingList rankings) {
         RankingsDto rankingsDto = new RankingsDto();
-        for (Ranking ranking : rankings) {
+        for (Ranking ranking : rankings.getRankingList()) {
             RankingDto rankingDto = new RankingDto();
             rankingDto.setUserId(ranking.getUserId());
             rankingDto.setName(ranking.getName());

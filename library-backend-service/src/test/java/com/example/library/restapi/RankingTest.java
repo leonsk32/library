@@ -2,6 +2,7 @@ package com.example.library.restapi;
 
 import com.example.library.app_service.UserService;
 import com.example.library.domain.ranking.Ranking;
+import com.example.library.domain.ranking.RankingList;
 import org.intellij.lang.annotations.Language;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,11 +31,14 @@ class RankingTest {
     @DisplayName("全検索")
     @Test
     void findBookRanking() throws Exception {
-        when(service.searchLentRanking()).thenReturn(List.of(
+        List<Ranking> rankings = List.of(
                 new Ranking("1234567", "きり丸", 10),
                 new Ranking("1234568", "乱太郎", 7),
-                new Ranking("1234569", "新兵衛", 3)
-        ));
+                new Ranking("1234569", "新兵衛", 3));
+
+        RankingList rankingList = new RankingList(rankings);
+
+        when(service.searchLentRanking()).thenReturn(rankingList);
 
         @Language("JSON") String content = "{\"rankings\": [\n" +
                 "  " +

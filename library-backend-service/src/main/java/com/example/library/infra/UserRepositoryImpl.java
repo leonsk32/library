@@ -1,6 +1,7 @@
 package com.example.library.infra;
 
 import com.example.library.domain.ranking.Ranking;
+import com.example.library.domain.ranking.RankingList;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
 import com.example.library.infra.dto.LendingEventDto;
@@ -67,14 +68,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<Ranking> findLentRanking() {
+    public RankingList findLentRanking() {
         String sql = "SELECT * FROM LENDING_EVENT";
         BeanPropertyRowMapper<LendingEventDto> rowMapper = new BeanPropertyRowMapper<LendingEventDto>(LendingEventDto.class);
         List<LendingEventDto> result = jdbcTemplate.query(sql, rowMapper);
 
-        List<Ranking> rankingList = new ArrayList<>();
+        RankingList rankingList = new RankingList();
         for (LendingEventDto dto : result){
-            Ranking ranking = new Ranking(dto.getUserId(), dto.getIsbn(), 0);
+            Ranking ranking = new Ranking(dto.getUserId(), "");
             rankingList.add(ranking);
         }
         return rankingList;
