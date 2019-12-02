@@ -34,24 +34,14 @@ public class Users {
     @CrossOrigin
     public ResponseEntity<UserDto> search(@PathVariable("userId") String userId) {
         User user = service.searchById(userId);
-        UserDto userDto = new UserDto();
-        userDto.setUserId(user.getUserId());
-        userDto.setEmail(user.getEmail());
-        userDto.setSimei(user.getFamilyName());
-        userDto.setNamae(user.getGivenName());
-        return new ResponseEntity<>(userDto, OK);
+        return new ResponseEntity<>(toDto(user), OK);
     }
 
     @PutMapping("users")
     @CrossOrigin
     public ResponseEntity<Void> register(@RequestBody @Valid RequestParam body) {
 
-        UserDto userDto = new UserDto();
-        userDto.setUserId(body.getUserId());
-        userDto.setEmail(body.getEmail());
-        userDto.setSimei(body.getSimei());
-        userDto.setNamae(body.getNamae());
-        service.register(userDto);
+        service.register(toDomain(body));
         return new ResponseEntity<>(OK);
     }
 
@@ -77,15 +67,28 @@ public class Users {
         List<UserDto> userDtoList = new ArrayList<>();
 
         for (User user : users) {
-            UserDto userDto = new UserDto();
-            userDto.setUserId(user.getUserId());
-            userDto.setEmail(user.getEmail());
-            userDto.setSimei(user.getFamilyName());
-            userDto.setNamae(user.getGivenName());
-            userDtoList.add(userDto);
+            userDtoList.add(toDto(user));
         }
 
         result.setUsers(userDtoList);
         return result;
+    }
+
+    private UserDto toDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(user.getUserId());
+        userDto.setEmail(user.getEmail());
+        userDto.setSimei(user.getFamilyName());
+        userDto.setNamae(user.getGivenName());
+        return userDto;
+    }
+
+    private UserDto toDomain(RequestParam body) {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(body.getUserId());
+        userDto.setEmail(body.getEmail());
+        userDto.setSimei(body.getSimei());
+        userDto.setNamae(body.getNamae());
+        return userDto;
     }
 }
