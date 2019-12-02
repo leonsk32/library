@@ -381,6 +381,39 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @param {UserDto} [users] tags to filter by
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersPut(users?: UserDto, options: any = {}): RequestArgs {
+            const localVarPath = `/users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (users !== undefined) {
+                localVarQueryParameter['users'] = users;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -447,39 +480,6 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {UserDto} [users] tags to filter by
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usersUserIdPut(users?: UserDto, options: any = {}): RequestArgs {
-            const localVarPath = `/users/{userId}`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (users !== undefined) {
-                localVarQueryParameter['users'] = users;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -496,6 +496,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
          */
         usersGet(options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsersDto> {
             const localVarAxiosArgs = UsersApiAxiosParamCreator(configuration).usersGet(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {UserDto} [users] tags to filter by
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersPut(users?: UserDto, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = UsersApiAxiosParamCreator(configuration).usersPut(users, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -527,19 +540,6 @@ export const UsersApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        /**
-         * 
-         * @param {UserDto} [users] tags to filter by
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usersUserIdPut(users?: UserDto, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = UsersApiAxiosParamCreator(configuration).usersUserIdPut(users, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
     }
 };
 
@@ -559,6 +559,15 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @param {UserDto} [users] tags to filter by
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersPut(users?: UserDto, options?: any) {
+            return UsersApiFp(configuration).usersPut(users, options)(axios, basePath);
+        },
+        /**
+         * 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -574,15 +583,6 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         usersUserIdGet(userId: string, options?: any) {
             return UsersApiFp(configuration).usersUserIdGet(userId, options)(axios, basePath);
-        },
-        /**
-         * 
-         * @param {UserDto} [users] tags to filter by
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usersUserIdPut(users?: UserDto, options?: any) {
-            return UsersApiFp(configuration).usersUserIdPut(users, options)(axios, basePath);
         },
     };
 };
@@ -606,6 +606,17 @@ export class UsersApi extends BaseAPI {
 
     /**
      * 
+     * @param {UserDto} [users] tags to filter by
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersPut(users?: UserDto, options?: any) {
+        return UsersApiFp(this.configuration).usersPut(users, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -624,17 +635,6 @@ export class UsersApi extends BaseAPI {
      */
     public usersUserIdGet(userId: string, options?: any) {
         return UsersApiFp(this.configuration).usersUserIdGet(userId, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * 
-     * @param {UserDto} [users] tags to filter by
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public usersUserIdPut(users?: UserDto, options?: any) {
-        return UsersApiFp(this.configuration).usersUserIdPut(users, options)(this.axios, this.basePath);
     }
 
 }

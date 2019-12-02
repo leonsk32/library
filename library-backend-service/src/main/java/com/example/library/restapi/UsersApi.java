@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-02T23:00:40.669106400+09:00[Asia/Tokyo]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-02T23:25:55.384070900+09:00[Asia/Tokyo]")
 
 @Validated
 @Api(value = "users", description = "the users API")
@@ -28,6 +28,14 @@ public interface UsersApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<UsersDto> usersGet();
+
+
+    @ApiOperation(value = "", nickname = "usersPut", notes = "", tags={ "users", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK") })
+    @RequestMapping(value = "/users",
+        method = RequestMethod.PUT)
+    ResponseEntity<Void> usersPut(@ApiParam(value = "tags to filter by") @Valid UserDto users);
 
 
     @ApiOperation(value = "", nickname = "usersUserIdDelete", notes = "", tags={ "users", })
@@ -45,13 +53,5 @@ public interface UsersApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<UserDto> usersUserIdGet(@ApiParam(value = "", required = true) @PathVariable("userId") String userId);
-
-
-    @ApiOperation(value = "", nickname = "usersUserIdPut", notes = "", tags={ "users", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK") })
-    @RequestMapping(value = "/users/{userId}",
-        method = RequestMethod.PUT)
-    ResponseEntity<Void> usersUserIdPut(@ApiParam(value = "tags to filter by") @Valid UserDto users);
 
 }

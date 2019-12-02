@@ -11,7 +11,21 @@ all:
             schema:
               $ref: ./difinitions/usersDto.yaml
   parameters: []
-
+  put:
+    tags:
+      - users
+    summary:
+    responses:
+      '200':
+        description: OK
+    parameters:
+      - name: users
+        in: query
+        description: tags to filter by
+        required: false
+        style: form
+        schema:
+          $ref: ./difinitions/userDto.yaml
 id:
   get:
     tags:
@@ -31,21 +45,6 @@ id:
         schema:
           type: string
         description: ''
-  put:
-    tags:
-      - users
-    summary:
-    responses:
-      '200':
-        description: OK
-    parameters:
-      - name: users
-        in: query
-        description: tags to filter by
-        required: false
-        style: form
-        schema:
-          $ref: ./difinitions/userDto.yaml
   delete:
     tags:
       - users

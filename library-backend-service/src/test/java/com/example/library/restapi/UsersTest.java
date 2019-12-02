@@ -42,14 +42,14 @@ class UsersTest {
                                 "    {\n" +
                                 "      \"userId\": \"1234567\",\n" +
                                 "      \"email\": \"aa@bb\",\n" +
-                                "      \"simei\": \"kirima\",\n" +
-                                "      \"namae\": \"nainai\"\n" +
+                                "      \"familyName\": \"kirima\",\n" +
+                                "      \"givenName\": \"nainai\"\n" +
                                 "    },\n" +
                                 "    {\n" +
                                 "      \"userId\": \"1234568\",\n" +
                                 "      \"email\": \"cc@bb\",\n" +
-                                "      \"simei\": \"ki\",\n" +
-                                "      \"namae\": \"na\"\n" +
+                                "      \"familyName\": \"ki\",\n" +
+                                "      \"givenName\": \"na\"\n" +
                                 "    }\n" +
                                 "  ]\n" +
                                 "}", true));
@@ -66,8 +66,8 @@ class UsersTest {
                         "{\n" +
                                 "  \"userId\": \"1234567\",\n" +
                                 "  \"email\": \"aa@bb\",\n" +
-                                "  \"simei\": \"kirima\",\n" +
-                                "  \"namae\": \"nainai\"\n" +
+                                "  \"familyName\": \"kirima\",\n" +
+                                "  \"givenName\": \"nainai\"\n" +
                                 "}", true));
         verify(userService).searchById("1234567");
     }
@@ -79,16 +79,16 @@ class UsersTest {
 
         UserDto userDto = new UserDto();
         userDto.setUserId("1234567");
-        userDto.setNamae("kirima");
         userDto.setEmail("kiri@kiri");
-        userDto.setSimei("nainai");
+        userDto.setFamilyName("nainai");
+        userDto.setGivenName("kirima");
 
         //language=json
         String body = "{\n" +
                 "  \"userId\": \"1234567\",\n" +
-                "  \"namae\": \"kirima\",\n" +
                 "  \"email\": \"kiri@kiri\",\n" +
-                "  \"simei\": \"nainai\"\n" +
+                "  \"familyName\": \"nainai\",\n" +
+                "  \"givenName\": \"kirima\"\n" +
                 "}";
 
         // act

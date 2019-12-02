@@ -7,6 +7,7 @@ import com.example.library.restapi.dto.UsersDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,16 +33,16 @@ public class Users implements UsersApi {
 
     @CrossOrigin
     @Override
-    public ResponseEntity<UserDto> usersUserIdGet(String userId) {
-        User user = service.searchById(userId);
-        return new ResponseEntity<>(toDto(user), OK);
+    public ResponseEntity<Void> usersPut(@RequestBody @Valid UserDto users) {
+        service.register(toDomain(users));
+        return new ResponseEntity<>(OK);
     }
 
     @CrossOrigin
     @Override
-    public ResponseEntity<Void> usersUserIdPut(@Valid UserDto users) {
-        service.register(toDomain(users));
-        return new ResponseEntity<>(OK);
+    public ResponseEntity<UserDto> usersUserIdGet(String userId) {
+        User user = service.searchById(userId);
+        return new ResponseEntity<>(toDto(user), OK);
     }
 
     @CrossOrigin

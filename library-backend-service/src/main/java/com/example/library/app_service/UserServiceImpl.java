@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
         User user = new User(
                 userDto.getUserId(),
                 userDto.getEmail(),
-                userDto.getSimei(),
-                userDto.getNamae()
+                userDto.getFamilyName(),
+                userDto.getGivenName()
         );
 
         userRepository.register(user);
