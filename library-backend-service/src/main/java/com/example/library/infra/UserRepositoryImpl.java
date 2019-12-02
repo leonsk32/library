@@ -5,6 +5,7 @@ import com.example.library.domain.ranking.RankingList;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
 import com.example.library.infra.dto.LendingEventDto;
+import com.example.library.infra.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,13 +43,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findById(String userId) {
         String sql = "SELECT * FROM USERR where user_id = '" + userId + "'";
-        List<Map<String, Object>> resultMap = jdbcTemplate.queryForList(sql);
+        BeanPropertyRowMapper<UserDto> rowMapper = new BeanPropertyRowMapper<>(UserDto.class);
+        List<UserDto> resultMap = jdbcTemplate.query(sql, rowMapper);
         if (resultMap.size() == 0) return null;
-        String email = (String) resultMap.get(0).get("email");
-        String simei = (String) resultMap.get(0).get("simei");
-        String namae= (String) resultMap.get(0).get("namae");
-        User user = new User(userId, email, simei, namae);
-        return user;
+        return new User(userId, resultMap.get(0).getEmail(), resultMap.get(0).getFamilyName(), resultMap.get(0).getGivenName());
     }
 
     @Override
