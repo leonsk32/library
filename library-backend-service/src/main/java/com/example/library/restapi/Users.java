@@ -37,8 +37,8 @@ public class Users {
         UserDto userDto = new UserDto();
         userDto.setUserId(user.getUserId());
         userDto.setEmail(user.getEmail());
-        userDto.setSimei(user.getSimei());
-        userDto.setNamae(user.getNamae());
+        userDto.setSimei(user.getFamilyName());
+        userDto.setNamae(user.getGivenName());
         return new ResponseEntity<>(userDto, OK);
     }
 
@@ -80,8 +80,8 @@ public class Users {
             UserDto userDto = new UserDto();
             userDto.setUserId(user.getUserId());
             userDto.setEmail(user.getEmail());
-            userDto.setSimei(user.getSimei());
-            userDto.setNamae(user.getNamae());
+            userDto.setSimei(user.getFamilyName());
+            userDto.setNamae(user.getGivenName());
             userDtoList.add(userDto);
         }
 

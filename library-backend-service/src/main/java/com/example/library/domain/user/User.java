@@ -9,18 +9,18 @@ public class User {
     @Getter
     private final String email;
     @Getter
-    private String simei;
+    private String familyName;
     @Getter
-    private String namae;
+    private String givenName;
 
-    public User(String userId, String email, String simei, String namae) {
+    public User(String userId, String email, String familyName, String givenName) {
         if(userId.length() > 7) {
             throw new RuntimeException("userIdは７桁");
         }
         this.userId = userId;
         this.email = email;
-        this.simei = simei;
-        this.namae = namae;
+        this.familyName = familyName;
+        this.givenName = givenName;
     }
 
     public User(String userId, String email) {
@@ -39,6 +39,6 @@ public class User {
     }
 
     public String getFullName() {
-        return StringUtils.trimToEmpty(this.simei) + StringUtils.trimToEmpty(this.namae);
+        return StringUtils.trimToEmpty(this.familyName) + StringUtils.trimToEmpty(this.givenName);
     }
 }

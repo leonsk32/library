@@ -56,8 +56,8 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "insert into userr(user_id, email, family_name, given_name) values ('" +
                 user.getUserId() + "','" +
                 user.getEmail() + "','" +
-                user.getSimei() + "','" +
-                user.getNamae() + "')";
+                user.getFamilyName() + "','" +
+                user.getGivenName() + "')";
         jdbcTemplate.execute(sql);
     }
 
