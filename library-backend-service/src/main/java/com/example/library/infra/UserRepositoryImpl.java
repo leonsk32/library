@@ -53,7 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void register(User user) {
-        String sql = "insert into userr(user_id, email, simei, namae) values ('" +
+        String sql = "insert into userr(user_id, email, family_name, given_name) values ('" +
                 user.getUserId() + "','" +
                 user.getEmail() + "','" +
                 user.getSimei() + "','" +

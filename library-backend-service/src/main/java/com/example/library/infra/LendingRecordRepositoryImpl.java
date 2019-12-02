@@ -26,6 +26,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
 
+    @Deprecated
     @Override
     public void register(LendingRecord lendingRecord) {
         jdbcTemplate.execute("insert into lending_record(isbn, user_id) values('"
@@ -54,6 +55,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
                 LocalDateTime.now() + "')");
     }
 
+    @Deprecated
     @Override
     public void delete(LendingRecord lendingRecord) {
         String sql = "DELETE FROM LENDING_RECORD WHERE isbn = '"
@@ -63,6 +65,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
         jdbcTemplate.execute(sql);
     }
 
+    @Deprecated
     @Override
     public List<LendingRecord> findAll() {
         String sql = "SELECT * FROM LENDING_RECORD";
@@ -123,6 +126,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
                 userRepository.findById(lendingMap.getUserId())));
     }
 
+    @Deprecated
     @Override
     public LendingRecord findById(Book book, User user) {
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from LENDING_RECORD " +

@@ -37,7 +37,7 @@ class LendingRecordRepositoryImplTest {
     void setUp() {
         jdbcTemplate.execute("Delete from LENDING_EVENT");
         jdbcTemplate.execute("Delete from RETURN_EVENT");
-        jdbcTemplate.execute("Delete from LENDING_RECORD");
+//        jdbcTemplate.execute("Delete from LENDING_RECORD");
         jdbcTemplate.execute("Delete from BOOK");
         jdbcTemplate.execute("Delete from USERR");
     }
@@ -46,7 +46,7 @@ class LendingRecordRepositoryImplTest {
     void tearDown() {
         jdbcTemplate.execute("Delete from LENDING_EVENT");
         jdbcTemplate.execute("Delete from RETURN_EVENT");
-        jdbcTemplate.execute("Delete from LENDING_RECORD");
+//        jdbcTemplate.execute("Delete from LENDING_RECORD");
         jdbcTemplate.execute("Delete from BOOK");
         jdbcTemplate.execute("Delete from USERR");
     }
@@ -55,6 +55,7 @@ class LendingRecordRepositoryImplTest {
     @Nested
     class Insert {
 
+        @Disabled("lendingRecordをdropするのでdisabled")
         @Test
         void insert() {
             // Arrange
@@ -117,6 +118,7 @@ class LendingRecordRepositoryImplTest {
     @DisplayName("delete")
     @Nested
     class dlete {
+        @Disabled("lendingRecordをdropするのでdisabled")
         @Test
         void dlete01() {
             // GIVEN
@@ -145,6 +147,7 @@ class LendingRecordRepositoryImplTest {
     @DisplayName("find")
     @Nested
     class find {
+        @Disabled("lendingRecordをdropするのでdisabled")
         @DisplayName("単数の取得")
         @Test
         void findById_01() {
@@ -163,7 +166,7 @@ class LendingRecordRepositoryImplTest {
             assertThat(actual).isEqualTo(entity);
         }
 
-
+        @Disabled("lendingRecordをdropするのでdisabled")
         @DisplayName("複数の取得")
         @Test
         void findAllForEvent() {
