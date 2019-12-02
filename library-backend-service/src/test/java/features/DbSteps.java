@@ -1,13 +1,15 @@
 package features;
 
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class DbSteps {
     private Connection connection;
@@ -17,8 +19,8 @@ public class DbSteps {
         return String.format("INSERT INTO userr VALUES ('%s', '%s', '%s', '%s');", id, mail, familyName, firstName);
     }
 
-    private String createBookBy(String isbn, int amount) {
-        return String.format("INSERT INTO book VALUES ('%s', '%d');", isbn, amount);
+    private String createBookBy(String isbn, String amount) {
+        return String.format("INSERT INTO book VALUES ('%s', '%s');", isbn, amount);
     }
 
     private String createLentBy(String userId, String isbn) {
@@ -28,7 +30,6 @@ public class DbSteps {
     @Given("^DBの設定をする$")
     public void setupDB() throws Throwable {
         String url = "jdbc:postgresql://localhost:15432/library";
-//        String url = "jdbc:h2:mem:library;MODE=PostgreSQL;DB_CLOSE_DELAY=-1";
 
         connection = DriverManager.getConnection(url, "libuser", "libpass");
     }
@@ -41,10 +42,51 @@ public class DbSteps {
         }
     }
 
-    @When("{string} が {string}　の本を借りる")
-    public void がの本を借りる(String userId, String isbn) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.execute(this.createLentBy(userId, isbn));
+    @And("userId が isbn の本を借りる")
+    public void がの本を借りる(DataTable dataTable) throws SQLException {
+        boolean header = true;
+        for (List<String> row : dataTable.asLists()) {
+            if (header){
+                header = false;
+                continue;
+            }
+            String userId = row.get(0);
+            String isbn = row.get(1);
+            Statement statement = connection.createStatement();
+            statement.execute(this.createLentBy(userId, isbn));
+        }
+    }
+
+    @And("ユーザを作る")
+    public void createUser(DataTable dataTable) throws Throwable {
+        boolean header = true;
+        for (List<String> a : dataTable.asLists()) {
+            if (header){
+                header = false;
+                continue;
+            }
+            String id = a.get(0);
+            String mail = a.get(1);
+            String familyName = a.get(2);
+            String firstname = a.get(3);
+            Statement statement = connection.createStatement();
+            statement.execute(this.createUserBy(id, mail, familyName, firstname));
+        }
+    }
+
+    @And("本を作る")
+    public void createBook(DataTable dataTable) throws Throwable {
+        boolean header = true;
+        for (List<String> row : dataTable.asLists()) {
+            if (header){
+                header = false;
+                continue;
+            }
+            String isbn = row.get(0);
+            String amount = row.get(1);
+            Statement statement = connection.createStatement();
+            statement.execute(this.createBookBy(isbn, amount));
+        }
     }
 
     public enum DB {
@@ -64,17 +106,6 @@ public class DbSteps {
         }
     }
 
-    @When("id {string} mail {string} 氏　{string} 名 {string} のユーザを作る")
-    public void createUser(String id, String mail, String familyName, String firstname) throws Throwable {
-        Statement statement = connection.createStatement();
-        statement.execute(this.createUserBy(id, mail, familyName, firstname));
-    }
-
-    @When("isbn {string} amount {int} の本を作る")
-    public void createBook(String isbn, int amount) throws Throwable {
-        Statement statement = connection.createStatement();
-        statement.execute(this.createBookBy(isbn, amount));
-    }
 
     @Then("^コネクションを閉じる$")
     public void connectionClose() throws Throwable {

@@ -3,7 +3,13 @@ Feature: テストデータ
   Scenario:
     Given DBの設定をする
     And 初期化
-    When id "111426" mail "aa@bb" 氏　"摂津の" 名 "きり丸" のユーザを作る
-    When isbn "9784567890978" amount 10 の本を作る
-    When "111426" が "9784567890978"　の本を借りる
+    And ユーザを作る
+      | id     | mail  | familyName | firstname |
+      | 111426 | aa@bb | 摂津の        | きり丸       |
+    And 本を作る
+      | isbn          | amount |
+      | 9784567890978 | 10     |
+    And userId が isbn の本を借りる
+      | userId | isbn          |
+      | 111426 | 9784567890978 |
     Then コネクションを閉じる
