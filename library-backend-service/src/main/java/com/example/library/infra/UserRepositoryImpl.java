@@ -68,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public RankingList findLentRanking() {
         String sql = "SELECT * FROM LENDING_EVENT";
-        BeanPropertyRowMapper<LendingEventDto> rowMapper = new BeanPropertyRowMapper<LendingEventDto>(LendingEventDto.class);
+        BeanPropertyRowMapper<LendingEventDto> rowMapper = new BeanPropertyRowMapper<>(LendingEventDto.class);
         List<LendingEventDto> result = jdbcTemplate.query(sql, rowMapper);
 
         RankingList rankingList = new RankingList();

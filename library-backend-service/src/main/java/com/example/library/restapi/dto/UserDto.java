@@ -1,6 +1,5 @@
 package com.example.library.restapi.dto;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
