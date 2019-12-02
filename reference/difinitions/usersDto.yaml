@@ -1,0 +1,10 @@
+title: usersDto
+type: object
+description: ユーザのリスト
+properties:
+  users:
+    type: array
+    items:
+      $ref: ./userDto.yaml
+required:
+  - users

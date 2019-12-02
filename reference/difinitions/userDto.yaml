@@ -1,0 +1,14 @@
+title: userDto
+type: object
+description:
+properties:
+  userId:
+    type: string
+  email:
+    type: string
+  familyName:
+    type: string
+  givenName:
+    type: string
+required:
+  - userId
