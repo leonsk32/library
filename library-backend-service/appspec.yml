@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: build/libs/library-backend-service-0.0.1-SNAPSHOT.jar
+    destination: /var/src/
+    overwrite: yes
+hooks:
+  ApplicationStop:
+    - location: scripts/appstop.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/appstart.sh
+      timeout: 300
+      runas: root

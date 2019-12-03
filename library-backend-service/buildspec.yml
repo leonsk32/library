@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  pre_build:
+    commands:
+      - cd library-backend-service
+  build:
+    commands:
+      - ./gradlew clean build
+artifacts:
+  files:
+    - '**/*'
+  base-directory: library-backend-service
+cache:
+  paths:
+    - '/root/.gradle/caches/**/*'
+    - '/root/.gradle/wrapper/**/*'
+    - 'ampd-backend-service/.gradle/**/*'
