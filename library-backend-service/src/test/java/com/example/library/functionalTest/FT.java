@@ -9,12 +9,10 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -27,14 +25,14 @@ class FT {
 
     @BeforeEach
     void setUp() {
-        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
+//        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
         jdbcTemplate.execute("Delete from BOOK");
         jdbcTemplate.execute("Delete from USERR");
     }
 
     @AfterEach
     private void tearDown() {
-        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
+//        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
         jdbcTemplate.execute("Delete from BOOK");
         jdbcTemplate.execute("Delete from USERR");
     }
@@ -81,7 +79,7 @@ class FT {
         void test01() {
 
             jdbcTemplate.execute("insert into USERR(user_id, email) values(1234567, 'aa@bb')");
-            jdbcTemplate.execute("insert into USERR(user_id, email, simei, namae) values(1234568, 'aa@bb', 'kiri', 'nai')");
+            jdbcTemplate.execute("insert into USERR(user_id, email, family_name, given_name) values(1234568, 'aa@bb', 'kiri', 'nai')");
 
             URI url = URI.create("/v1/users/");
 

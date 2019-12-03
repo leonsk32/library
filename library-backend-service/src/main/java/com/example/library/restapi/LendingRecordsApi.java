@@ -28,4 +28,5 @@ public interface LendingRecordsApi {
         method = RequestMethod.GET)
     ResponseEntity<LendingRecordsDto> lendingRecordsGet();
 
+    ResponseEntity<LendingRecordsDto> lendingRecordsGetForEvent();
 }

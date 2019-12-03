@@ -19,4 +19,8 @@ paths:
     $ref: './paths/lendingRecords.yaml#/root'
   '/ranking/books':
     $ref: './paths/ranking.yaml#/books'
+  '/users':
+    $ref: './paths/users.yaml#/all'
+  '/users/{userId}':
+    $ref: './paths/users.yaml#/id'
 

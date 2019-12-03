@@ -75,19 +75,19 @@ export interface RankingDto {
      * @type {string}
      * @memberof RankingDto
      */
-    userId?: string;
+    userId: string;
     /**
      * 
      * @type {string}
      * @memberof RankingDto
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {number}
      * @memberof RankingDto
      */
-    num?: number;
+    num: number;
 }
 /**
  * ランキングのリスト
@@ -100,7 +100,51 @@ export interface RankingsDto {
      * @type {Array<RankingDto>}
      * @memberof RankingsDto
      */
-    rankings?: Array<RankingDto>;
+    rankings: Array<RankingDto>;
+}
+/**
+ * 
+ * @export
+ * @interface UserDto
+ */
+export interface UserDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    userId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    familyName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    givenName?: string;
+}
+/**
+ * ユーザのリスト
+ * @export
+ * @interface UsersDto
+ */
+export interface UsersDto {
+    /**
+     * 
+     * @type {Array<UserDto>}
+     * @memberof UsersDto
+     */
+    users: Array<UserDto>;
 }
 
 /**
@@ -296,6 +340,301 @@ export class RankingApi extends BaseAPI {
      */
     public rankingBooksGet(options?: any) {
         return RankingApiFp(this.configuration).rankingBooksGet(options)(this.axios, this.basePath);
+    }
+
+}
+
+
+/**
+ * UsersApi - axios parameter creator
+ * @export
+ */
+export const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersGet(options: any = {}): RequestArgs {
+            const localVarPath = `/users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UserDto} [users] tags to filter by
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersPut(users?: UserDto, options: any = {}): RequestArgs {
+            const localVarPath = `/users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (users !== undefined) {
+                localVarQueryParameter['users'] = users;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersUserIdDelete(userId: string, options: any = {}): RequestArgs {
+            // verify required parameter 'userId' is not null or undefined
+            if (userId === null || userId === undefined) {
+                throw new RequiredError('userId','Required parameter userId was null or undefined when calling usersUserIdDelete.');
+            }
+            const localVarPath = `/users/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersUserIdGet(userId: string, options: any = {}): RequestArgs {
+            // verify required parameter 'userId' is not null or undefined
+            if (userId === null || userId === undefined) {
+                throw new RequiredError('userId','Required parameter userId was null or undefined when calling usersUserIdGet.');
+            }
+            const localVarPath = `/users/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UsersApi - functional programming interface
+ * @export
+ */
+export const UsersApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersGet(options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsersDto> {
+            const localVarAxiosArgs = UsersApiAxiosParamCreator(configuration).usersGet(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {UserDto} [users] tags to filter by
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersPut(users?: UserDto, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = UsersApiAxiosParamCreator(configuration).usersPut(users, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersUserIdDelete(userId: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = UsersApiAxiosParamCreator(configuration).usersUserIdDelete(userId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersUserIdGet(userId: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto> {
+            const localVarAxiosArgs = UsersApiAxiosParamCreator(configuration).usersUserIdGet(userId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * UsersApi - factory interface
+ * @export
+ */
+export const UsersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersGet(options?: any) {
+            return UsersApiFp(configuration).usersGet(options)(axios, basePath);
+        },
+        /**
+         * 
+         * @param {UserDto} [users] tags to filter by
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersPut(users?: UserDto, options?: any) {
+            return UsersApiFp(configuration).usersPut(users, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersUserIdDelete(userId: string, options?: any) {
+            return UsersApiFp(configuration).usersUserIdDelete(userId, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersUserIdGet(userId: string, options?: any) {
+            return UsersApiFp(configuration).usersUserIdGet(userId, options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * UsersApi - object-oriented interface
+ * @export
+ * @class UsersApi
+ * @extends {BaseAPI}
+ */
+export class UsersApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersGet(options?: any) {
+        return UsersApiFp(this.configuration).usersGet(options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @param {UserDto} [users] tags to filter by
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersPut(users?: UserDto, options?: any) {
+        return UsersApiFp(this.configuration).usersPut(users, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersUserIdDelete(userId: string, options?: any) {
+        return UsersApiFp(this.configuration).usersUserIdDelete(userId, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersUserIdGet(userId: string, options?: any) {
+        return UsersApiFp(this.configuration).usersUserIdGet(userId, options)(this.axios, this.basePath);
     }
 
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -34,6 +33,18 @@ public class LendingRecords implements LendingRecordsApi{
     @Override
     public ResponseEntity<LendingRecordsDto> lendingRecordsGet() {
         List<LendingRecord> result = service.search();
+        LendingRecordsDto LendingRecords = convertSearchResult(result);
+        return new ResponseEntity<>(LendingRecords, OK);
+    }
+
+    /**
+     * 貸出中の本とユーザーのリストを返却
+     *
+     * @return
+     */
+    @Override
+    public ResponseEntity<LendingRecordsDto> lendingRecordsGetForEvent() {
+        List<LendingRecord> result = service.searchForEvent();
         LendingRecordsDto LendingRecords = convertSearchResult(result);
         return new ResponseEntity<>(LendingRecords, OK);
     }
@@ -64,8 +75,8 @@ public class LendingRecords implements LendingRecordsApi{
             LendingRecordDto recordDto = new LendingRecordDto();
             recordDto.setIsbn(entity.getBook().getIsbn());
             recordDto.setUserId(entity.getUser().getUserId());
-            recordDto.setNamae(entity.getUser().getNamae());
-            recordDto.setSimei(entity.getUser().getSimei());
+            recordDto.setNamae(entity.getUser().getGivenName());
+            recordDto.setSimei(entity.getUser().getFamilyName());
             list.add(recordDto);
         }
         dtos.setLendingRecords(list);

@@ -36,6 +36,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+	testImplementation 'org.assertj:assertj-core'
 	testImplementation 'org.mockito:mockito-junit-jupiter'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
@@ -68,7 +69,7 @@ task cucumber() {
 	dependsOn assemble, compileTestJava
 	doLast {
 		javaexec {
-			main = "cucumber.api.cli.Main"
+			main = "io.cucumber.core.cli.Main"
 			classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
 			args = ['--plugin', 'pretty', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
 		}

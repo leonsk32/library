@@ -4,6 +4,7 @@
     * postgresのインストール
     * DB用環境変数設定
     * コードデプロイのエージェントをインストール
+    * 時刻やインスタンス名をいい感じにする
 
 ## 手作業で実施すること
 * EC2にJDKインストール
@@ -37,7 +38,7 @@ jar -cMf hoge.zip
 
 * jdk11のインストール
 ```aidl
-sudo yum install java-11-amazon-corretto
+sudo yum install -y java-11-amazon-corretto
 ```
 
 * 手動で作成したリソースからクラウドフォーメーションのtemplateを作成する方法

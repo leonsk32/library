@@ -33,15 +33,21 @@ export default class Auth extends Vue {
     userStatus: boolean = false;
 
     async doLogin(): Promise<void> {
-      const tmpUser = await Firebase.login();
-      this.user = tmpUser.user;
-      this.userStatus = true;
+      await Firebase.login();
+      this.user = Firebase.findLoginUser();
+      this.userStatus = Firebase.loginStatus();
     }
 
-    doLogout(): void {
-      Firebase.logout();
-      this.user = {};
-      this.userStatus = false;
+    async doLogout(): Promise<void> {
+      await Firebase.logout();
+      this.user = Firebase.findLoginUser();
+      this.userStatus = Firebase.loginStatus();
+    }
+
+    async mounted(): Promise<void> {
+      await Firebase.currentUser();
+      this.user = Firebase.findLoginUser();
+      this.userStatus = Firebase.loginStatus();
     }
 }
 </script>

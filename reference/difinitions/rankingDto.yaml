@@ -8,6 +8,10 @@ properties:
     type: string
   num:
     type: integer
+required:
+  - userId
+  - name
+  - num
 x-examples:
   本のランキング:
     value:

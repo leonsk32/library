@@ -17,9 +17,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Configuration, LendingRecordsApi } from '@/generated';
+import { LendingRecordsApi } from '@/generated';
 import { DefaultApi } from '@/generated/external';
 import LendingRecord from '@/class/LendingRecord';
+import { Constant } from '@/class/Constant';
+
+import customConfiguration = Constant.customConfiguration;
 
     @Component
 export default class BookList extends Vue {
@@ -30,18 +33,7 @@ export default class BookList extends Vue {
     { text: '貸出者', value: 'userId' },
   ];
 
-    configuration: Configuration =
-      {
-        baseOptions: {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
-        },
-        basePath: process.env.VUE_APP_DEV_SERVER_URL,
-
-      };
-
-    bookApi: LendingRecordsApi = new LendingRecordsApi(this.configuration);
+    bookApi: LendingRecordsApi = new LendingRecordsApi(customConfiguration);
 
     bookInfoapi: DefaultApi = new DefaultApi();
 
