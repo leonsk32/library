@@ -9,13 +9,7 @@ books:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                books:
-                  anyOf:
-                    - type: array
-                      items: {}
-                    - $ref: ./difinitions/books.v1.yaml
+              $ref: ./difinitions/booksDto.yaml
   parameters: []
 isbn:
   parameters:
@@ -27,47 +21,15 @@ isbn:
       description: ''
   put:
     tags:
-      - booksIsbn
+      - books
     summary: 本を登録する
     responses:
-      '501':
+      '200':
         description: Not Implemented
     description: ''
   delete:
     summary: ''
     responses:
-      '501':
-        description: Not Implemented
-actions:
-  parameters:
-    - name: isbn
-      in: path
-      required: true
-      schema:
-        type: string
-      description: ''
-  post:
-    tags:
-      - booksIsbnActions
-    summary: 本に対する行動
-    responses:
       '200':
-        description: OK
-    requestBody:
-      content:
-        application/json:
-          schema:
-            $ref: ./difinitions/bookaction.v1.yaml
-          examples:
-            borrow:
-              value:
-                type: borrow
-                userId: '1234567'
-            return:
-              value:
-                type: return
-                userId: '1234567'
-      description: パラメータのISBNの
-    description: ''
-    parameters: []
+        description: Not Implemented
 

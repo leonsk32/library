@@ -1,7 +1,0 @@
-title: bookAction
-type: object
-properties:
-  type:
-    type: string
-  userId:
-    type: string
