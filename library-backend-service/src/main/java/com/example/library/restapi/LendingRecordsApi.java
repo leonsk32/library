@@ -27,6 +27,4 @@ public interface LendingRecordsApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<LendingRecordsDto> lendingRecordsGet();
-
-    ResponseEntity<LendingRecordsDto> lendingRecordsGetForEvent();
 }

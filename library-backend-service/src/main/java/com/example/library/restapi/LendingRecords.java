@@ -28,22 +28,9 @@ public class LendingRecords implements LendingRecordsApi{
      *
      * @return
      */
-    @GetMapping("lendingRecords")
     @CrossOrigin
     @Override
     public ResponseEntity<LendingRecordsDto> lendingRecordsGet() {
-        List<LendingRecord> result = service.search();
-        LendingRecordsDto LendingRecords = convertSearchResult(result);
-        return new ResponseEntity<>(LendingRecords, OK);
-    }
-
-    /**
-     * 貸出中の本とユーザーのリストを返却
-     *
-     * @return
-     */
-    @Override
-    public ResponseEntity<LendingRecordsDto> lendingRecordsGetForEvent() {
         List<LendingRecord> result = service.searchForEvent();
         LendingRecordsDto LendingRecords = convertSearchResult(result);
         return new ResponseEntity<>(LendingRecords, OK);
