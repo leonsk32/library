@@ -24,6 +24,8 @@ public class Users implements UsersApi {
 
     private final UserService service;
 
+    // FIXME 管理画面からのみのアクセスに変える
+    // 外に晒すものでもないし、、、
     @CrossOrigin
     @Override
     public ResponseEntity<UsersDto> usersGet() {
