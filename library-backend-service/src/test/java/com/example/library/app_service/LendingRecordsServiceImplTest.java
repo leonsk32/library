@@ -35,21 +35,6 @@ class LendingRecordsServiceImplTest {
     }
 
     @Test
-    void search() {
-
-        List<LendingRecord> lendingRecords = Arrays.asList(
-            new LendingRecord(new Book("9784567890123"), new User("1234567", "aa@bb")),
-            new LendingRecord(new Book("9784567890124"), new User("1234568", "aa@bb"))
-        );
-
-        when(lendingRecordRepository.findAll()).thenReturn(lendingRecords);
-        List<LendingRecord> actual = target.search();
-
-        List<LendingRecord> expected = lendingRecords;
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
     void searchForEvent() {
 
         List<LendingRecord> lendingRecords = Arrays.asList(

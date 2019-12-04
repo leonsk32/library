@@ -19,11 +19,6 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
     private final UserRepository userRepository;
 
     @Override
-    public List<LendingRecord> search(String... options) {
-        return lendingRecordRepository.findAll();
-    }
-
-    @Override
     public List<LendingRecord> searchForEvent(String... options) {
         return lendingRecordRepository.findAllForEvent();
     }
