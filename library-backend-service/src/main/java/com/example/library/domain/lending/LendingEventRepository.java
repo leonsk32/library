@@ -1,13 +1,15 @@
 package com.example.library.domain.lending;
 
 
-import com.example.library.domain.book.Book;
-import com.example.library.domain.user.User;
 import com.example.library.infra.dto.LendingEvent;
 
 import java.util.List;
 
-public interface LendingRecordRepository {
+// 実はイベントのリポジトリ説
+// なんかイベントの操作しかしてない
+// findは実装で明らかにクリエイトしているため
+// ファクトリに移譲するたぐいの処理に見える
+public interface LendingEventRepository {
 
     /**
      * 本を借りる
@@ -28,7 +30,5 @@ public interface LendingRecordRepository {
      * @return
      */
     List<LendingRecord> findAllForEvent();
-
-    LendingRecord findById(Book book, User user);
 
 }

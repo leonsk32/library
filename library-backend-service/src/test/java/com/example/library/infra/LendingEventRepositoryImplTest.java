@@ -2,7 +2,6 @@ package com.example.library.infra;
 
 import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
-import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
 import com.example.library.infra.dto.LendingEvent;
@@ -21,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @SpringBootTest
-class LendingRecordRepositoryImplTest {
+class LendingEventRepositoryImplTest {
 
     @Autowired
-    LendingRecordRepositoryImpl target;
+    LendingEventRepositoryImpl target;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

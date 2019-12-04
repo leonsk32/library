@@ -1,10 +1,8 @@
 package com.example.library.infra;
 
-import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
 import com.example.library.domain.lending.LendingRecord;
-import com.example.library.domain.lending.LendingRecordRepository;
-import com.example.library.domain.user.User;
+import com.example.library.domain.lending.LendingEventRepository;
 import com.example.library.domain.user.UserRepository;
 import com.example.library.infra.dto.LendingEvent;
 import com.example.library.infra.dto.ReturnEventDto;
@@ -21,7 +19,7 @@ import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
-public class LendingRecordRepositoryImpl implements LendingRecordRepository {
+public class LendingEventRepositoryImpl implements LendingEventRepository {
     private final JdbcTemplate jdbcTemplate;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
@@ -105,17 +103,6 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     private void addRecord(ArrayList<LendingRecord> lendingRecords, LendingEvent lendingMap) {
         lendingRecords.add(new LendingRecord(bookRepository.findById(lendingMap.getIsbn()),
                 userRepository.findById(lendingMap.getUserId())));
-    }
-
-    @Deprecated
-    @Override
-    public LendingRecord findById(Book book, User user) {
-        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from LENDING_RECORD " +
-                "where isbn = '" + book.getIsbn() + "' " +
-                "and user_id = '" + user.getUserId() + "'");
-        String isbn = (String) maps.get(0).get("isbn");
-        String userId = (String) maps.get(0).get("user_id");
-        return new LendingRecord(bookRepository.findById(isbn), userRepository.findById(userId));
     }
 
     @AllArgsConstructor

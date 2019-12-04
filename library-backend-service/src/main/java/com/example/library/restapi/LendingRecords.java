@@ -31,6 +31,9 @@ public class LendingRecords implements LendingRecordsApi{
     @CrossOrigin
     @Override
     public ResponseEntity<LendingRecordsDto> lendingRecordsGet() {
+        // TODO レンディングレコードDTOをクエリモデルとして扱う
+        // TODO => DTOとエンティティの区別がいらない
+        // TODO => リポジトリもいらない　＝＞　レンディングレコードとは毎回作られるもの
         List<LendingRecord> result = service.searchForEvent();
         LendingRecordsDto LendingRecords = convertSearchResult(result);
         return new ResponseEntity<>(LendingRecords, OK);
@@ -47,7 +50,6 @@ public class LendingRecords implements LendingRecordsApi{
         return new ResponseEntity<>(OK);
     }
 
-    // TODO 本来であればURLにIDを仕込むがこの場合はどうする
     @DeleteMapping("lendingRecords")
     @CrossOrigin
     public ResponseEntity<Void> delete(@RequestBody @Valid RequestParame body) {

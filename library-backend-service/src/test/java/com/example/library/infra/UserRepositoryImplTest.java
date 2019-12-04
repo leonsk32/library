@@ -2,7 +2,6 @@ package com.example.library.infra;
 
 import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
-import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.ranking.Ranking;
 import com.example.library.domain.ranking.RankingList;
 import com.example.library.domain.user.User;
@@ -27,7 +26,7 @@ class UserRepositoryImplTest {
     @Autowired
     BookRepository bookRepository;
     @Autowired
-    LendingRecordRepositoryImpl lendingRecordRepository;
+    LendingEventRepositoryImpl lendingRecordRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
