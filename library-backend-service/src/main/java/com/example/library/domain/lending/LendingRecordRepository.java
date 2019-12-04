@@ -3,26 +3,22 @@ package com.example.library.domain.lending;
 
 import com.example.library.domain.book.Book;
 import com.example.library.domain.user.User;
+import com.example.library.infra.dto.LendingEvent;
 
 import java.util.List;
 
 public interface LendingRecordRepository {
 
-    void register(LendingRecord lendingRecord);
-
     /**
      * 本を借りる
-     * @param lendingRecord
      */
-    void registerForLendingEvent(LendingRecord lendingRecord);
+    void registerForLendingEvent(LendingEvent lendingEvent);
 
     /**
      * 本を返す
-     * @param lendingRecord
      */
-    void registerForReturnEvent(LendingRecord lendingRecord);
+    void registerForReturnEvent(LendingEvent lendingEvent);
 
-    void delete(LendingRecord lendingRecord);
 
     List<LendingRecord> findAll();
 

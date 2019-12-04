@@ -6,7 +6,7 @@ import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingRecordRepository;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
-import com.example.library.infra.dto.LendingEventDto;
+import com.example.library.infra.dto.LendingEvent;
 import com.example.library.infra.dto.ReturnEventDto;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -26,43 +26,24 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
 
-    @Deprecated
     @Override
-    public void register(LendingRecord lendingRecord) {
-        jdbcTemplate.execute("insert into lending_record(isbn, user_id) values('"
-                + lendingRecord.getBook().getIsbn()
-                + "','" +
-                lendingRecord.getUser().getUserId() + "')");
-    }
-
-    @Override
-    public void registerForLendingEvent(LendingRecord lendingRecord) {
+    public void registerForLendingEvent(LendingEvent lendingEvent) {
         jdbcTemplate.execute("insert into lending_event(isbn, user_id, lending_date) values('"
-                + lendingRecord.getBook().getIsbn()
+                + lendingEvent.getIsbn()
                 + "','"
-                + lendingRecord.getUser().getUserId()
+                + lendingEvent.getUserId()
                 + "','" +
-                LocalDateTime.now() + "')");
+                lendingEvent.getLendingDate() + "')");
     }
 
     @Override
-    public void registerForReturnEvent(LendingRecord lendingRecord) {
+    public void registerForReturnEvent(LendingEvent lendingEvent) {
         jdbcTemplate.execute("insert into return_event(isbn, user_id, return_date) values('"
-                + lendingRecord.getBook().getIsbn()
+                + lendingEvent.getIsbn()
                 + "','"
-                + lendingRecord.getUser().getUserId()
+                + lendingEvent.getUserId()
                 + "','" +
                 LocalDateTime.now() + "')");
-    }
-
-    @Deprecated
-    @Override
-    public void delete(LendingRecord lendingRecord) {
-        String sql = "DELETE FROM LENDING_RECORD WHERE isbn = '"
-                + lendingRecord.getBook().getIsbn()
-                + "' AND USER_ID='"
-                + lendingRecord.getUser().getUserId() + "';";
-        jdbcTemplate.execute(sql);
     }
 
     @Deprecated
@@ -84,8 +65,8 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
     public List<LendingRecord> findAllForEvent() {
 
         String lending = "SELECT isbn, user_id, COUNT(isbn) AS count FROM LENDING_EVENT GROUP BY isbn, user_id";
-        BeanPropertyRowMapper<LendingEventDto> beanMap = new BeanPropertyRowMapper<LendingEventDto>(LendingEventDto.class);
-        List<LendingEventDto> lendingResultMapList = jdbcTemplate.query(lending, beanMap);
+        BeanPropertyRowMapper<LendingEvent> beanMap = new BeanPropertyRowMapper<LendingEvent>(LendingEvent.class);
+        List<LendingEvent> lendingResultMapList = jdbcTemplate.query(lending, beanMap);
 
         String returned = "SELECT isbn, user_id, COUNT(isbn) AS count FROM RETURN_EVENT GROUP BY isbn, user_id";
         BeanPropertyRowMapper<ReturnEventDto> map2 = new BeanPropertyRowMapper<ReturnEventDto>(ReturnEventDto.class);
@@ -96,7 +77,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
 
         //isbn,user_idが一致したとき、lendingのほうがcountが多ければlendingRecordsにaddする
         //TODO need refactor
-        for (LendingEventDto lendingMap : lendingResultMapList) {
+        for (LendingEvent lendingMap : lendingResultMapList) {
 
             boolean isNoReturnRecord = true;
 
@@ -121,7 +102,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
         return lendingRecords;
     }
 
-    private void addRecord(ArrayList<LendingRecord> lendingRecords, LendingEventDto lendingMap) {
+    private void addRecord(ArrayList<LendingRecord> lendingRecords, LendingEvent lendingMap) {
         lendingRecords.add(new LendingRecord(bookRepository.findById(lendingMap.getIsbn()),
                 userRepository.findById(lendingMap.getUserId())));
     }
@@ -139,7 +120,7 @@ public class LendingRecordRepositoryImpl implements LendingRecordRepository {
 
     @AllArgsConstructor
     private static class RecordMatcher {
-        private LendingEventDto lendingMap;
+        private LendingEvent lendingMap;
         private ReturnEventDto returnMap;
 
         boolean isMatch() {

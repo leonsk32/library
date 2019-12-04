@@ -7,11 +7,14 @@ import com.example.library.domain.ranking.Ranking;
 import com.example.library.domain.ranking.RankingList;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
+import com.example.library.infra.dto.LendingEvent;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -90,8 +93,8 @@ class UserRepositoryImplTest {
             bookRepository.register(new Book("9784567890978"));
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784567, 'aa@bb')");
 
-            LendingRecord entity1 = new LendingRecord(new Book("9784567890978"), new User("9784567", "aa@BB"));
 
+            LendingEvent entity1 = new LendingEvent("9784567890978", "9784567", LocalDateTime.now());
             lendingRecordRepository.registerForLendingEvent(entity1);
 
             SoftAssertions softly = new SoftAssertions();
@@ -117,14 +120,18 @@ class UserRepositoryImplTest {
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784568, 'ab@bb')");
             jdbcTemplate.execute("insert into USERR(user_id, email) values(9784569, 'ac@bb')");
 
-            LendingRecord entity1 = new LendingRecord(new Book("9784567890978"), new User("9784567", "aa@BB"));
-            LendingRecord entity2 = new LendingRecord(new Book("9784567890124"), new User("9784568", "ab@BB"));
-            LendingRecord entity3 = new LendingRecord(new Book("9784567890125"), new User("9784569", "ac@BB"));
+            Book book = new Book("9784567890978");
+            User user = new User("9784567", "aa@BB");
 
-            lendingRecordRepository.registerForLendingEvent(entity1);
-            lendingRecordRepository.registerForLendingEvent(entity2);
-            lendingRecordRepository.registerForLendingEvent(entity2);
-            lendingRecordRepository.registerForLendingEvent(entity3);
+            Book book1 = new Book("9784567890124");
+            User user1 = new User("9784568", "ab@BB");
+            Book book2 = new Book("9784567890125");
+            User user2 = new User("9784569", "ac@BB");
+
+            lendingRecordRepository.registerForLendingEvent(new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now()));
+            lendingRecordRepository.registerForLendingEvent(new LendingEvent(book1.getIsbn(), user1.getUserId(), LocalDateTime.now()));
+            lendingRecordRepository.registerForLendingEvent(new LendingEvent(book2.getIsbn(), user2.getUserId(), LocalDateTime.now()));
+            lendingRecordRepository.registerForLendingEvent(new LendingEvent(book1.getIsbn(), user1.getUserId(), LocalDateTime.now()));
 
             SoftAssertions softly = new SoftAssertions();
             // THEN

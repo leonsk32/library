@@ -56,18 +56,17 @@ class LendingRecordsServiceImplTest {
         final String userId = "1234567";
         Book book = new Book(isbn);
         User user = new User(userId, "aa@bb");
-        LendingRecord lendingRecord = new LendingRecord(book, user);
 
         // act
         when(bookRepository.findById(isbn)).thenReturn(book);
         when(userRepository.findById(userId)).thenReturn(user);
-        doNothing().when(lendingRecordRepository).register(lendingRecord);
+        doNothing().when(lendingRecordRepository).registerForReturnEvent(any());
         target.borrow(isbn, userId);
 
         // assert
         verify(bookRepository).findById("9781234567890");
         verify(userRepository).findById("1234567");
-        verify(lendingRecordRepository).register(lendingRecord);
+        verify(lendingRecordRepository).registerForReturnEvent(any());
     }
 
 }

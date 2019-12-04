@@ -4,7 +4,7 @@ import com.example.library.domain.ranking.Ranking;
 import com.example.library.domain.ranking.RankingList;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
-import com.example.library.infra.dto.LendingEventDto;
+import com.example.library.infra.dto.LendingEvent;
 import com.example.library.infra.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -68,11 +68,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public RankingList findLentRanking() {
         String sql = "SELECT * FROM LENDING_EVENT";
-        BeanPropertyRowMapper<LendingEventDto> rowMapper = new BeanPropertyRowMapper<>(LendingEventDto.class);
-        List<LendingEventDto> result = jdbcTemplate.query(sql, rowMapper);
+        BeanPropertyRowMapper<LendingEvent> rowMapper = new BeanPropertyRowMapper<>(LendingEvent.class);
+        List<LendingEvent> result = jdbcTemplate.query(sql, rowMapper);
 
         RankingList rankingList = new RankingList();
-        for (LendingEventDto dto : result) {
+        for (LendingEvent dto : result) {
             User user = findById(dto.getUserId());
             Ranking ranking = new Ranking(dto.getUserId(), user.getFullName());
             rankingList.add(ranking);
