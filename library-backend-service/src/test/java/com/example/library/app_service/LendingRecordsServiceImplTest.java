@@ -7,6 +7,7 @@ import com.example.library.domain.lending.LendingEventRepository;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -49,6 +50,7 @@ class LendingRecordsServiceImplTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Disabled
     @Test
     void borrow() {
         // arrange
