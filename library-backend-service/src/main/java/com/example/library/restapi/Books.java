@@ -3,14 +3,11 @@ package com.example.library.restapi;
 
 import com.example.library.app_service.BookService;
 import com.example.library.domain.book.Book;
-import com.example.library.restapi.dto.BookListDto;
-import lombok.Data;
+import com.example.library.restapi.dto.BooksDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -18,37 +15,35 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/v1")
 @RequiredArgsConstructor
-public class Books {
+public class Books implements BooksApi {
     private final BookService service;
+
     @CrossOrigin
-    @GetMapping("books")
-    public ResponseEntity<BookListDto> search() {
+    @Override
+    public ResponseEntity<BooksDto> booksGet() {
         List<Book> books = service.searchAll();
-        return new ResponseEntity<BookListDto>(convert(books), OK);
+        return new ResponseEntity<>(convert(books), OK);
     }
 
     @CrossOrigin
-    @PutMapping("books/{isbn}")
-    public ResponseEntity<Void> register(@PathVariable("isbn") String isbn) {
+    @Override
+    public ResponseEntity<Void> booksIsbnPut(String isbn) {
         service.register(isbn);
         return new ResponseEntity<>(OK);
     }
 
     @CrossOrigin
-    @DeleteMapping("books/{isbn}")
-    public ResponseEntity<Void> delete(@PathVariable("isbn") String isbn) {
+    @Override
+    public ResponseEntity<Void> booksIsbnDelete(String isbn) {
         service.waste(isbn);
         return new ResponseEntity<>(OK);
     }
 
-    private BookListDto convert(List<Book> books) {
-        BookListDto bookListDto = new BookListDto();
-        List<String> isbns = new ArrayList<>();
-        for(Book book : books) {
-            isbns.add(book.getIsbn());
+    private BooksDto convert(List<Book> books) {
+        BooksDto bookListDto = new BooksDto();
+        for (Book book : books) {
+            bookListDto.addIsbnsItem(book.getIsbn());
         }
-        bookListDto.setIsbns(isbns);
         return bookListDto;
     }
-
 }

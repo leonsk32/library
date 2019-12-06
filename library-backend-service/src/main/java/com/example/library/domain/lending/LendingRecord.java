@@ -6,9 +6,8 @@ import com.example.library.domain.user.User;
 import lombok.Getter;
 
 /**
- * こいつはEntity
- * 日付を持ったほうがよいかも
- * immutable(変更不可)
+ * イベントを導入したことで、こいつがエンティティでなくただの
+ * 画面のためのものである可能性が浮上している
  */
 public final class LendingRecord {
     @Getter

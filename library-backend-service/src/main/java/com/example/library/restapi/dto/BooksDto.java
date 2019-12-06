@@ -5,47 +5,47 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * ユーザのリスト
+ * 本の検索結果オブジェクト
  */
-@ApiModel(description = "ユーザのリスト")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-02T23:00:40.669106400+09:00[Asia/Tokyo]")
+@ApiModel(description = "本の検索結果オブジェクト")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-04T00:14:22.876272900+09:00[Asia/Tokyo]")
 
-public class UsersDto   {
-  @JsonProperty("users")
+public class BooksDto   {
+  @JsonProperty("isbns")
   @Valid
-  private List<UserDto> users = new ArrayList<>();
+  private List<String> isbns = null;
 
-  public UsersDto users(List<UserDto> users) {
-    this.users = users;
+  public BooksDto isbns(List<String> isbns) {
+    this.isbns = isbns;
     return this;
   }
 
-  public UsersDto addUsersItem(UserDto usersItem) {
-    this.users.add(usersItem);
+  public BooksDto addIsbnsItem(String isbnsItem) {
+    if (this.isbns == null) {
+      this.isbns = new ArrayList<>();
+    }
+    this.isbns.add(isbnsItem);
     return this;
   }
 
   /**
-   * Get users
-   * @return users
+   * Get isbns
+   * @return isbns
   */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
-  @Valid
 
-  public List<UserDto> getUsers() {
-    return users;
+  public List<String> getIsbns() {
+    return isbns;
   }
 
-  public void setUsers(List<UserDto> users) {
-    this.users = users;
+  public void setIsbns(List<String> isbns) {
+    this.isbns = isbns;
   }
 
 
@@ -57,21 +57,21 @@ public class UsersDto   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UsersDto usersDto = (UsersDto) o;
-    return Objects.equals(this.users, usersDto.users);
+    BooksDto booksDto = (BooksDto) o;
+    return Objects.equals(this.isbns, booksDto.isbns);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(users);
+    return Objects.hash(isbns);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UsersDto {\n");
+    sb.append("class BooksDto {\n");
     
-    sb.append("    users: ").append(toIndentedString(users)).append("\n");
+    sb.append("    isbns: ").append(toIndentedString(isbns)).append("\n");
     sb.append("}");
     return sb.toString();
   }

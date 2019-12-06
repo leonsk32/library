@@ -3,24 +3,26 @@ package com.example.library.app_service;
 import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
 import com.example.library.domain.lending.LendingRecord;
-import com.example.library.domain.lending.LendingRecordRepository;
+import com.example.library.domain.lending.LendingEventRepository;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
+import com.example.library.infra.dto.LendingEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class LendingRecordsServiceImpl implements LendingRecordsService {
-    private final LendingRecordRepository lendingRecordRepository;
+    private final LendingEventRepository lendingEventRepository;
     private  final BookRepository bookRepository;
     private final UserRepository userRepository;
 
     @Override
-    public List<LendingRecord> search(String... options) {
-        return lendingRecordRepository.findAll();
+    public List<LendingRecord> searchForEvent(String... options) {
+        return lendingEventRepository.findAllForEvent();
     }
 
     @Override
@@ -30,8 +32,8 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
 
         if(book == null || user == null) throw new RuntimeException("本かユーザが登録されていない");
 
-        LendingRecord lendingRecord = new LendingRecord(book, user);
-        lendingRecordRepository.register(lendingRecord);
+        LendingEvent lendingEvent = new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now());
+        lendingEventRepository.registerForReturnEvent(lendingEvent);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
 
         if(book == null || user == null) throw new RuntimeException("本かユーザが登録されていない");
 
-        LendingRecord lendingRecord = lendingRecordRepository.findById(book, user);
-        lendingRecordRepository.delete(lendingRecord);
+        LendingEvent lendingEvent = new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now());
+        lendingEventRepository.registerForReturnEvent(lendingEvent);
     }
 }

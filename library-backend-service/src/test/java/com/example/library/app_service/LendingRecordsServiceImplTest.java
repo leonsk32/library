@@ -3,7 +3,7 @@ package com.example.library.app_service;
 import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
 import com.example.library.domain.lending.LendingRecord;
-import com.example.library.domain.lending.LendingRecordRepository;
+import com.example.library.domain.lending.LendingEventRepository;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 class LendingRecordsServiceImplTest {
     private LendingRecordsServiceImpl target;
     @Mock
-    LendingRecordRepository lendingRecordRepository;
+    LendingEventRepository lendingEventRepository;
     @Mock
     BookRepository bookRepository;
     @Mock
@@ -31,19 +31,19 @@ class LendingRecordsServiceImplTest {
 
     @BeforeEach
     void setup() {
-        target = new LendingRecordsServiceImpl(lendingRecordRepository, bookRepository, userRepository);
+        target = new LendingRecordsServiceImpl(lendingEventRepository, bookRepository, userRepository);
     }
 
     @Test
-    void search() {
+    void searchForEvent() {
 
         List<LendingRecord> lendingRecords = Arrays.asList(
-                new LendingRecord(new Book("9784567890123"), new User("1234567", "aa@bb")),
-                new LendingRecord(new Book("9784567890124"), new User("1234568", "aa@bb"))
+            new LendingRecord(new Book("9784567890123"), new User("1234567", "aa@bb")),
+            new LendingRecord(new Book("9784567890124"), new User("1234568", "aa@bb"))
         );
 
-        when(lendingRecordRepository.findAll()).thenReturn(lendingRecords);
-        List<LendingRecord> actual = target.search();
+        when(lendingEventRepository.findAllForEvent()).thenReturn(lendingRecords);
+        List<LendingRecord> actual = target.searchForEvent();
 
         List<LendingRecord> expected = lendingRecords;
         assertThat(actual).isEqualTo(expected);
@@ -55,19 +55,18 @@ class LendingRecordsServiceImplTest {
         final String isbn = "9781234567890";
         final String userId = "1234567";
         Book book = new Book(isbn);
-        User user= new User(userId, "aa@bb");
-        LendingRecord lendingRecord = new LendingRecord(book, user);
+        User user = new User(userId, "aa@bb");
 
         // act
         when(bookRepository.findById(isbn)).thenReturn(book);
         when(userRepository.findById(userId)).thenReturn(user);
-        doNothing().when(lendingRecordRepository).register(lendingRecord);
+        doNothing().when(lendingEventRepository).registerForReturnEvent(any());
         target.borrow(isbn, userId);
 
         // assert
         verify(bookRepository).findById("9781234567890");
         verify(userRepository).findById("1234567");
-        verify(lendingRecordRepository).register(lendingRecord);
+        verify(lendingEventRepository).registerForReturnEvent(any());
     }
 
 }

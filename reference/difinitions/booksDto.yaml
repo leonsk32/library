@@ -1,0 +1,8 @@
+title: booksDto
+type: object
+description: 本の検索結果オブジェクト
+properties:
+  isbns:
+    type: array
+    items:
+      type: string

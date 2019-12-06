@@ -1,0 +1,61 @@
+all:
+  get:
+    tags:
+      - users
+    summary:
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: ./difinitions/usersDto.yaml
+  parameters: []
+  put:
+    tags:
+      - users
+    summary:
+    responses:
+      '200':
+        description: OK
+    parameters:
+      - name: users
+        in: query
+        description: tags to filter by
+        required: false
+        style: form
+        schema:
+          $ref: ./difinitions/userDto.yaml
+id:
+  get:
+    tags:
+      - users
+    summary:
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: ./difinitions/userDto.yaml
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ''
+  delete:
+    tags:
+      - users
+    summary:
+    responses:
+      '200':
+        description: OK
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ''

@@ -4,73 +4,54 @@ import com.example.library.app_service.UserService;
 import com.example.library.domain.user.User;
 import com.example.library.restapi.dto.UserDto;
 import com.example.library.restapi.dto.UsersDto;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/v1")
 @RequiredArgsConstructor
-public class Users {
+public class Users implements UsersApi {
 
     private final UserService service;
 
-    @GetMapping("users")
+    // FIXME 管理画面からのみのアクセスに変える
+    // 外に晒すものでもないし、、、
     @CrossOrigin
-    public ResponseEntity<UsersDto> search() {
+    @Override
+    public ResponseEntity<UsersDto> usersGet() {
         List<User> users = service.searchAll();
         return new ResponseEntity<>(convert(users), OK);
     }
 
-    @GetMapping("users/{userId}")
     @CrossOrigin
-    public ResponseEntity<UserDto> search(@PathVariable("userId") String userId) {
-        User user = service.searchById(userId);
-        UserDto userDto = new UserDto();
-        userDto.setUserId(user.getUserId());
-        userDto.setEmail(user.getEmail());
-        userDto.setSimei(user.getSimei());
-        userDto.setNamae(user.getNamae());
-        return new ResponseEntity<>(userDto, OK);
-    }
-
-    @PutMapping("users")
-    @CrossOrigin
-    public ResponseEntity<Void> register(@RequestBody @Valid RequestParam body) {
-
-        UserDto userDto = new UserDto();
-        userDto.setUserId(body.getUserId());
-        userDto.setEmail(body.getEmail());
-        userDto.setSimei(body.getSimei());
-        userDto.setNamae(body.getNamae());
-        service.register(userDto);
+    @Override
+    public ResponseEntity<Void> usersPut(@RequestBody @Valid UserDto users) {
+        service.register(toDomain(users));
         return new ResponseEntity<>(OK);
     }
 
-    @DeleteMapping("users/{userId}")
     @CrossOrigin
-    public ResponseEntity<Void> delete(@PathVariable("userId") String userId) {
+    @Override
+    public ResponseEntity<UserDto> usersUserIdGet(String userId) {
+        User user = service.searchById(userId);
+        return new ResponseEntity<>(toDto(user), OK);
+    }
+
+    @CrossOrigin
+    @Override
+    public ResponseEntity<Void> usersUserIdDelete(String userId) {
         service.delete(userId);
         return new ResponseEntity<>(OK);
-    }
-
-    @Data
-    private static class RequestParam {
-        @NotNull
-        private String userId;
-        private String email;
-        private String namae;
-        private String simei;
-
     }
 
     private UsersDto convert(List<User> users) {
@@ -78,15 +59,28 @@ public class Users {
         List<UserDto> userDtoList = new ArrayList<>();
 
         for (User user : users) {
-            UserDto userDto = new UserDto();
-            userDto.setUserId(user.getUserId());
-            userDto.setEmail(user.getEmail());
-            userDto.setSimei(user.getSimei());
-            userDto.setNamae(user.getNamae());
-            userDtoList.add(userDto);
+            userDtoList.add(toDto(user));
         }
 
         result.setUsers(userDtoList);
         return result;
+    }
+
+    private UserDto toDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(user.getUserId());
+        userDto.setEmail(user.getEmail());
+        userDto.setFamilyName(user.getFamilyName());
+        userDto.setGivenName(user.getGivenName());
+        return userDto;
+    }
+
+    private UserDto toDomain(UserDto body) {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(body.getUserId());
+        userDto.setEmail(body.getEmail());
+        userDto.setFamilyName(body.getFamilyName());
+        userDto.setGivenName(body.getGivenName());
+        return userDto;
     }
 }

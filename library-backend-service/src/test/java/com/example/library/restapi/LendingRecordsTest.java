@@ -35,7 +35,7 @@ class LendingRecordsTest {
                 new LendingRecord(new Book("9784567890123"), new User("1234567", "aa@bb")),
                 new LendingRecord(new Book("9784567890124"), new User("1234568", "aa@bb", "mizukami", "hiroto")));
 
-        when(service.search()).thenReturn(lendingRecordList);
+        when(service.searchForEvent()).thenReturn(lendingRecordList);
 
         mockMvc.perform(get("/v1/lendingRecords"))
                 .andExpect(status().isOk())
@@ -63,7 +63,7 @@ class LendingRecordsTest {
     void test_02() throws Exception {
         List<LendingRecord> lendingRecordList = asList();
 
-        when(service.search()).thenReturn(lendingRecordList);
+        when(service.searchForEvent()).thenReturn(lendingRecordList);
 
         mockMvc.perform(get("/v1/lendingRecords"))
                 .andExpect(status().isOk())
