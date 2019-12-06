@@ -33,7 +33,7 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
         if(book == null || user == null) throw new RuntimeException("本かユーザが登録されていない");
 
         LendingEvent lendingEvent = new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now());
-        lendingEventRepository.registerForReturnEvent(lendingEvent);
+        lendingEventRepository.registerForLendingEvent(lendingEvent);
     }
 
     @Override
