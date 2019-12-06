@@ -13,6 +13,7 @@
       <v-data-table :headers="headers"
                     :items="ranking"
                     :sort-by="['num']"
+                    :sort-desc="[true]"
                     class="elevation-1">
         <template v-slot:item.rank="{ item }">
           <v-chip>
@@ -56,6 +57,7 @@ export default class Home extends Vue {
           const ranking = new Ranking(rankingDto.name, rankingDto.num);
           this.ranking.push(ranking);
         }
+        this.ranking.sort((a, b) => b.num - a.num);
       });
     }
 
