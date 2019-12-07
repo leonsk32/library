@@ -27,6 +27,8 @@ class FT {
     @BeforeEach
     void setUp() {
 //        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
+        jdbcTemplate.execute("Delete from LENDING_EVENT");
+        jdbcTemplate.execute("Delete from RETURN_EVENT");
         jdbcTemplate.execute("Delete from BOOK");
         jdbcTemplate.execute("Delete from USERR");
     }
@@ -34,6 +36,8 @@ class FT {
     @AfterEach
     private void tearDown() {
 //        jdbcTemplate.execute("DELETE FROM LENDING_RECORD");
+        jdbcTemplate.execute("Delete from LENDING_EVENT");
+        jdbcTemplate.execute("Delete from RETURN_EVENT");
         jdbcTemplate.execute("Delete from BOOK");
         jdbcTemplate.execute("Delete from USERR");
     }
@@ -112,7 +116,7 @@ class FT {
         @Test
         void test01() {
             // 本を登録
-            URI url3 = URI.create("/v1/lendingRecords/9781111111111");
+            URI url3 = URI.create("/v1/books/9781111111111");
             RequestEntity requestEntity3 = RequestEntity.put(url3).build();
             ResponseEntity<String> response3 = restTemplate.exchange(requestEntity3, String.class);
 
@@ -120,8 +124,8 @@ class FT {
 
             // 本を借りる
             URI url1 = URI.create("/v1/lendingRecords");
-            RequestEntity requestEntity1 = RequestEntity.post(url1).build();
-            ResponseEntity<String> response1 = restTemplate.exchange(requestEntity1, String.class);
+//            RequestEntity requestEntity1 = RequestEntity.post(url1).build();
+//            ResponseEntity<String> response1 = restTemplate.exchange(requestEntity1, String.class);
             // language=json
             String request = "{\"isbn\":\"9781111111111\",\"userId\":\"1234568\"}";
             RequestEntity requestEntity =
@@ -131,6 +135,7 @@ class FT {
             ResponseEntity<String> response =
                     restTemplate.exchange(requestEntity, String.class);
             System.out.println("response = " + response);
+
 
             // 一覧表示
 

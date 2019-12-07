@@ -62,8 +62,7 @@ public class LendingEventRepositoryImpl implements LendingEventRepository {
     @Override
     public List<LendingRecord> findAllForEvent() {
 
-//        String lending = "SELECT isbn, user_id, COUNT(isbn) AS count FROM LENDING_EVENT GROUP BY isbn, user_id";
-        String lending = "SELECT *  FROM LENDING_EVENT ";
+        String lending = "SELECT isbn, user_id, COUNT(isbn) AS count FROM LENDING_EVENT GROUP BY isbn, user_id";
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(lending);
 
         BeanPropertyRowMapper<LendingEvent> beanMap = new BeanPropertyRowMapper<LendingEvent>(LendingEvent.class);
