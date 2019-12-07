@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,11 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.http.RequestEntity.*;
 
-@Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class LendingRecordsFT {
 
@@ -83,6 +81,72 @@ class LendingRecordsFT {
         ResponseEntity<LendingRecordsDto> response2Zero = restTemplate.exchange(lendingRecordsGetRequestZero, LendingRecordsDto.class);
         assertThat(response2Zero.getStatusCode()).isEqualTo(OK);
         assertThat(response2Zero.getBody().getLendingRecords().size()).isEqualTo(0);
+    }
+
+    @DisplayName("ハッピーパス" +
+            "本を2冊登録" +
+            "ユーザを２人登録" +
+            "本を借りるx2" +
+            "貸し出し帳表示")
+    @Test
+    void test02() {
+        // 本を１冊登録
+        URI putUrl1 = URI.create("/v1/books/9781111111111");
+        RequestEntity putRequest1 = put(putUrl1).build();
+        ResponseEntity<Void> responseBookRegist = restTemplate.exchange(putRequest1, Void.class);
+        assertThat(responseBookRegist.getStatusCode()).isEqualTo(OK);
+        // 本を登録
+        URI putUrl2 = URI.create("/v1/books/9781111111112");
+        RequestEntity putRequest2 = put(putUrl2).build();
+        ResponseEntity<Void> responseBookRegist2 = restTemplate.exchange(putRequest2, Void.class);
+        assertThat(responseBookRegist2.getStatusCode()).isEqualTo(OK);
+
+        // ユーザを登録
+        URI putUrl = URI.create("/v1/users");
+        //language=json
+        String putRequest = "{\n" +
+                "  \"userId\": \"1234567\",\n" +
+                "  \"email\": \"aa@bb\",\n" +
+                "  \"familyName\": \"kiri\",\n" +
+                "  \"givenName\": \"nai\"\n" +
+                "}";
+        RequestEntity requestEntity3 = put(putUrl).contentType(APPLICATION_JSON_UTF8).body(putRequest);
+        ResponseEntity<String> putResponse = restTemplate.exchange(requestEntity3, String.class);
+        assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // ユーザを登録
+        URI putUrl22 = URI.create("/v1/users");
+        //language=json
+        String putRequest22 = "{\n" +
+                "  \"userId\": \"1234568\",\n" +
+                "  \"email\": \"aa@bb\",\n" +
+                "  \"familyName\": \"ki\",\n" +
+                "  \"givenName\": \"na\"\n" +
+                "}";
+        RequestEntity requestEntity322 = put(putUrl22).contentType(APPLICATION_JSON_UTF8).body(putRequest22);
+        ResponseEntity<String> putResponse22 = restTemplate.exchange(requestEntity322, String.class);
+        assertThat(putResponse22.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // 本を借りる
+        URI lendingUrl = URI.create("/v1/lendingRecords");
+        String lendingRequest = "{\"isbn\":\"9781111111111\",\"userId\":\"1234567\"}";
+        RequestEntity lendingRequestEntity = post(lendingUrl).contentType(APPLICATION_JSON_UTF8).body(lendingRequest);
+        ResponseEntity<Void> lendingResponse = restTemplate.exchange(lendingRequestEntity, Void.class);
+        assertThat(lendingResponse.getStatusCode()).isEqualTo(OK);
+        // 本を借りる
+        URI lendingUrl2 = URI.create("/v1/lendingRecords");
+        String lendingRequest2 = "{\"isbn\":\"9781111111112\",\"userId\":\"1234568\"}";
+        RequestEntity lendingRequestEntity2 = post(lendingUrl2).contentType(APPLICATION_JSON_UTF8).body(lendingRequest2);
+        ResponseEntity<Void> lendingResponse2 = restTemplate.exchange(lendingRequestEntity2, Void.class);
+        assertThat(lendingResponse2.getStatusCode()).isEqualTo(OK);
+
+        // 一覧表示
+        URI getLendingRecords = URI.create("/v1/lendingRecords");
+        RequestEntity lendingRecordsGetRequest = get(getLendingRecords).build();
+        ResponseEntity<LendingRecordsDto> response2 = restTemplate.exchange(lendingRecordsGetRequest, LendingRecordsDto.class);
+        assertThat(response2.getStatusCode()).isEqualTo(OK);
+        assertThat(response2.getBody().getLendingRecords().size()).isEqualTo(2);
+
     }
     @Autowired
     private TestRestTemplate restTemplate;

@@ -20,7 +20,6 @@ import java.util.Objects;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BookFT {
     @DisplayName("本を廃棄しようとしたが、その本は登録されていなかったのでエラー")
