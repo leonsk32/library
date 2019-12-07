@@ -22,6 +22,6 @@ public class LibraryExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) {
         log.error(ex.getMessage(), ex);
-        return super.handleExceptionInternal(ex, ex.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR, request);
+        return super.handleExceptionInternal(ex, ex.getMessage(), null, HttpStatus.BAD_REQUEST, request);
     }
 }
