@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.http.RequestEntity.*;
@@ -148,6 +148,32 @@ class LendingRecordsFT {
         assertThat(response2.getBody().getLendingRecords().size()).isEqualTo(2);
 
     }
+
+    @DisplayName("本がシステム上ないときに、借りようとしてエラー")
+    @Test
+    void test03() {
+        // ユーザを登録
+        URI putUrl22 = URI.create("/v1/users");
+        //language=json
+        String putRequest22 = "{\n" +
+                "  \"userId\": \"1234567\",\n" +
+                "  \"email\": \"aa@bb\",\n" +
+                "  \"familyName\": \"ki\",\n" +
+                "  \"givenName\": \"na\"\n" +
+                "}";
+        RequestEntity requestEntity322 = put(putUrl22).contentType(APPLICATION_JSON_UTF8).body(putRequest22);
+        ResponseEntity<String> putResponse22 = restTemplate.exchange(requestEntity322, String.class);
+        assertThat(putResponse22.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // 本を借りる
+        URI lendingUrl = URI.create("/v1/lendingRecords");
+        String lendingRequest = "{\"isbn\":\"9781111111111\",\"userId\":\"1234567\"}";
+        RequestEntity lendingRequestEntity = post(lendingUrl).contentType(APPLICATION_JSON_UTF8).body(lendingRequest);
+        ResponseEntity<String> lendingResponse = restTemplate.exchange(lendingRequestEntity, String.class);
+        assertThat(lendingResponse.getStatusCode()).isEqualTo(BAD_REQUEST);
+        assertThat(lendingResponse.getBody()).isEqualTo("本が登録されていない");
+    }
+
     @Autowired
     private TestRestTemplate restTemplate;
     @Autowired

@@ -39,7 +39,6 @@ public class LendingRecords implements LendingRecordsApi{
         return new ResponseEntity<>(LendingRecords, OK);
     }
 
-    // TODO 本がないときはかりられないようにする
     /**
      * 借りる
      * @param body userIdとisbnが含まれる

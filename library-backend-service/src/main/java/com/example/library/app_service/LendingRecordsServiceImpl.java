@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LendingRecordsServiceImpl implements LendingRecordsService {
     private final LendingEventRepository lendingEventRepository;
-    private  final BookRepository bookRepository;
+    private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
     @Override
@@ -30,7 +30,8 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
         Book book = bookRepository.findById(isbn);
         User user = userRepository.findById(userId);
 
-        if(book == null || user == null) throw new RuntimeException("本かユーザが登録されていない");
+        if (user == null) throw new RuntimeException("ユーザが登録されていない");
+        if (book == null) throw new RuntimeException("本が登録されていない");
 
         LendingEvent lendingEvent = new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now());
         lendingEventRepository.registerForLendingEvent(lendingEvent);
@@ -41,7 +42,7 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
         Book book = bookRepository.findById(isbn);
         User user = userRepository.findById(userId);
 
-        if(book == null || user == null) throw new RuntimeException("本かユーザが登録されていない");
+        if (book == null || user == null) throw new RuntimeException("本かユーザが登録されていない");
 
         LendingEvent lendingEvent = new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now());
         lendingEventRepository.registerForReturnEvent(lendingEvent);
