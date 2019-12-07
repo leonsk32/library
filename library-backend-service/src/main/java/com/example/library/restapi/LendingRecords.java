@@ -39,6 +39,7 @@ public class LendingRecords implements LendingRecordsApi{
         return new ResponseEntity<>(LendingRecords, OK);
     }
 
+    // TODO 本がないときはかりられないようにする
     /**
      * 借りる
      * @param body userIdとisbnが含まれる
@@ -50,6 +51,7 @@ public class LendingRecords implements LendingRecordsApi{
         return new ResponseEntity<>(OK);
     }
 
+    // TODO かりてないとき返そうとしたらエラーにする
     // デリートは基本的にはリクエストボディを持たないらしいので変えた
     @DeleteMapping("lendingRecords/{isbn}/{userId}")
     @CrossOrigin

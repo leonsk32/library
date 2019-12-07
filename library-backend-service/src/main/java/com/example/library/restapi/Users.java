@@ -44,6 +44,7 @@ public class Users implements UsersApi {
         return new ResponseEntity<>(toDto(user), OK);
     }
 
+    // TODO カスケードでけすかしないと、外部参照制約とかでおちる
     @CrossOrigin
     @Override
     public ResponseEntity<Void> usersUserIdDelete(String userId) {

@@ -18,6 +18,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class Books implements BooksApi {
     private final BookService service;
 
+    // TODO 何冊あるかもほしいかも
     @CrossOrigin
     @Override
     public ResponseEntity<BooksDto> booksGet() {
