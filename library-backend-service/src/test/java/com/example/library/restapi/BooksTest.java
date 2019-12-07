@@ -84,7 +84,7 @@ class BooksTest {
         doThrow(new RuntimeException()).when(service).waste(isbn);
         mockMvc.perform(delete("/v1/books/" + isbn)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
         verify(service).waste(isbn);
     }
 }
