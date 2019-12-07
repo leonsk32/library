@@ -46,6 +46,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(String userId) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            throw new RuntimeException("削除対象ユーザが存在しない。userId = " + userId);
+        }
         userRepository.delete(userId);
     }
 
