@@ -32,12 +32,12 @@ public class BookServiceImpl implements BookService {
     public void waste(String isbn) {
         Book book = repository.findById(isbn);
         if (book == null) throw new RuntimeException("その本はない");
-        if (book.getAmount() != 0) {
+        if (book.getAmount() > 1) {
             book.decliment();
             repository.save(book);
             return;
         }
-        if (book.getAmount() == 0) {
+        if (book.getAmount() == 1) {
             repository.delete(book);
         }
     }

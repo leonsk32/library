@@ -32,21 +32,24 @@ class BookServiceImplTest {
         verify(bookRepository).findAll();
     }
 
-    @Disabled
+    @DisplayName("２冊ある本を１冊排棄")
     @Test
     void test02() {
         final String isbn = "9781234567890";
         final Book book = new Book(isbn);
-        doNothing().when(bookRepository).register(book);
-        target.register(isbn);
-        verify(bookRepository).register(book);
+        book.add();
+        when(bookRepository.findById(isbn)).thenReturn(book);
+        doNothing().when(bookRepository).save(book);
+        target.waste(isbn);
+        verify(bookRepository, never()).delete(book);
+        verify(bookRepository).save(book);
     }
 
+    @DisplayName("1冊ある本を排棄")
     @Test
     void test03() {
         final String isbn = "9781234567890";
         final Book book = new Book(isbn);
-        book.decliment();
         when(bookRepository.findById(isbn)).thenReturn(book);
         doNothing().when(bookRepository).delete(book);
         target.waste(isbn);
