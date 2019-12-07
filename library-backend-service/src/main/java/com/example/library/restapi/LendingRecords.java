@@ -50,10 +50,11 @@ public class LendingRecords implements LendingRecordsApi{
         return new ResponseEntity<>(OK);
     }
 
-    @DeleteMapping("lendingRecords")
+    // デリートは基本的にはリクエストボディを持たないらしいので変えた
+    @DeleteMapping("lendingRecords/{isbn}/{userId}")
     @CrossOrigin
-    public ResponseEntity<Void> delete(@RequestBody @Valid RequestParame body) {
-        service.returnn(body.getIsbn(), body.getUserId());
+    public ResponseEntity<Void> delete(@PathVariable String isbn, @PathVariable String userId) {
+        service.returnn(isbn, userId);
         return new ResponseEntity<>(OK);
     }
 

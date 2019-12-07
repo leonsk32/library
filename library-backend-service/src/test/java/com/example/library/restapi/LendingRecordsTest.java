@@ -94,25 +94,4 @@ class LendingRecordsTest {
                 .andExpect(status().isOk());
         verify(service).borrow(any(), any());
     }
-
-    @DisplayName("返す")
-    @Test
-    void test_04() throws Exception {
-        // arrange
-        doNothing().when(service).returnn("isbn", "userId");
-
-        //language=json
-        String body = "{\n" +
-                "  \"isbn\": \"987654321\",\n" +
-                "  \"userId\": \"1234567\"\n" +
-                "}";
-
-        // act and assert
-        mockMvc.perform(
-                delete("/v1/lendingRecords")
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(body))
-                .andExpect(status().isOk());
-        verify(service).returnn(any(), any());
-    }
 }

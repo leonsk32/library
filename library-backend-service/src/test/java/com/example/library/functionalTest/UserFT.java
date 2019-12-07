@@ -14,10 +14,12 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 
 @Transactional
@@ -43,35 +45,31 @@ class UserFT {
                 "}";
         RequestEntity requestEntity3 = RequestEntity.put(putUrl).contentType(APPLICATION_JSON_UTF8).body(putRequest);
         ResponseEntity<String> putResponse = restTemplate.exchange(requestEntity3, String.class);
-        assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(putResponse.getStatusCode()).isEqualTo(OK);
 
         // ユーザを全件検索する
         URI getUrlAll = URI.create("/v1/users/");
         RequestEntity getRequestAll = RequestEntity.get(getUrlAll).build();
         ResponseEntity<UsersDto> getAllResponse = restTemplate.exchange(getRequestAll, UsersDto.class);
         assertThat(getAllResponse.getBody().getUsers().size()).isEqualTo(1);
-        assertThat(getAllResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getAllResponse.getStatusCode()).isEqualTo(OK);
 
         // ユーザをID検索する
         URI getUrl = URI.create("/v1/users/1234567");
         RequestEntity getRequest = RequestEntity.get(getUrl).build();
         ResponseEntity<UserDto> getResponse = restTemplate.exchange(getRequest, UserDto.class);
         assertThat(getResponse.getBody().getUserId()).isEqualTo("1234567");
-        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getResponse.getStatusCode()).isEqualTo(OK);
 
         // ユーザを削除
         URI deleteUrlB = URI.create("/v1/users/1234567");
         RequestEntity deleteRequestB = RequestEntity.delete(deleteUrlB).build();
-        ResponseEntity<UserDto> deleteResponseB = restTemplate.exchange(deleteRequestB, UserDto.class);
-        assertThat(deleteResponseB.getStatusCode()).isEqualTo(HttpStatus.OK);
+        ResponseEntity<Void> deleteResponseB = restTemplate.exchange(deleteRequestB, Void.class);
 
         // ユーザをID検索する
         URI getUrlZero = URI.create("/v1/users/1234567");
         RequestEntity getRequestZero = RequestEntity.get(getUrlZero).build();
         ResponseEntity<String> getResponseZero = restTemplate.exchange(getRequestZero, String.class);
-        assertThat(getResponseZero.getBody()).isEqualTo("ユーザが存在しない。userId = 1234567");
-        assertThat(getResponseZero.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
     }
 
     @DisplayName("いないユーザを削除しようとしてエラー")
@@ -80,9 +78,8 @@ class UserFT {
         // ユーザを削除
         URI deleteUrlB = URI.create("/v1/users/1234567");
         RequestEntity deleteRequestB = RequestEntity.delete(deleteUrlB).build();
-        ResponseEntity<String> deleteResponseB = restTemplate.exchange(deleteRequestB, String.class);
-        assertThat(deleteResponseB.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(deleteResponseB.getBody()).isEqualTo("削除対象ユーザが存在しない。userId = 1234567");
+        ResponseEntity<Void> deleteResponseB = restTemplate.exchange(deleteRequestB, Void.class);
+        assertThat(deleteResponseB.getStatusCode()).isEqualTo(BAD_REQUEST);
     }
 
     @Autowired
