@@ -11,6 +11,10 @@ servers:
 paths:
   /books:
     $ref: './paths/books.yaml#/books'
+  '/books/inventory/{version}':
+    $ref: './paths/booksInventory.yaml#/inventory'
+  '/books/inventory/{version}/{isbn}':
+    $ref: './paths/booksInventory.yaml#/inventoryEvent'
   '/books/{isbn}':
     $ref: './paths/books.yaml#/isbn'
   '/lendingRecords':
