@@ -18,15 +18,15 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { LendingRecordsApi } from '@/generated';
-import { DefaultApi } from '@/generated/external';
 import LendingRecord from '@/class/LendingRecord';
 import { Constant } from '@/class/Constant';
+import Isbn from '@/class/Isbn';
 
 import customConfiguration = Constant.customConfiguration;
 
-    @Component
+@Component
 export default class BookList extends Vue {
-    lendingRecords: Array<LendingRecord> = [];
+  lendingRecords: Array<LendingRecord> = [];
 
   headers: any = [
     { text: 'タイトル', value: 'title' },
@@ -35,33 +35,44 @@ export default class BookList extends Vue {
 
     bookApi: LendingRecordsApi = new LendingRecordsApi(customConfiguration);
 
-    bookInfoapi: DefaultApi = new DefaultApi();
-
+    /**
+     * 貸出帳の作成を行う。
+     */
     getBooks(): void {
       this.bookApi.lendingRecordsGet()
-        .then((res) => {
-          const lendingRecordsDto: any = res.data.lendingRecords;
+        .then(async (res) => {
+          const lendingRecordsDto = res.data.lendingRecords;
 
-          /* eslint no-restricted-syntax : 0 */
-          for (const lendingRecordDto of lendingRecordsDto) {
-            const lendingRecord = new LendingRecord(lendingRecordDto.isbn, lendingRecordDto.userId);
-
-            const formatIsbnList: Array<string> = [];
-            formatIsbnList.push(lendingRecord.getFormattedIsbn());
-            /* eslint no-loop-func:0 */
-            this.bookInfoapi.getGet(formatIsbnList)
-              .then((res2) => {
-                /* eslint prefer-destructuring:0 */
-                lendingRecord.title = res2.data[0].summary.title;
-              }).finally(() => {
-                this.lendingRecords.push(lendingRecord);
-              });
+          if (typeof lendingRecordsDto === 'undefined') {
+            return;
           }
+
+          // Promiseの配列を生成
+          const b = lendingRecordsDto.map(item => this.createLendingRecord(item));
+
+          // 配列bに入っている処理がすべて終わるまで、await
+          // 並列処理を行う。
+          await Promise.all(b);
         });
     }
 
+    /**
+      * ライフサイクル：mounted
+      */
     mounted(): void {
       this.getBooks();
+    }
+
+    /**
+    * 貸出帳を作成する。
+    * @param lendingRecordDto
+    */
+    async createLendingRecord(lendingRecordDto : any): Promise<void> {
+      const lendingRecord = new LendingRecord(lendingRecordDto.isbn, lendingRecordDto.userId);
+      const isbn = new Isbn(lendingRecordDto.isbn);
+
+      lendingRecord.title = await isbn.getTitle();
+      this.lendingRecords.push(lendingRecord);
     }
 }
 </script>
