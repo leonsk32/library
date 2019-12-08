@@ -1,0 +1,58 @@
+inventory:
+  parameters:
+    - name: version
+      in: path
+      schema:
+        type: integer
+      description: '棚卸のバージョン'
+  get:
+    tags:
+      - books
+      - inventory
+    summary: 棚卸対象の一覧を取得する
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: ./difinitions/inventorysDto.yaml
+  put:
+    tags:
+      - books
+      - inventory
+    summary: パラメータのISBNの棚卸を開始する
+    responses:
+      '200':
+        description: 棚卸
+inventoryEvent:
+  parameters:
+    - name: version
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: '棚卸のバージョン'
+    - name: isbn
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: '棚卸対象のISBN'
+  put:
+    tags:
+      - books
+      - inventory
+    summary: 本を棚卸する
+    responses:
+      '200':
+        description: Not Implemented
+    description: ''
+  delete:
+    tags:
+      - books
+      - inventory
+    summary: 誤って登録した棚卸を取り消す
+    responses:
+      '200':
+        description: Not Implemented

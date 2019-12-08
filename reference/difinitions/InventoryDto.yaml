@@ -1,0 +1,26 @@
+title: inventoryDto
+type: object
+description: 棚卸のためのDto。本のISBNと現在棚卸を終わった数、棚卸対象の数、どのバージョンの棚卸結果か、あとメモ。
+properties:
+  isbn:
+    type: string
+  num:
+    type: integer
+  maxNum:
+    type: integer
+  version:
+    type: integer
+  memo:
+    type: string
+required:
+  - isbn
+  - maxNum
+  - version
+x-examples:
+  アジャイルサムライの棚卸:
+    value:
+      isbn: '1'
+      num: '1'
+      maxNum: '10'
+      version: '2'
+      memo: '1冊：貸出中'

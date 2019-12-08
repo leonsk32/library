@@ -1,0 +1,8 @@
+title: inventorysDto
+type: object
+description: 棚卸のオブジェクト
+properties:
+  lendingRecords:
+    type: array
+    items:
+      $ref: ./inventoryDto.yaml

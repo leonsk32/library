@@ -21,6 +21,69 @@ import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
+ * 本の検索結果オブジェクト
+ * @export
+ * @interface BooksDto
+ */
+export interface BooksDto {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BooksDto
+     */
+    isbns?: Array<string>;
+}
+/**
+ * 棚卸のためのDto。本のISBNと現在棚卸を終わった数、棚卸対象の数、どのバージョンの棚卸結果か、あとメモ。
+ * @export
+ * @interface InventoryDto
+ */
+export interface InventoryDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof InventoryDto
+     */
+    isbn: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InventoryDto
+     */
+    num?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InventoryDto
+     */
+    maxNum: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InventoryDto
+     */
+    version: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InventoryDto
+     */
+    memo?: string;
+}
+/**
+ * 棚卸のオブジェクト
+ * @export
+ * @interface InventorysDto
+ */
+export interface InventorysDto {
+    /**
+     * 
+     * @type {Array<InventoryDto>}
+     * @memberof InventorysDto
+     */
+    lendingRecords?: Array<InventoryDto>;
+}
+/**
  * 貸出帳の検索結果オブジェクト
  * @export
  * @interface LendingRecordDto
@@ -146,6 +209,925 @@ export interface UsersDto {
      */
     users: Array<UserDto>;
 }
+
+/**
+ * BooksApi - axios parameter creator
+ * @export
+ */
+export const BooksApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 本を検索する
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksGet(options: any = {}): RequestArgs {
+            const localVarPath = `/books`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 棚卸対象の一覧を取得する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionGet(version: number, options: any = {}): RequestArgs {
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling booksInventoryVersionGet.');
+            }
+            const localVarPath = `/books/inventory/{version}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 誤って登録した棚卸を取り消す
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnDelete(version: number, isbn: number, options: any = {}): RequestArgs {
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling booksInventoryVersionIsbnDelete.');
+            }
+            // verify required parameter 'isbn' is not null or undefined
+            if (isbn === null || isbn === undefined) {
+                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksInventoryVersionIsbnDelete.');
+            }
+            const localVarPath = `/books/inventory/{version}/{isbn}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)))
+                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 本を棚卸する
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnPut(version: number, isbn: number, options: any = {}): RequestArgs {
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling booksInventoryVersionIsbnPut.');
+            }
+            // verify required parameter 'isbn' is not null or undefined
+            if (isbn === null || isbn === undefined) {
+                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksInventoryVersionIsbnPut.');
+            }
+            const localVarPath = `/books/inventory/{version}/{isbn}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)))
+                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary パラメータのISBNの棚卸を開始する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionPut(version: number, options: any = {}): RequestArgs {
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling booksInventoryVersionPut.');
+            }
+            const localVarPath = `/books/inventory/{version}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 本を登録する
+         * @param {string} isbn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksIsbnPut(isbn: string, options: any = {}): RequestArgs {
+            // verify required parameter 'isbn' is not null or undefined
+            if (isbn === null || isbn === undefined) {
+                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksIsbnPut.');
+            }
+            const localVarPath = `/books/{isbn}`
+                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BooksApi - functional programming interface
+ * @export
+ */
+export const BooksApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 本を検索する
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksGet(options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksDto> {
+            const localVarAxiosArgs = BooksApiAxiosParamCreator(configuration).booksGet(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary 棚卸対象の一覧を取得する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionGet(version: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<InventorysDto> {
+            const localVarAxiosArgs = BooksApiAxiosParamCreator(configuration).booksInventoryVersionGet(version, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary 誤って登録した棚卸を取り消す
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnDelete(version: number, isbn: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = BooksApiAxiosParamCreator(configuration).booksInventoryVersionIsbnDelete(version, isbn, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary 本を棚卸する
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnPut(version: number, isbn: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = BooksApiAxiosParamCreator(configuration).booksInventoryVersionIsbnPut(version, isbn, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary パラメータのISBNの棚卸を開始する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionPut(version: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = BooksApiAxiosParamCreator(configuration).booksInventoryVersionPut(version, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary 本を登録する
+         * @param {string} isbn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksIsbnPut(isbn: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = BooksApiAxiosParamCreator(configuration).booksIsbnPut(isbn, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * BooksApi - factory interface
+ * @export
+ */
+export const BooksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @summary 本を検索する
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksGet(options?: any) {
+            return BooksApiFp(configuration).booksGet(options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary 棚卸対象の一覧を取得する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionGet(version: number, options?: any) {
+            return BooksApiFp(configuration).booksInventoryVersionGet(version, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary 誤って登録した棚卸を取り消す
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnDelete(version: number, isbn: number, options?: any) {
+            return BooksApiFp(configuration).booksInventoryVersionIsbnDelete(version, isbn, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary 本を棚卸する
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnPut(version: number, isbn: number, options?: any) {
+            return BooksApiFp(configuration).booksInventoryVersionIsbnPut(version, isbn, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary パラメータのISBNの棚卸を開始する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionPut(version: number, options?: any) {
+            return BooksApiFp(configuration).booksInventoryVersionPut(version, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary 本を登録する
+         * @param {string} isbn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksIsbnPut(isbn: string, options?: any) {
+            return BooksApiFp(configuration).booksIsbnPut(isbn, options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * BooksApi - object-oriented interface
+ * @export
+ * @class BooksApi
+ * @extends {BaseAPI}
+ */
+export class BooksApi extends BaseAPI {
+    /**
+     * 
+     * @summary 本を検索する
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BooksApi
+     */
+    public booksGet(options?: any) {
+        return BooksApiFp(this.configuration).booksGet(options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary 棚卸対象の一覧を取得する
+     * @param {number} version 棚卸のバージョン
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BooksApi
+     */
+    public booksInventoryVersionGet(version: number, options?: any) {
+        return BooksApiFp(this.configuration).booksInventoryVersionGet(version, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary 誤って登録した棚卸を取り消す
+     * @param {number} version 棚卸のバージョン
+     * @param {number} isbn 棚卸対象のISBN
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BooksApi
+     */
+    public booksInventoryVersionIsbnDelete(version: number, isbn: number, options?: any) {
+        return BooksApiFp(this.configuration).booksInventoryVersionIsbnDelete(version, isbn, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary 本を棚卸する
+     * @param {number} version 棚卸のバージョン
+     * @param {number} isbn 棚卸対象のISBN
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BooksApi
+     */
+    public booksInventoryVersionIsbnPut(version: number, isbn: number, options?: any) {
+        return BooksApiFp(this.configuration).booksInventoryVersionIsbnPut(version, isbn, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary パラメータのISBNの棚卸を開始する
+     * @param {number} version 棚卸のバージョン
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BooksApi
+     */
+    public booksInventoryVersionPut(version: number, options?: any) {
+        return BooksApiFp(this.configuration).booksInventoryVersionPut(version, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary 本を登録する
+     * @param {string} isbn 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BooksApi
+     */
+    public booksIsbnPut(isbn: string, options?: any) {
+        return BooksApiFp(this.configuration).booksIsbnPut(isbn, options)(this.axios, this.basePath);
+    }
+
+}
+
+
+/**
+ * DefaultApi - axios parameter creator
+ * @export
+ */
+export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {string} isbn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksIsbnDelete(isbn: string, options: any = {}): RequestArgs {
+            // verify required parameter 'isbn' is not null or undefined
+            if (isbn === null || isbn === undefined) {
+                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksIsbnDelete.');
+            }
+            const localVarPath = `/books/{isbn}`
+                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - functional programming interface
+ * @export
+ */
+export const DefaultApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {string} isbn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksIsbnDelete(isbn: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).booksIsbnDelete(isbn, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - factory interface
+ * @export
+ */
+export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {string} isbn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksIsbnDelete(isbn: string, options?: any) {
+            return DefaultApiFp(configuration).booksIsbnDelete(isbn, options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * DefaultApi - object-oriented interface
+ * @export
+ * @class DefaultApi
+ * @extends {BaseAPI}
+ */
+export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary 
+     * @param {string} isbn 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public booksIsbnDelete(isbn: string, options?: any) {
+        return DefaultApiFp(this.configuration).booksIsbnDelete(isbn, options)(this.axios, this.basePath);
+    }
+
+}
+
+
+/**
+ * InventoryApi - axios parameter creator
+ * @export
+ */
+export const InventoryApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 棚卸対象の一覧を取得する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionGet(version: number, options: any = {}): RequestArgs {
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling booksInventoryVersionGet.');
+            }
+            const localVarPath = `/books/inventory/{version}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 誤って登録した棚卸を取り消す
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnDelete(version: number, isbn: number, options: any = {}): RequestArgs {
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling booksInventoryVersionIsbnDelete.');
+            }
+            // verify required parameter 'isbn' is not null or undefined
+            if (isbn === null || isbn === undefined) {
+                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksInventoryVersionIsbnDelete.');
+            }
+            const localVarPath = `/books/inventory/{version}/{isbn}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)))
+                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 本を棚卸する
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnPut(version: number, isbn: number, options: any = {}): RequestArgs {
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling booksInventoryVersionIsbnPut.');
+            }
+            // verify required parameter 'isbn' is not null or undefined
+            if (isbn === null || isbn === undefined) {
+                throw new RequiredError('isbn','Required parameter isbn was null or undefined when calling booksInventoryVersionIsbnPut.');
+            }
+            const localVarPath = `/books/inventory/{version}/{isbn}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)))
+                .replace(`{${"isbn"}}`, encodeURIComponent(String(isbn)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary パラメータのISBNの棚卸を開始する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionPut(version: number, options: any = {}): RequestArgs {
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling booksInventoryVersionPut.');
+            }
+            const localVarPath = `/books/inventory/{version}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * InventoryApi - functional programming interface
+ * @export
+ */
+export const InventoryApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 棚卸対象の一覧を取得する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionGet(version: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<InventorysDto> {
+            const localVarAxiosArgs = InventoryApiAxiosParamCreator(configuration).booksInventoryVersionGet(version, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary 誤って登録した棚卸を取り消す
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnDelete(version: number, isbn: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = InventoryApiAxiosParamCreator(configuration).booksInventoryVersionIsbnDelete(version, isbn, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary 本を棚卸する
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnPut(version: number, isbn: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = InventoryApiAxiosParamCreator(configuration).booksInventoryVersionIsbnPut(version, isbn, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary パラメータのISBNの棚卸を開始する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionPut(version: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = InventoryApiAxiosParamCreator(configuration).booksInventoryVersionPut(version, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * InventoryApi - factory interface
+ * @export
+ */
+export const InventoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @summary 棚卸対象の一覧を取得する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionGet(version: number, options?: any) {
+            return InventoryApiFp(configuration).booksInventoryVersionGet(version, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary 誤って登録した棚卸を取り消す
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnDelete(version: number, isbn: number, options?: any) {
+            return InventoryApiFp(configuration).booksInventoryVersionIsbnDelete(version, isbn, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary 本を棚卸する
+         * @param {number} version 棚卸のバージョン
+         * @param {number} isbn 棚卸対象のISBN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionIsbnPut(version: number, isbn: number, options?: any) {
+            return InventoryApiFp(configuration).booksInventoryVersionIsbnPut(version, isbn, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary パラメータのISBNの棚卸を開始する
+         * @param {number} version 棚卸のバージョン
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        booksInventoryVersionPut(version: number, options?: any) {
+            return InventoryApiFp(configuration).booksInventoryVersionPut(version, options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * InventoryApi - object-oriented interface
+ * @export
+ * @class InventoryApi
+ * @extends {BaseAPI}
+ */
+export class InventoryApi extends BaseAPI {
+    /**
+     * 
+     * @summary 棚卸対象の一覧を取得する
+     * @param {number} version 棚卸のバージョン
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public booksInventoryVersionGet(version: number, options?: any) {
+        return InventoryApiFp(this.configuration).booksInventoryVersionGet(version, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary 誤って登録した棚卸を取り消す
+     * @param {number} version 棚卸のバージョン
+     * @param {number} isbn 棚卸対象のISBN
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public booksInventoryVersionIsbnDelete(version: number, isbn: number, options?: any) {
+        return InventoryApiFp(this.configuration).booksInventoryVersionIsbnDelete(version, isbn, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary 本を棚卸する
+     * @param {number} version 棚卸のバージョン
+     * @param {number} isbn 棚卸対象のISBN
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public booksInventoryVersionIsbnPut(version: number, isbn: number, options?: any) {
+        return InventoryApiFp(this.configuration).booksInventoryVersionIsbnPut(version, isbn, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary パラメータのISBNの棚卸を開始する
+     * @param {number} version 棚卸のバージョン
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public booksInventoryVersionPut(version: number, options?: any) {
+        return InventoryApiFp(this.configuration).booksInventoryVersionPut(version, options)(this.axios, this.basePath);
+    }
+
+}
+
 
 /**
  * LendingRecordsApi - axios parameter creator

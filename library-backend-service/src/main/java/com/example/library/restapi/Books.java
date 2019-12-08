@@ -4,6 +4,7 @@ package com.example.library.restapi;
 import com.example.library.app_service.BookService;
 import com.example.library.domain.book.Book;
 import com.example.library.restapi.dto.BooksDto;
+import com.example.library.restapi.dto.InventorysDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -27,6 +29,30 @@ public class Books implements BooksApi {
         List<Book> books = service.searchAll();
         log.info("enter booksGet");
         return new ResponseEntity<>(convert(books), OK);
+    }
+
+    @CrossOrigin
+    @Override
+    public ResponseEntity<InventorysDto> booksInventoryVersionGet(Integer version) {
+        return new ResponseEntity<>(NOT_IMPLEMENTED);
+    }
+
+    @CrossOrigin
+    @Override
+    public ResponseEntity<Void> booksInventoryVersionIsbnDelete(Integer version, Integer isbn) {
+        return new ResponseEntity<>(NOT_IMPLEMENTED);
+    }
+
+    @CrossOrigin
+    @Override
+    public ResponseEntity<Void> booksInventoryVersionIsbnPut(Integer version, Integer isbn) {
+        return new ResponseEntity<>(NOT_IMPLEMENTED);
+    }
+
+    @CrossOrigin
+    @Override
+    public ResponseEntity<Void> booksInventoryVersionPut(Integer version) {
+        return new ResponseEntity<>(NOT_IMPLEMENTED);
     }
 
     @CrossOrigin
