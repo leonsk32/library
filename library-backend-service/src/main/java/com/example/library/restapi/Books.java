@@ -27,7 +27,6 @@ public class Books implements BooksApi {
     @Override
     public ResponseEntity<BooksDto> booksGet() {
         List<Book> books = service.searchAll();
-        log.info("enter booksGet");
         return new ResponseEntity<>(convert(books), OK);
     }
 
