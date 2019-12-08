@@ -36,7 +36,7 @@ export default class BookList extends Vue {
     bookApi: LendingRecordsApi = new LendingRecordsApi(customConfiguration);
 
     /**
-     * 貸出帳の作成を行う。
+     * 貸出帳をサーバーから取得する。
      */
     getBooks(): void {
       this.bookApi.lendingRecordsGet()
@@ -64,14 +64,12 @@ export default class BookList extends Vue {
     }
 
     /**
-    * 貸出帳を作成する。
+    * サーバーから取得した値を元にクライアントの貸出帳を作成する。
     * @param lendingRecordDto
     */
     async createLendingRecord(lendingRecordDto : any): Promise<void> {
-      const lendingRecord = new LendingRecord(lendingRecordDto.isbn, lendingRecordDto.userId);
       const isbn = new Isbn(lendingRecordDto.isbn);
-
-      lendingRecord.title = await isbn.getTitle();
+      const lendingRecord = new LendingRecord(isbn, lendingRecordDto.userId, await isbn.getTitle());
       this.lendingRecords.push(lendingRecord);
     }
 }
