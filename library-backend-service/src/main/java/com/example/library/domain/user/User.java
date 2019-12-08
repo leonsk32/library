@@ -7,7 +7,7 @@ public class User {
     @Getter
     private final String userId;
     @Getter
-    private final String email;
+    private String email;
     @Getter
     private String familyName;
     @Getter
@@ -29,6 +29,13 @@ public class User {
         }
         this.userId = userId;
         this.email = email;
+    }
+
+    public User(String userId) {
+        if(userId.length() > 7) {
+            throw new RuntimeException("userIdは７桁");
+        }
+        this.userId = userId;
     }
 
     @Override

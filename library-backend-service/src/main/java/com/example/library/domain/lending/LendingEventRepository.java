@@ -31,4 +31,6 @@ public interface LendingEventRepository {
      */
     List<LendingRecord> findAllForEvent();
 
+    List<LendingEvent> find(String isbn, String userId);
+
 }

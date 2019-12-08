@@ -174,6 +174,29 @@ class LendingRecordsFT {
         assertThat(lendingResponse.getBody()).isEqualTo("本が登録されていない");
     }
 
+    @DisplayName("借りてないものを返そうとしてエラー")
+    @Test
+    void test04() {
+        // ユーザを登録
+        URI putUrl22 = URI.create("/v1/users");
+        //language=json
+        String putRequest22 = "{\n" +
+                "  \"userId\": \"1234567\",\n" +
+                "  \"email\": \"aa@bb\",\n" +
+                "  \"familyName\": \"ki\",\n" +
+                "  \"givenName\": \"na\"\n" +
+                "}";
+        RequestEntity requestEntity322 = put(putUrl22).contentType(APPLICATION_JSON_UTF8).body(putRequest22);
+        ResponseEntity<String> putResponse22 = restTemplate.exchange(requestEntity322, String.class);
+        assertThat(putResponse22.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // 本を返す
+        URI lendingUrlDelete = URI.create("/v1/lendingRecords/9781111111111/1234567");
+        RequestEntity lendingRequestEntityDelete = delete(lendingUrlDelete).build();
+        ResponseEntity<Void> lendingResponseDelete = restTemplate.exchange(lendingRequestEntityDelete, Void.class);
+        assertThat(lendingResponseDelete.getStatusCode()).isEqualTo(BAD_REQUEST);
+    }
+
     @Autowired
     private TestRestTemplate restTemplate;
     @Autowired

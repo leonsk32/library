@@ -5,7 +5,7 @@ import com.example.library.domain.lending.LendingRecord;
 import com.example.library.domain.lending.LendingEventRepository;
 import com.example.library.domain.user.UserRepository;
 import com.example.library.infra.dto.LendingEvent;
-import com.example.library.infra.dto.ReturnEventDto;
+import com.example.library.infra.dto.ReturnEvent;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -69,9 +69,9 @@ public class LendingEventRepositoryImpl implements LendingEventRepository {
         List<LendingEvent> lendingResultMapList = jdbcTemplate.query(lending, beanMap);
 
         String returned = "SELECT isbn, user_id, COUNT(isbn) AS count FROM RETURN_EVENT GROUP BY isbn, user_id";
-        BeanPropertyRowMapper<ReturnEventDto> map2 = new BeanPropertyRowMapper<ReturnEventDto>(ReturnEventDto.class);
+        BeanPropertyRowMapper<ReturnEvent> map2 = new BeanPropertyRowMapper<ReturnEvent>(ReturnEvent.class);
 
-        List<ReturnEventDto> returnedResultMapList = jdbcTemplate.query(returned, map2);
+        List<ReturnEvent> returnedResultMapList = jdbcTemplate.query(returned, map2);
 
         ArrayList<LendingRecord> lendingRecords = new ArrayList<>();
 
@@ -81,7 +81,7 @@ public class LendingEventRepositoryImpl implements LendingEventRepository {
 
             boolean isNoReturnRecord = true;
 
-            for (ReturnEventDto returnMap : returnedResultMapList) {
+            for (ReturnEvent returnMap : returnedResultMapList) {
 
                 final RecordMatcher recordMatcher = new RecordMatcher(lendingMap, returnMap);
                 if (recordMatcher.isMatch()) {
@@ -102,6 +102,15 @@ public class LendingEventRepositoryImpl implements LendingEventRepository {
         return lendingRecords;
     }
 
+    @Override
+    public List<LendingEvent> find(String isbn, String userId) {
+        String sql = "SELECT isbn, user_id, lending_date FROM LENDING_EVENT " +
+                "where isbn = '" + isbn + "' " +
+                "AND user_id = '" + userId + "'";
+        BeanPropertyRowMapper<LendingEvent> lendingEventBeanPropertyRowMapper = new BeanPropertyRowMapper<>(LendingEvent.class);
+        return jdbcTemplate.query(sql, lendingEventBeanPropertyRowMapper);
+    }
+
     private void addRecord(ArrayList<LendingRecord> lendingRecords, LendingEvent lendingMap) {
         lendingRecords.add(new LendingRecord(bookRepository.findById(lendingMap.getIsbn()),
                 userRepository.findById(lendingMap.getUserId())));
@@ -110,7 +119,7 @@ public class LendingEventRepositoryImpl implements LendingEventRepository {
     @AllArgsConstructor
     private static class RecordMatcher {
         private LendingEvent lendingMap;
-        private ReturnEventDto returnMap;
+        private ReturnEvent returnMap;
 
         boolean isMatch() {
             return lendingMap.getIsbn().equals(returnMap.getIsbn()) &&
