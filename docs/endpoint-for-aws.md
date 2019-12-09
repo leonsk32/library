@@ -1,4 +1,5 @@
 ## 貸し出し
+https://0i4gd1lpy7.execute-api.ap-northeast-1.amazonaws.com/test
 * 貸し出し状況の確認
 ```
   GET
