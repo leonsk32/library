@@ -246,17 +246,6 @@ class LendingRecordsFT {
         ResponseEntity<Void> lendingResponse23 = restTemplate.exchange(lendingRequestEntity23, Void.class);
         assertThat(lendingResponse23.getStatusCode()).isEqualTo(BAD_REQUEST);
 
-//        // 本を返す
-//        URI lendingUrlDelete2 = URI.create("/v1/lendingRecords/9781111111111/1234567");
-//        RequestEntity lendingRequestEntityDelete2 = delete(lendingUrlDelete2).build();
-//        ResponseEntity<Void> lendingResponseDelete2 = restTemplate.exchange(lendingRequestEntityDelete2, Void.class);
-//        assertThat(lendingResponseDelete2.getStatusCode()).isEqualTo(OK);
-//
-//        // 本を返す
-//        URI lendingUrlDelete22 = URI.create("/v1/lendingRecords/9781111111111/1234568");
-//        RequestEntity lendingRequestEntityDelete22 = delete(lendingUrlDelete22).build();
-//        ResponseEntity<Void> lendingResponseDelete22 = restTemplate.exchange(lendingRequestEntityDelete22, Void.class);
-//        assertThat(lendingResponseDelete22.getStatusCode()).isEqualTo(BAD_REQUEST);
     }
 
     @Autowired
