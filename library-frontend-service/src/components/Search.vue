@@ -5,10 +5,20 @@
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="lendingRecords" class="elevation-1">
+    <v-card-title>
+      検索
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+    <v-data-table :headers="headers" :items="lendingRecords" class="elevation-1" :search="search">
       <template v-slot:items="props">
+        <td>{{ props.item.isbn.isbn }}</td>
         <td>{{ props.item.title }}</td>
-        <td>{{ props.item.userId }}</td>
       </template>
       <template v-slot:no-data> </template>
     </v-data-table>
@@ -19,19 +29,21 @@
 import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line import/named
 import { BooksApi } from '@/generated';
-import LendingRecord from '@/class/LendingRecord';
 import { Constant } from '@/class/Constant';
 import Isbn from '@/class/Isbn';
+import Book from '@/class/Book';
 
 import customConfiguration = Constant.customConfiguration;
 
 @Component
 export default class Search extends Vue {
-    lendingRecords: Array<LendingRecord> = [];
+    search: string = '';
 
-    headers: any = [
+    lendingRecords: Array<Book> = [];
+
+    headers: Array<any> = [
+      { text: 'isbn', value: 'isbn.isbn' },
       { text: 'タイトル', value: 'title' },
-      { text: '貸出者', value: 'userId' },
     ];
 
     bookApi: BooksApi = new BooksApi(customConfiguration);
@@ -45,11 +57,7 @@ export default class Search extends Vue {
             return;
           }
 
-          // Promiseの配列を生成
           const b = isbns.map(item => this.createBook(item));
-
-          // 配列bに入っている処理がすべて終わるまで、await
-          // 並列処理を行う。
           await Promise.all(b);
         });
     }
@@ -60,7 +68,8 @@ export default class Search extends Vue {
 
     async createBook(isbnDto: string): Promise<void> {
       const isbn = new Isbn(isbnDto);
-      const lendingRecord = new LendingRecord(isbn, isbnDto, await isbn.getTitle());
+      const info = await isbn.getBookInfo();
+      const lendingRecord = new Book(isbn, info.summary.title);
       this.lendingRecords.push(lendingRecord);
     }
 }

@@ -51,6 +51,14 @@
             </v-list-item-title>
           </v-list-item>
 
+          <v-list-item>
+            <v-list-item-title
+              @click="to('/books/inventory')"
+            >
+              <v-icon>mdi-briefcase</v-icon>
+              棚卸
+            </v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
