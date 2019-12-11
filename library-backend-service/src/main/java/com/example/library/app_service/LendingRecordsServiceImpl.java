@@ -36,6 +36,12 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
         if (user == null) throw new RuntimeException("ユーザが登録されていない");
         if (book == null) throw new RuntimeException("本が登録されていない");
 
+        List<LendingRecord> lendingRecordsList = lendingEventRepository.findAllForEvent();
+        long count = lendingRecordsList.stream()
+                .filter(lendingRecord -> lendingRecord.getBook().equals(book))
+                .count();
+        if(book.getAmount() <= count) throw new RuntimeException("システム上すべて借りられたことになっているので借りることができませんでした。システム管理者に連絡してください");
+
         LendingEvent lendingEvent = new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now());
         lendingEventRepository.registerForLendingEvent(lendingEvent);
     }
