@@ -197,6 +197,57 @@ class LendingRecordsFT {
         assertThat(lendingResponseDelete.getStatusCode()).isEqualTo(BAD_REQUEST);
     }
 
+    @DisplayName("すべて借りられた本を借りようとしたらエラー")
+    @Test
+    void test05() {
+        // ユーザを登録
+        URI putUrl22 = URI.create("/v1/users");
+        //language=json
+        String putRequest22 = "{\n" +
+                "  \"userId\": \"1234567\",\n" +
+                "  \"email\": \"aa@bb\",\n" +
+                "  \"familyName\": \"ki\",\n" +
+                "  \"givenName\": \"na\"\n" +
+                "}";
+        RequestEntity requestEntity322 = put(putUrl22).contentType(APPLICATION_JSON_UTF8).body(putRequest22);
+        ResponseEntity<String> putResponse22 = restTemplate.exchange(requestEntity322, String.class);
+        assertThat(putResponse22.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // ユーザを登録
+        URI putUrl222 = URI.create("/v1/users");
+        //language=json
+        String putRequest222 = "{\n" +
+                "  \"userId\": \"1234568\",\n" +
+                "  \"email\": \"aa@bb\",\n" +
+                "  \"familyName\": \"nai\",\n" +
+                "  \"givenName\": \"nai\"\n" +
+                "}";
+        RequestEntity requestEntity3222 = put(putUrl222).contentType(APPLICATION_JSON_UTF8).body(putRequest222);
+        ResponseEntity<String> putResponse222 = restTemplate.exchange(requestEntity3222, String.class);
+        assertThat(putResponse222.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // 本を１冊登録
+        URI putUrl1 = URI.create("/v1/books/9781111111111");
+        RequestEntity putRequest1 = put(putUrl1).build();
+        ResponseEntity<Void> responseBookRegist = restTemplate.exchange(putRequest1, Void.class);
+        assertThat(responseBookRegist.getStatusCode()).isEqualTo(OK);
+
+        // 本を借りる
+        URI lendingUrl2 = URI.create("/v1/lendingRecords");
+        String lendingRequest2 = "{\"isbn\":\"9781111111111\",\"userId\":\"1234567\"}";
+        RequestEntity lendingRequestEntity2 = post(lendingUrl2).contentType(APPLICATION_JSON_UTF8).body(lendingRequest2);
+        ResponseEntity<Void> lendingResponse2 = restTemplate.exchange(lendingRequestEntity2, Void.class);
+        assertThat(lendingResponse2.getStatusCode()).isEqualTo(OK);
+
+        // 本を借りる
+        URI lendingUrl23 = URI.create("/v1/lendingRecords");
+        String lendingRequest23 = "{\"isbn\":\"9781111111111\",\"userId\":\"1234568\"}";
+        RequestEntity lendingRequestEntity23 = post(lendingUrl23).contentType(APPLICATION_JSON_UTF8).body(lendingRequest23);
+        ResponseEntity<Void> lendingResponse23 = restTemplate.exchange(lendingRequestEntity23, Void.class);
+        assertThat(lendingResponse23.getStatusCode()).isEqualTo(BAD_REQUEST);
+
+    }
+
     @Autowired
     private TestRestTemplate restTemplate;
     @Autowired

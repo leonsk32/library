@@ -1,9 +1,9 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.8.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-	id 'java'
-	id "org.sonarqube" version "2.7.1"
-	id "jacoco"
+    id 'org.springframework.boot' version '2.1.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id "org.sonarqube" version "2.7.1"
+    id "jacoco"
 }
 
 group = 'com.example'
@@ -11,54 +11,54 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	cucumberRuntime {
-		extendsFrom testImplementation
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
 }
 
 bootJar {
-	launchScript()
+    launchScript()
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.flywaydb:flyway-core'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
-	testImplementation 'org.assertj:assertj-core'
-	testImplementation 'org.mockito:mockito-junit-jupiter'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.flywaydb:flyway-core'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
-	testImplementation 'com.codeborne:selenide:5.2.3'
-	testImplementation 'io.cucumber:cucumber-java:4.7.1'
-	testImplementation 'io.cucumber:cucumber-junit:4.7.1'
+    testImplementation 'com.codeborne:selenide:5.2.3'
+    testImplementation 'io.cucumber:cucumber-java:4.7.1'
+    testImplementation 'io.cucumber:cucumber-junit:4.7.1'
 
-	implementation 'org.openapitools:openapi-generator-gradle-plugin:4.2.0'
+    implementation 'org.openapitools:openapi-generator-gradle-plugin:4.2.0'
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 sonarqube {
-	properties {
-		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.projectKey", "AgileDevelopmentClub_library"
-		property "sonar.organization", "agiledevelopmentclub"
-		property "sonar.login", "259aab5a38d819bdabe20dd61f17ba4008fd046c"
-		property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-	}
+    properties {
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.projectKey", "AgileDevelopmentClub_library"
+        property "sonar.organization", "agiledevelopmentclub"
+        property "sonar.login", "259aab5a38d819bdabe20dd61f17ba4008fd046c"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+    }
 }
 
 /**
@@ -66,14 +66,18 @@ sonarqube {
  * @developing タグは無視する設定
  */
 task cucumber() {
-	dependsOn assemble, compileTestJava
-	doLast {
-		javaexec {
-			main = "io.cucumber.core.cli.Main"
-			classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-			args = ['--plugin', 'pretty', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
-		}
-	}
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath =
+                    sourceSets.main.output +
+                            sourceSets.main.runtimeClasspath +
+                            sourceSets.test.output +
+                            configurations.cucumberRuntime
+            args = ['--plugin', 'pretty', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
+        }
+    }
 }
 
 /**
@@ -81,14 +85,18 @@ task cucumber() {
  * @developing タグは無視する
  */
 task cucumberNow() {
-	dependsOn assemble, compileTestJava
-	doLast {
-		javaexec {
-			main = "cucumber.api.cli.Main"
-			classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-			args = ['--plugin', 'pretty', '--tags', '@now', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
-		}
-	}
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath =
+                    sourceSets.main.output +
+                            sourceSets.main.runtimeClasspath +
+                            sourceSets.test.output +
+                            configurations.cucumberRuntime
+            args = ['--plugin', 'pretty', '--tags', '@now', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
+        }
+    }
 }
 
 /**

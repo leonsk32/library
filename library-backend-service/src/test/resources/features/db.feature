@@ -1,5 +1,5 @@
 Feature: テストデータ
-  @developing
+#  @developing
   Scenario:
     Given DBの設定をする
     And 初期化
