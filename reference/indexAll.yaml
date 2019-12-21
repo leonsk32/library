@@ -1,0 +1,142 @@
+openapi: 3.0.0
+info:
+  title: libraryApplication
+  version: 1.0.0
+  description: '図書館アプリのライブラリ'
+servers:
+  - url: 'http://localhost:8080/api/v1'
+    description: local Server
+  - url: 'https://enigmatic-depths-14464.herokuapp.com/api/v1'
+    description: Main Server
+paths:
+  /books:
+    get:
+      tags:
+        - books
+      summary: 本を検索する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/booksDto"
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/books"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "http"
+    parameters: []
+  '/books/inventory/{version}':
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: integer
+        description: '棚卸のバージョン'
+    get:
+      tags:
+        - books
+        - inventory
+      summary: 棚卸対象の一覧を取得する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./difinitions/inventorysDto.yaml
+    put:
+      tags:
+        - books
+        - inventory
+      summary: パラメータのISBNの棚卸を開始する
+      responses:
+        '200':
+          description: 棚卸
+  '/books/inventory/{version}/{isbn}':
+    parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: '棚卸のバージョン'
+      - name: isbn
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: '棚卸対象のISBN'
+    put:
+      tags:
+        - books
+        - inventory
+      summary: 本を棚卸する
+      responses:
+        '200':
+          description: Not Implemented
+      description: ''
+    delete:
+      tags:
+        - books
+        - inventory
+      summary: 誤って登録した棚卸を取り消す
+      responses:
+        '200':
+          description: Not Implemented
+  '/books/{isbn}':
+    parameters:
+      - name: isbn
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ''
+    put:
+      tags:
+        - books
+      summary: 本を登録する
+      responses:
+        '200':
+          description: Not Implemented
+      description: ''
+    delete:
+      summary: ''
+      responses:
+        '200':
+          description: Not Implemented
+  '/lendingRecords':
+    get:
+      tags:
+       - lendingRecords
+      summary: 貸出帳を検索する
+      responses:
+       '200':
+          description: OK
+          content:
+           application/json:
+              schema:
+                $ref: ./difinitions/lendingRecordsDto.yaml
+    parameters: []
+#  '/ranking/books':
+#    $ref: './paths/ranking.yaml#/books'
+#  '/users':
+#    $ref: './paths/users.yaml#/all'
+#  '/users/{userId}':
+#    $ref: './paths/users.yaml#/id'
+
+components:
+  schemas:
+    booksDto:
+      title: booksDto
+      type: object
+      description: 本の検索結果オブジェクト
+      properties:
+        isbns:
+          type: array
+          items:
+            type: string
