@@ -104,11 +104,27 @@ paths:
         '200':
           description: Not Implemented
       description: ''
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/books/{isbn}"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "PUT"
+        type: "http"
     delete:
       summary: ''
       responses:
         '200':
           description: Not Implemented
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/books/{isbn}"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "DELETE"
+        type: "http"
   '/lendingRecords':
     get:
       tags:
@@ -121,6 +137,14 @@ paths:
            application/json:
               schema:
                 $ref: "#/components/schemas/lendingRecordsDto"
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/lendingRecords"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "http"
     parameters: []
   '/ranking/books':
     get:
@@ -134,6 +158,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/rankingsDto"
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/ranking/books"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "http"
     parameters: []
   '/users':
     get:
