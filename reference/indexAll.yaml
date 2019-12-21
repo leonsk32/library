@@ -48,7 +48,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./difinitions/inventorysDto.yaml
+                $ref: "#/components/schemas/inventorysDto"
     put:
       tags:
         - books
@@ -120,7 +120,7 @@ paths:
           content:
            application/json:
               schema:
-                $ref: ./difinitions/lendingRecordsDto.yaml
+                $ref: "#/components/schemas/lendingRecordsDto"
     parameters: []
   '/ranking/books':
     get:
@@ -133,7 +133,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./difinitions/rankingsDto.yaml
+                $ref: "#/components/schemas/rankingsDto"
     parameters: []
   '/users':
     get:
@@ -146,7 +146,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./difinitions/usersDto.yaml
+                $ref: "#/components/schemas/usersDto"
     parameters: []
     put:
       tags:
@@ -162,7 +162,7 @@ paths:
           required: false
           style: form
           schema:
-            $ref: ./difinitions/userDto.yaml
+            $ref: "#/components/schemas/userDto"
   '/users/{userId}':
     get:
       tags:
@@ -174,7 +174,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./difinitions/userDto.yaml
+                $ref: "#/components/schemas/userDto"
       parameters:
         - name: userId
           in: path
@@ -208,3 +208,132 @@ components:
           type: array
           items:
             type: string
+    inventoryDto:
+      title: inventoryDto
+      type: object
+      description: 棚卸のためのDto。本のISBNと現在棚卸を終わった数、棚卸対象の数、どのバージョンの棚卸結果か、あとメモ。
+      properties:
+        isbn:
+          type: string
+        num:
+          type: integer
+        maxNum:
+          type: integer
+        version:
+          type: integer
+        memo:
+          type: string
+      required:
+        - isbn
+        - maxNum
+        - version
+      x-examples:
+        アジャイルサムライの棚卸:
+          value:
+            isbn: '1'
+            num: '1'
+            maxNum: '10'
+            version: '2'
+            memo: '1冊：貸出中'
+    inventorysDto:
+      title: inventorysDto
+      type: object
+      description: 棚卸のオブジェクト
+      properties:
+        lendingRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/inventoryDto'
+    lendingRecordDto:
+      title: lendingRecordsDto
+      type: object
+      description: 貸出帳の検索結果オブジェクト
+      properties:
+        isbn:
+          type: string
+        userId:
+          type: string
+        namae:
+          type: string
+        simei:
+          type: string
+      x-examples:
+        本:
+          value:
+            isbn: '1234567890123'
+            userId: '1234567'
+
+    lendingRecordsDto:
+      title: lendingRecordDto
+      type: object
+      description: 貸出帳のオブジェクト
+      properties:
+        lendingRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/lendingRecordDto'
+
+    rankingDto:
+      title: rankingDto
+      type: object
+      description: ランキングを表現する。idは呼び出し元の使い方により、userId等に読み替えられるようにする。
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+        num:
+          type: integer
+      required:
+        - userId
+        - name
+        - num
+      x-examples:
+        本のランキング:
+          value:
+            ranking: '1'
+            id: '111426'
+            num: '4'
+
+    rankingsDto:
+      title: rankingsDto
+      type: object
+      description: ランキングのリスト
+      properties:
+        rankings:
+          type: array
+          items:
+            $ref: '#/components/schemas/rankingDto'
+      required:
+        - rankings
+
+
+
+    userDto:
+      title: userDto
+      type: object
+      description:
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        familyName:
+          type: string
+        givenName:
+          type: string
+      required:
+        - userId
+
+
+    usersDto:
+      title: usersDto
+      type: object
+      description: ユーザのリスト
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/userDto'
+      required:
+        - users
