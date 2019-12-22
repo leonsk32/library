@@ -43,6 +43,7 @@ dependencies {
     testImplementation 'com.codeborne:selenide:5.2.3'
     testImplementation 'io.cucumber:cucumber-java:4.7.1'
     testImplementation 'io.cucumber:cucumber-junit:4.7.1'
+    testImplementation 'com.google.guava:guava:28.1-jre'
 
     implementation 'org.openapitools:openapi-generator-gradle-plugin:4.2.0'
 }
@@ -72,10 +73,9 @@ task cucumber() {
             main = "io.cucumber.core.cli.Main"
             classpath =
                     sourceSets.main.output +
-                            sourceSets.main.runtimeClasspath +
-                            sourceSets.test.output +
-                            configurations.cucumberRuntime
-            args = ['--plugin', 'pretty', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
+                            sourceSets.test.runtimeClasspath +
+                            sourceSets.test.output
+            args = ['--plugin', 'pretty', '--tags', 'not @developing', '--glue', 'features', 'src/test/resources']
         }
     }
 }
@@ -91,10 +91,9 @@ task cucumberNow() {
             main = "cucumber.api.cli.Main"
             classpath =
                     sourceSets.main.output +
-                            sourceSets.main.runtimeClasspath +
-                            sourceSets.test.output +
-                            configurations.cucumberRuntime
-            args = ['--plugin', 'pretty', '--tags', '@now', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
+                            sourceSets.test.runtimeClasspath +
+                            sourceSets.test.output
+            args = ['--plugin', 'pretty', '--tags', '@now', '--tags', 'not @developing', '--glue', 'features', 'src/test/resources']
         }
     }
 }

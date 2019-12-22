@@ -40,7 +40,7 @@ function main() {
     set_project_root_directory
     pull
     run_unit_tests
-    run_e2e_tests
+#    run_e2e_tests
     push
     display_ascii_success_message
 }
