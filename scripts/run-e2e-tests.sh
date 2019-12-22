@@ -16,6 +16,12 @@ function set_project_root_directory() {
 
 function run_e2e_tests() {
     cd "$ROOT_DIR/library-backend-service"
+    ./gradlew bootRun
+
+    cd "$ROOT_DIR/library-frontend-service"
+    yarn serve
+
+    cd "$ROOT_DIR/library-backend-service"
     ./gradlew cucumber
 }
 
