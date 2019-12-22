@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static java.util.Collections.emptyList;
 
@@ -25,17 +24,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> findAll() {
         String sql = "SELECT * FROM USERR";
-        List<Map<String, Object>> resultMap = jdbcTemplate.queryForList(sql);
+        BeanPropertyRowMapper<UserDto> rowMapper = new BeanPropertyRowMapper<>(UserDto.class);
+        List<UserDto> resultMap = jdbcTemplate.query(sql, rowMapper);
         if (resultMap.isEmpty()) return emptyList();
 
         List<User> result = new ArrayList<>();
-        for (Map<String, Object> map : resultMap) {
-            String userId = (String) map.get("user_id");
-            String email = (String) map.get("email");
-            String simei = (String) map.get("simei");
-            String namae = (String) map.get("namae");
-            User user = new User(userId, email, simei, namae);
-            result.add(user);
+        for (UserDto map : resultMap) {
+            result.add(map.convert());
         }
         return result;
     }
@@ -46,7 +41,7 @@ public class UserRepositoryImpl implements UserRepository {
         BeanPropertyRowMapper<UserDto> rowMapper = new BeanPropertyRowMapper<>(UserDto.class);
         List<UserDto> resultMap = jdbcTemplate.query(sql, rowMapper);
         if (resultMap.isEmpty()) return null;
-        return new User(userId, resultMap.get(0).getEmail(), resultMap.get(0).getFamilyName(), resultMap.get(0).getGivenName());
+        return resultMap.get(0).convert();
     }
 
     @Override
