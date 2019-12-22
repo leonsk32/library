@@ -7,6 +7,7 @@ import com.example.library.domain.lending.LendingEventRepository;
 import com.example.library.domain.lending.ReturnEventRepository;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
+import com.example.library.exception.BusinessException;
 import com.example.library.infra.dto.LendingEvent;
 import com.example.library.infra.dto.ReturnEvent;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +34,14 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
         Book book = bookRepository.findById(isbn);
         User user = userRepository.findById(userId);
 
-        if (user == null) throw new RuntimeException("ユーザが登録されていない");
-        if (book == null) throw new RuntimeException("本が登録されていない");
+        if (user == null) throw new BusinessException("ユーザが登録されていない");
+        if (book == null) throw new BusinessException("本が登録されていない");
 
         List<LendingRecord> lendingRecordsList = lendingEventRepository.findAllForEvent();
         long count = lendingRecordsList.stream()
                 .filter(lendingRecord -> lendingRecord.getBook().equals(book))
                 .count();
-        if(book.getAmount() <= count) throw new RuntimeException("システム上すべて借りられたことになっているので借りることができませんでした。システム管理者に連絡してください");
+        if(book.getAmount() <= count) throw new BusinessException("システム上すべて借りられたことになっているので借りることができませんでした。システム管理者に連絡してください");
 
         LendingEvent lendingEvent = new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now());
         lendingEventRepository.registerForLendingEvent(lendingEvent);
@@ -51,9 +52,9 @@ public class LendingRecordsServiceImpl implements LendingRecordsService {
         Book book = bookRepository.findById(isbn);
         User user = userRepository.findById(userId);
 
-        if (user == null) throw new RuntimeException("ユーザが登録されていない");
-        if (book == null) throw new RuntimeException("本が登録されていない");
-        if (!isBorrow(user, isbn)) throw new RuntimeException("かりてないのに返そうとしています");
+        if (user == null) throw new BusinessException("ユーザが登録されていない");
+        if (book == null) throw new BusinessException("本が登録されていない");
+        if (!isBorrow(user, isbn)) throw new BusinessException("かりてないのに返そうとしています");
 
         LendingEvent lendingEvent = new LendingEvent(book.getIsbn(), user.getUserId(), LocalDateTime.now());
         lendingEventRepository.registerForReturnEvent(lendingEvent);

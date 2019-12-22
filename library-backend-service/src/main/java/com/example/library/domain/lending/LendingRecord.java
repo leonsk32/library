@@ -3,6 +3,7 @@ package com.example.library.domain.lending;
 
 import com.example.library.domain.book.Book;
 import com.example.library.domain.user.User;
+import com.example.library.exception.BusinessException;
 import lombok.Getter;
 
 /**
@@ -25,10 +26,16 @@ public final class LendingRecord {
     // よくわからなかったのでヘルプください
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof LendingRecord)) throw new RuntimeException("Lending Record同士で比較してくれ");
+        if (!(other instanceof LendingRecord)) throw new BusinessException("Lending Record同士で比較してくれ");
         LendingRecord otherLendingRecord = (LendingRecord) other;
         return this.book.equals(otherLendingRecord.book) &&
                 this.user.equals(otherLendingRecord.user);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
 }
