@@ -1,12 +1,8 @@
 <template>
   <v-container>
-    <v-toolbar flat color="white">
+    <v-toolbar flat color="white" class="elevation-1">
       <v-toolbar-title>本一覧</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-    <v-card-title>
-      検索
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -14,7 +10,7 @@
         single-line
         hide-details
       ></v-text-field>
-    </v-card-title>
+    </v-toolbar>
     <v-data-table :headers="headers" :items="books" class="elevation-1" :search="search">
       <template v-slot:items="props">
         <td>{{ props.item.isbn.isbn }}</td>
