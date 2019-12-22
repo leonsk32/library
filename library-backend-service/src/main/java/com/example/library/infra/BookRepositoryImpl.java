@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static java.util.Collections.emptyList;
 
@@ -25,20 +24,24 @@ public class BookRepositoryImpl implements BookRepository {
         BeanPropertyRowMapper<BookDto> beanMap = new BeanPropertyRowMapper<>(BookDto.class);
 
         List<BookDto> resultMap = jdbcTemplate.query(sql, beanMap);
-        if (resultMap.size() == 0) return null;
-        Book book = new Book(resultMap.get(0).getIsbn(), resultMap.get(0).getAmount());
-        return book;
+        if (resultMap.isEmpty()) {
+            return null;
+        }
+        return resultMap.get(0).convert();
     }
 
     @Override
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM book";
-        List<Map<String, Object>> resultMap = jdbcTemplate.queryForList(sql);
-        if (resultMap.size() == 0) return emptyList();
-        for (Map<String, Object> stringObjectMap : resultMap) {
-            String isbn = (String) stringObjectMap.get("isbn");
-            books.add(new Book(isbn, (Integer) stringObjectMap.get("amount")));
+        BeanPropertyRowMapper<BookDto> beanMap = new BeanPropertyRowMapper<>(BookDto.class);
+        List<BookDto> resultMap = jdbcTemplate.query(sql, beanMap);
+
+        if (resultMap.isEmpty()){
+            return emptyList();
+        }
+        for (BookDto bookDto : resultMap) {
+            books.add(bookDto.convert());
         }
         return books;
     }
