@@ -4,11 +4,12 @@ import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
 import com.example.library.infra.dto.BookDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -20,10 +21,15 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public Book findById(String isbn) {
-        String sql = "SELECT * FROM book where isbn = '" + isbn + "'";
-        BeanPropertyRowMapper<BookDto> beanMap = new BeanPropertyRowMapper<>(BookDto.class);
+        String sql = "SELECT * FROM book where isbn = ?";
 
-        List<BookDto> resultMap = jdbcTemplate.query(sql, beanMap);
+        PreparedStatementCreatorFactory pscFactory = new PreparedStatementCreatorFactory(sql);
+        pscFactory.addParameter(new SqlParameter(Types.VARCHAR));
+        PreparedStatementCreator psc = pscFactory.newPreparedStatementCreator(Arrays.asList(isbn));
+        BeanPropertyRowMapper<BookDto> rowMapper = new BeanPropertyRowMapper<>(BookDto.class);
+
+        List<BookDto> resultMap = jdbcTemplate.query(psc, rowMapper);
+
         if (resultMap.isEmpty()) {
             return null;
         }
@@ -37,7 +43,7 @@ public class BookRepositoryImpl implements BookRepository {
         BeanPropertyRowMapper<BookDto> beanMap = new BeanPropertyRowMapper<>(BookDto.class);
         List<BookDto> resultMap = jdbcTemplate.query(sql, beanMap);
 
-        if (resultMap.isEmpty()){
+        if (resultMap.isEmpty()) {
             return emptyList();
         }
         for (BookDto bookDto : resultMap) {
@@ -48,9 +54,17 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public void register(Book book) {
-        String sql = "insert into book (isbn, amount) values (" +
-                book.getIsbn() + "," + book.getAmount() + ");";
-        jdbcTemplate.execute(sql);
+        String sql = "insert into book (isbn, amount) values (?,?)";
+
+        PreparedStatementCreatorFactory pscFactory = new PreparedStatementCreatorFactory(sql);
+        pscFactory.addParameter(new SqlParameter(Types.VARCHAR));
+        pscFactory.addParameter(new SqlParameter(Types.VARCHAR));
+        PreparedStatementCreator psc = pscFactory.newPreparedStatementCreator(
+                Arrays.asList(
+                        book.getIsbn(),
+                        book.getAmount()
+                ));
+        jdbcTemplate.update(psc);
     }
 
     @Override
