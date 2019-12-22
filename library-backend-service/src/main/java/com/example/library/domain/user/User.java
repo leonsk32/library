@@ -1,5 +1,6 @@
 package com.example.library.domain.user;
 
+import com.example.library.exception.BusinessException;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,7 +16,7 @@ public class User {
 
     public User(String userId, String email, String familyName, String givenName) {
         if (userId.length() > 7) {
-            throw new RuntimeException("userIdは７桁");
+            throw new BusinessException("userIdは７桁");
         }
         this.userId = userId;
         this.email = email;
@@ -25,7 +26,7 @@ public class User {
 
     public User(String userId, String email) {
         if (userId.length() > 7) {
-            throw new RuntimeException("userIdは７桁");
+            throw new BusinessException("userIdは７桁");
         }
         this.userId = userId;
         this.email = email;
@@ -33,14 +34,14 @@ public class User {
 
     public User(String userId) {
         if (userId.length() > 7) {
-            throw new RuntimeException("userIdは７桁");
+            throw new BusinessException("userIdは７桁");
         }
         this.userId = userId;
     }
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof User)) throw new RuntimeException();
+        if (!(other instanceof User)) throw new BusinessException();
         User otherUser = (User) other;
         return this.userId.equals(otherUser.userId);
     }

@@ -26,7 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> findAll() {
         String sql = "SELECT * FROM USERR";
         List<Map<String, Object>> resultMap = jdbcTemplate.queryForList(sql);
-        if (resultMap.size() == 0) return emptyList();
+        if (resultMap.isEmpty()) return emptyList();
 
         List<User> result = new ArrayList<>();
         for (Map<String, Object> map : resultMap) {
@@ -45,7 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "SELECT * FROM USERR where user_id = '" + userId + "'";
         BeanPropertyRowMapper<UserDto> rowMapper = new BeanPropertyRowMapper<>(UserDto.class);
         List<UserDto> resultMap = jdbcTemplate.query(sql, rowMapper);
-        if (resultMap.size() == 0) return null;
+        if (resultMap.isEmpty()) return null;
         return new User(userId, resultMap.get(0).getEmail(), resultMap.get(0).getFamilyName(), resultMap.get(0).getGivenName());
     }
 
