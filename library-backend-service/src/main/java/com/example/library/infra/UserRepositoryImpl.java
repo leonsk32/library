@@ -52,12 +52,23 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void register(User user) {
-        String sql = "insert into userr(user_id, email, family_name, given_name) values ('" +
-                user.getUserId() + "','" +
-                user.getEmail() + "','" +
-                user.getFamilyName() + "','" +
-                user.getGivenName() + "')";
-        jdbcTemplate.execute(sql);
+        String sql = "insert into userr(user_id, email, family_name, given_name) values (?,?,?,?)";
+
+        PreparedStatementCreatorFactory pscFactory = new PreparedStatementCreatorFactory(sql);
+        pscFactory.addParameter(new SqlParameter(Types.VARCHAR));
+        pscFactory.addParameter(new SqlParameter(Types.VARCHAR));
+        pscFactory.addParameter(new SqlParameter(Types.VARCHAR));
+        pscFactory.addParameter(new SqlParameter(Types.VARCHAR));
+        PreparedStatementCreator psc = pscFactory.newPreparedStatementCreator(
+                Arrays.asList(
+                        user.getUserId(),
+                        user.getEmail(),
+                        user.getFamilyName(),
+                        user.getGivenName()
+                )
+        );
+
+        jdbcTemplate.update(psc);
     }
 
     @Override
