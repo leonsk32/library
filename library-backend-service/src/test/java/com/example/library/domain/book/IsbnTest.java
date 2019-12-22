@@ -22,19 +22,19 @@ class IsbnTest {
     @DisplayName("[エリックエヴァンス本]10桁が入ってきた場合、13桁のISBNに変換する")
     @Test
     void test_02_01() {
-        assertThat(EVANS_DDD_ISBN13).isEqualTo(new Isbn(EVANS_DDD_ISBN10).getIsbn());
+        assertThat(EVANS_DDD_ISBN13).isEqualTo(new Isbn(EVANS_DDD_ISBN10).getCode());
     }
 
     @DisplayName("[実践DDD本]10桁が入ってきた場合、13桁のISBNに変換する")
     @Test
     void test_02_02() {
-        assertThat(PRACTICE_DDD_ISBN13).isEqualTo(new Isbn(PRACTICE_DDD_ISBN10).getIsbn());
+        assertThat(PRACTICE_DDD_ISBN13).isEqualTo(new Isbn(PRACTICE_DDD_ISBN10).getCode());
     }
 
     @DisplayName("13桁が入ってきた場合、そのままISBNに設定する")
     @Test
     void test_03() {
-        assertThat(EVANS_DDD_ISBN13).isEqualTo(new Isbn(EVANS_DDD_ISBN13).getIsbn());
+        assertThat(EVANS_DDD_ISBN13).isEqualTo(new Isbn(EVANS_DDD_ISBN13).getCode());
     }
 
     @DisplayName("13桁だが、頭から3文字が978ではない場合、Exceptionを発生させる。2列目を読み込んだ可能性。")

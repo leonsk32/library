@@ -166,7 +166,7 @@ export interface RankingsDto {
     rankings: Array<RankingDto>;
 }
 /**
- * 
+ * null
  * @export
  * @interface UserDto
  */
@@ -690,7 +690,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
-         * @summary 
          * @param {string} isbn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -734,7 +733,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary 
          * @param {string} isbn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -757,7 +755,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
-         * @summary 
          * @param {string} isbn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -777,7 +774,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 export class DefaultApi extends BaseAPI {
     /**
      * 
-     * @summary 
      * @param {string} isbn 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1335,6 +1331,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary null
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1363,6 +1360,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary null
          * @param {UserDto} [users] tags to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1396,6 +1394,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary null
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1430,6 +1429,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary null
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1473,6 +1473,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary null
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1485,6 +1486,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary null
          * @param {UserDto} [users] tags to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1498,6 +1500,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary null
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1511,6 +1514,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary null
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1533,6 +1537,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @summary null
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1541,6 +1546,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary null
          * @param {UserDto} [users] tags to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1550,6 +1556,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary null
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1559,6 +1566,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary null
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1578,6 +1586,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
 export class UsersApi extends BaseAPI {
     /**
      * 
+     * @summary null
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
@@ -1588,6 +1597,7 @@ export class UsersApi extends BaseAPI {
 
     /**
      * 
+     * @summary null
      * @param {UserDto} [users] tags to filter by
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1599,6 +1609,7 @@ export class UsersApi extends BaseAPI {
 
     /**
      * 
+     * @summary null
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1610,6 +1621,7 @@ export class UsersApi extends BaseAPI {
 
     /**
      * 
+     * @summary null
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

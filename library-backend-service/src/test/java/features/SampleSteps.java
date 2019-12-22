@@ -1,5 +1,6 @@
 package features;
 
+import com.codeborne.selenide.Selenide;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -9,7 +10,7 @@ public class SampleSteps {
 
   @When("{string}にアクセスする")
   public void にアクセスする(String string) {
-    //Selenide.open("/v1/sample/hoge");
+    Selenide.open("http://localhost:8081/");
   }
 
   @Then("本を{string}する")

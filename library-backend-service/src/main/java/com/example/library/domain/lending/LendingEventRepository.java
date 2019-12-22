@@ -22,8 +22,6 @@ public interface LendingEventRepository {
     void registerForReturnEvent(LendingEvent lendingEvent);
 
 
-    List<LendingRecord> findAll();
-
     /**
      * 借りた本のリストと返した本のリストを突合して、</br>
      * 借りている本の一覧を返却する

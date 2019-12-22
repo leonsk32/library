@@ -1,5 +1,6 @@
 package com.example.library.domain.book;
 
+import com.example.library.exception.BusinessException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -10,18 +11,18 @@ import lombok.Getter;
 @EqualsAndHashCode
 @Getter
 public class Isbn {
-    private final String isbn;
+    private final String code;
     private static final String PREFIX_ISBN = "978";
 
 
-    Isbn(String isbn) {
-        if (!(isbn.length() == 10 || isbn.length() == 13)) throw new RuntimeException("ISBNの桁数が正しくない");
-        String isbn1 = convert10to13(isbn);
+    Isbn(String code) {
+        if (!(code.length() == 10 || code.length() == 13)) throw new BusinessException("ISBNの桁数が正しくない");
+        String isbn1 = convert10to13(code);
         // ISBNではない可能性がある。2列目バーコードを読み取った可能性。
         if (!PREFIX_ISBN.equals(isbn1.substring(0, 3))) {
-            throw new RuntimeException();
+            throw new BusinessException();
         }
-        this.isbn = isbn1;
+        this.code = isbn1;
     }
 
     /**
@@ -67,7 +68,7 @@ public class Isbn {
 
     @Override
     public String toString() {
-        return this.isbn;
+        return this.code;
     }
 
 }

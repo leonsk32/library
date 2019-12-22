@@ -2,6 +2,7 @@ package com.example.library.app_service;
 
 import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
+import com.example.library.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void waste(String isbn) {
         Book book = repository.findById(isbn);
-        if (book == null) throw new RuntimeException("その本はない");
+        if (book == null) throw new BusinessException("その本はない");
         if (book.getAmount() > 1) {
             book.decliment();
             repository.save(book);

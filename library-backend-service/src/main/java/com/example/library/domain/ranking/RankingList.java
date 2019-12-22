@@ -9,14 +9,14 @@ import java.util.Optional;
 
 @Value
 public class RankingList {
-    private List<Ranking> rankingList;
+    private List<Ranking> rankings;
 
     public RankingList() {
-        this.rankingList = new ArrayList<Ranking>();
+        this.rankings = new ArrayList<>();
     }
 
-    public RankingList(List<Ranking> rankingList) {
-        this.rankingList = rankingList;
+    public RankingList(List<Ranking> rankings) {
+        this.rankings = rankings;
     }
 
     /**
@@ -27,13 +27,13 @@ public class RankingList {
      * @param ranking ランキング
      */
     public void add(Ranking ranking) {
-        Optional<Ranking> first = rankingList.stream().filter(e -> Objects.equals(e.getUserId(), ranking.getUserId())).findFirst();
+        Optional<Ranking> first = rankings.stream().filter(e -> Objects.equals(e.getUserId(), ranking.getUserId())).findFirst();
 
         if (first.isPresent()) {
             int num = first.get().getNum();
             first.get().setNum(num + 1);
         } else {
-            this.rankingList.add(ranking);
+            this.rankings.add(ranking);
         }
     }
 }

@@ -1,0 +1,371 @@
+openapi: 3.0.0
+info:
+  title: libraryApplication
+  version: 1.0.0
+  description: '図書館アプリのライブラリ'
+servers:
+  - url: 'http://localhost:8080/api/v1'
+    description: local Server
+  - url: 'https://enigmatic-depths-14464.herokuapp.com/api/v1'
+    description: Main Server
+paths:
+  /books:
+    get:
+      tags:
+        - books
+      summary: 本を検索する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/booksDto"
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/books"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "http"
+    parameters: []
+  '/books/inventory/{version}':
+    parameters:
+      - name: version
+        in: path
+        schema:
+          type: integer
+        description: '棚卸のバージョン'
+    get:
+      tags:
+        - books
+        - inventory
+      summary: 棚卸対象の一覧を取得する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inventorysDto"
+    put:
+      tags:
+        - books
+        - inventory
+      summary: パラメータのISBNの棚卸を開始する
+      responses:
+        '200':
+          description: 棚卸
+  '/books/inventory/{version}/{isbn}':
+    parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: '棚卸のバージョン'
+      - name: isbn
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: '棚卸対象のISBN'
+    put:
+      tags:
+        - books
+        - inventory
+      summary: 本を棚卸する
+      responses:
+        '200':
+          description: Not Implemented
+      description: ''
+    delete:
+      tags:
+        - books
+        - inventory
+      summary: 誤って登録した棚卸を取り消す
+      responses:
+        '200':
+          description: Not Implemented
+  '/books/{isbn}':
+    parameters:
+      - name: isbn
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ''
+    put:
+      tags:
+        - books
+      summary: 本を登録する
+      responses:
+        '200':
+          description: Not Implemented
+      description: ''
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/books/{isbn}"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "PUT"
+        type: "http"
+    delete:
+      summary: ''
+      responses:
+        '200':
+          description: Not Implemented
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/books/{isbn}"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "DELETE"
+        type: "http"
+  '/lendingRecords':
+    get:
+      tags:
+       - lendingRecords
+      summary: 貸出帳を検索する
+      responses:
+       '200':
+          description: OK
+          content:
+           application/json:
+              schema:
+                $ref: "#/components/schemas/lendingRecordsDto"
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/lendingRecords"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "http"
+    parameters: []
+  '/ranking/books':
+    get:
+      tags:
+        - ranking
+      summary: 本の貸し出しランキングを取得する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rankingsDto"
+      x-amazon-apigateway-integration:
+        uri: "http://ec2-18-182-137-21.ap-northeast-1.compute.amazonaws.com:8080/api/v1/ranking/books"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "GET"
+        type: "http"
+    parameters: []
+  '/users':
+    get:
+      tags:
+        - users
+      summary:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/usersDto"
+    parameters: []
+    put:
+      tags:
+        - users
+      summary:
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: users
+          in: query
+          description: tags to filter by
+          required: false
+          style: form
+          schema:
+            $ref: "#/components/schemas/userDto"
+  '/users/{userId}':
+    get:
+      tags:
+        - users
+      summary:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userDto"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ''
+    delete:
+      tags:
+        - users
+      summary:
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ''
+
+components:
+  schemas:
+    booksDto:
+      title: booksDto
+      type: object
+      description: 本の検索結果オブジェクト
+      properties:
+        isbns:
+          type: array
+          items:
+            type: string
+    inventoryDto:
+      title: inventoryDto
+      type: object
+      description: 棚卸のためのDto。本のISBNと現在棚卸を終わった数、棚卸対象の数、どのバージョンの棚卸結果か、あとメモ。
+      properties:
+        isbn:
+          type: string
+        num:
+          type: integer
+        maxNum:
+          type: integer
+        version:
+          type: integer
+        memo:
+          type: string
+      required:
+        - isbn
+        - maxNum
+        - version
+      x-examples:
+        アジャイルサムライの棚卸:
+          value:
+            isbn: '1'
+            num: '1'
+            maxNum: '10'
+            version: '2'
+            memo: '1冊：貸出中'
+    inventorysDto:
+      title: inventorysDto
+      type: object
+      description: 棚卸のオブジェクト
+      properties:
+        lendingRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/inventoryDto'
+    lendingRecordDto:
+      title: lendingRecordsDto
+      type: object
+      description: 貸出帳の検索結果オブジェクト
+      properties:
+        isbn:
+          type: string
+        userId:
+          type: string
+        namae:
+          type: string
+        simei:
+          type: string
+      x-examples:
+        本:
+          value:
+            isbn: '1234567890123'
+            userId: '1234567'
+
+    lendingRecordsDto:
+      title: lendingRecordDto
+      type: object
+      description: 貸出帳のオブジェクト
+      properties:
+        lendingRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/lendingRecordDto'
+
+    rankingDto:
+      title: rankingDto
+      type: object
+      description: ランキングを表現する。idは呼び出し元の使い方により、userId等に読み替えられるようにする。
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+        num:
+          type: integer
+      required:
+        - userId
+        - name
+        - num
+      x-examples:
+        本のランキング:
+          value:
+            ranking: '1'
+            id: '111426'
+            num: '4'
+
+    rankingsDto:
+      title: rankingsDto
+      type: object
+      description: ランキングのリスト
+      properties:
+        rankings:
+          type: array
+          items:
+            $ref: '#/components/schemas/rankingDto'
+      required:
+        - rankings
+
+
+
+    userDto:
+      title: userDto
+      type: object
+      description:
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        familyName:
+          type: string
+        givenName:
+          type: string
+      required:
+        - userId
+
+
+    usersDto:
+      title: usersDto
+      type: object
+      description: ユーザのリスト
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/userDto'
+      required:
+        - users

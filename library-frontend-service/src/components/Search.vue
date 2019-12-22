@@ -1,12 +1,8 @@
 <template>
   <v-container>
-    <v-toolbar flat color="white">
+    <v-toolbar flat color="white" class="elevation-1">
       <v-toolbar-title>本一覧</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-    <v-card-title>
-      検索
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -14,8 +10,8 @@
         single-line
         hide-details
       ></v-text-field>
-    </v-card-title>
-    <v-data-table :headers="headers" :items="lendingRecords" class="elevation-1" :search="search">
+    </v-toolbar>
+    <v-data-table :headers="headers" :items="books" class="elevation-1" :search="search">
       <template v-slot:items="props">
         <td>{{ props.item.isbn.isbn }}</td>
         <td>{{ props.item.title }}</td>
@@ -39,7 +35,7 @@ import customConfiguration = Constant.customConfiguration;
 export default class Search extends Vue {
     search: string = '';
 
-    lendingRecords: Array<Book> = [];
+    books: Array<Book> = [];
 
     headers: Array<any> = [
       { text: 'isbn', value: 'isbn.isbn' },
@@ -69,8 +65,15 @@ export default class Search extends Vue {
     async createBook(isbnDto: string): Promise<void> {
       const isbn = new Isbn(isbnDto);
       const info = await isbn.getBookInfo();
-      const lendingRecord = new Book(isbn, info.summary.title);
-      this.lendingRecords.push(lendingRecord);
+      {
+        let book;
+        if (typeof info === 'undefined') {
+          book = new Book(isbn, '');
+        } else {
+          book = new Book(isbn, info.summary.title);
+        }
+        this.books.push(book);
+      }
     }
 }
 </script>

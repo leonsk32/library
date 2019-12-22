@@ -99,8 +99,8 @@ class UserRepositoryImplTest {
             SoftAssertions softly = new SoftAssertions();
             // THEN
             RankingList actual = target.findLentRanking();
-            softly.assertThat(actual.getRankingList()).hasSize(1);
-            softly.assertThat(actual.getRankingList()).containsExactlyInAnyOrder(
+            softly.assertThat(actual.getRankings()).hasSize(1);
+            softly.assertThat(actual.getRankings()).containsExactlyInAnyOrder(
                     new Ranking("9784567", "", 1)
             );
             softly.assertAll();
@@ -135,8 +135,8 @@ class UserRepositoryImplTest {
             SoftAssertions softly = new SoftAssertions();
             // THEN
             RankingList actual = target.findLentRanking();
-            softly.assertThat(actual.getRankingList()).hasSize(3);
-            softly.assertThat(actual.getRankingList()).containsExactlyInAnyOrder(
+            softly.assertThat(actual.getRankings()).hasSize(3);
+            softly.assertThat(actual.getRankings()).containsExactlyInAnyOrder(
                     new Ranking("9784567", "", 1),
                     new Ranking("9784568", "", 2),
                     new Ranking("9784569", "", 1)
