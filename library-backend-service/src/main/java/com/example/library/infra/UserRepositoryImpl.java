@@ -7,11 +7,12 @@ import com.example.library.domain.user.UserRepository;
 import com.example.library.infra.dto.LendingEvent;
 import com.example.library.infra.dto.UserDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -37,9 +38,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(String userId) {
-        String sql = "SELECT * FROM USERR where user_id = '" + userId + "'";
+        String sql = "SELECT * FROM USERR where user_id = ?";
+
+        PreparedStatementCreatorFactory pscFactory = new PreparedStatementCreatorFactory(sql);
+        pscFactory.addParameter(new SqlParameter(Types.VARCHAR));
+        PreparedStatementCreator psc = pscFactory.newPreparedStatementCreator(Arrays.asList(userId));
         BeanPropertyRowMapper<UserDto> rowMapper = new BeanPropertyRowMapper<>(UserDto.class);
-        List<UserDto> resultMap = jdbcTemplate.query(sql, rowMapper);
+
+        List<UserDto> resultMap = jdbcTemplate.query(psc, rowMapper);
         if (resultMap.isEmpty()) return null;
         return resultMap.get(0).convert();
     }
