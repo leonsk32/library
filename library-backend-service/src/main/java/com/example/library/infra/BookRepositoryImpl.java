@@ -2,16 +2,17 @@ package com.example.library.infra;
 
 import com.example.library.domain.book.Book;
 import com.example.library.domain.book.BookRepository;
+import com.example.library.infra.dto.BookDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Collections.*;
+import static java.util.Collections.emptyList;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,9 +22,11 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book findById(String isbn) {
         String sql = "SELECT * FROM book where isbn = '" + isbn + "'";
-        List<Map<String, Object>> resultMap = jdbcTemplate.queryForList(sql);
+        BeanPropertyRowMapper<BookDto> beanMap = new BeanPropertyRowMapper<>(BookDto.class);
+
+        List<BookDto> resultMap = jdbcTemplate.query(sql, beanMap);
         if (resultMap.size() == 0) return null;
-        Book book = new Book(isbn, (Integer) resultMap.get(0).get("amount"));
+        Book book = new Book(resultMap.get(0).getIsbn(), resultMap.get(0).getAmount());
         return book;
     }
 
