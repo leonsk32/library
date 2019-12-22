@@ -28,7 +28,7 @@ public class RankingApiImpl implements RankingApi {
 
     private RankingsDto convert(RankingList rankings) {
         RankingsDto rankingsDto = new RankingsDto();
-        for (Ranking ranking : rankings.getRankingList()) {
+        for (Ranking ranking : rankings.getRankings()) {
             RankingDto rankingDto = new RankingDto();
             rankingDto.setUserId(ranking.getUserId());
             rankingDto.setName(ranking.getName());

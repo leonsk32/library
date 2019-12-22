@@ -3,6 +3,7 @@ package com.example.library.app_service;
 import com.example.library.domain.ranking.RankingList;
 import com.example.library.domain.user.User;
 import com.example.library.domain.user.UserRepository;
+import com.example.library.exception.BusinessException;
 import com.example.library.restapi.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
     public User searchById(String userId) {
         User user = userRepository.findById(userId);
         if (user == null) {
-            throw new RuntimeException("ユーザが存在しない。userId = " + userId);
+            throw new BusinessException("ユーザが存在しない。userId = " + userId);
         }
         return user;
     }
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
     public void delete(String userId) {
         User user = userRepository.findById(userId);
         if (user == null) {
-            throw new RuntimeException("削除対象ユーザが存在しない。userId = " + userId);
+            throw new BusinessException("削除対象ユーザが存在しない。userId = " + userId);
         }
         userRepository.delete(userId);
     }
