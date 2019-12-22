@@ -75,7 +75,7 @@ task cucumber() {
                     sourceSets.main.output +
                             sourceSets.test.runtimeClasspath +
                             sourceSets.test.output
-            args = ['--plugin', 'pretty', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
+            args = ['--plugin', 'pretty', '--tags', 'not @developing', '--glue', 'features', 'src/test/resources']
         }
     }
 }
@@ -93,7 +93,7 @@ task cucumberNow() {
                     sourceSets.main.output +
                             sourceSets.test.runtimeClasspath +
                             sourceSets.test.output
-            args = ['--plugin', 'pretty', '--tags', '@now', '--tags', '~@developing', '--glue', 'features', 'src/test/resources']
+            args = ['--plugin', 'pretty', '--tags', '@now', '--tags', 'not @developing', '--glue', 'features', 'src/test/resources']
         }
     }
 }
