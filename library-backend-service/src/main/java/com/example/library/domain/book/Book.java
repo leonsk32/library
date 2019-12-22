@@ -43,7 +43,7 @@ public class Book {
     public boolean equals(Object other) {
         if (!(other instanceof Book)) throw new RuntimeException("Book同士を比較して下さい");
         Book otherBook = (Book) other;
-        return this.isbn.getIsbn().equals(otherBook.isbn.getIsbn());
+        return this.isbn.getCode().equals(otherBook.isbn.getCode());
     }
 
     /**
@@ -52,6 +52,6 @@ public class Book {
      */
     @Override
     public int hashCode() {
-        return isbn.getIsbn().hashCode();
+        return isbn.getCode().hashCode();
     }
 }
